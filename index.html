@@ -1145,8 +1145,9 @@
     }).join('');
   }
 
-  /* Pick the best FREE on-device voice. Prefer local (no network, no cost),
-     then known neural/enhanced voices, then an AU/GB/US accent for Esteban. */
+  /* Pick the best FREE on-device voice — tuned for an Australian, radio/podcast
+     delivery (Esteban's own accent). Priority: AU accent > neural/enhanced
+     quality > on-device > a warm male voice for the first-person host feel. */
   var pickedVoice = null;
   function chooseVoice() {
     if (!('speechSynthesis' in window)) return null;
@@ -1154,18 +1155,19 @@
     if (!voices.length) return null;
     var en = voices.filter(function (v) { return /^en(-|_|$)/i.test(v.lang || ''); });
     var pool = en.length ? en : voices;
-    var PREF = ['Ava', 'Zoe', 'Alex', 'Daniel', 'Serena', 'Karen', 'Lee', 'Samantha',
-                'Google', 'Aria', 'Guy', 'Ryan', 'Jenny', 'Sonia', 'Siri'];
+    // Warm, male-leaning voices that read as a podcast host (AU first, then GB/US).
+    var MALE = /\b(Lee|James|William|Russell|Mike|Gordon|Daniel|Arthur|Alex|Aaron|Fred|Tom|Guy|Ryan|Rishi|Eddy|Reed|Evan|Nathan|Male)\b/i;
     function score(v) {
       var s = 0, name = v.name || '', lang = (v.lang || '').toLowerCase();
-      if (v.localService) s += 40;                              // on-device: free, no network
-      if (/enhanced|premium|neural|natural/i.test(name)) s += 24;
-      for (var i = 0; i < PREF.length; i++) {
-        if (name.indexOf(PREF[i]) !== -1) { s += (PREF.length - i); break; }
-      }
-      if (lang.indexOf('en-au') === 0) s += 12;                 // Esteban's in Sydney
-      else if (lang.indexOf('en-gb') === 0) s += 6;
-      else if (lang.indexOf('en-us') === 0) s += 4;
+      // Accent is the headline: make it Australian whenever the device has one.
+      if (lang.indexOf('en-au') === 0) s += 1000;
+      else if (lang.indexOf('en-gb') === 0) s += 250;          // closest fallback to AU
+      else if (lang.indexOf('en') === 0) s += 60;
+      // Radio timbre: neural/enhanced voices; on-device = free, no network.
+      if (/enhanced|premium|neural|natural/i.test(name)) s += 60;
+      if (v.localService) s += 30;
+      // Persona: a warm male voice for a first-person podcast feel.
+      if (MALE.test(name)) s += 35;
       if (v.default) s += 1;
       return s;
     }
@@ -1185,7 +1187,8 @@
       if (!pickedVoice) refreshVoice();
       var u = new SpeechSynthesisUtterance(text);
       if (pickedVoice) { u.voice = pickedVoice; u.lang = pickedVoice.lang; }
-      u.rate = 0.98; u.pitch = 1.0;        // calmer + more natural than the old 1.02
+      else { u.lang = 'en-AU'; }            // nudge the engine toward an AU accent
+      u.rate = 0.93; u.pitch = 0.96; u.volume = 1.0;   // measured, warm broadcast cadence
       u.onstart = function () { setEq(true); };
       u.onend = function () { setEq(false); };
       window.speechSynthesis.speak(u);

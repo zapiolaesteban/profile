@@ -9,7 +9,7 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
 // ---- config ---------------------------------------------------------------
-const MODEL = "claude-sonnet-4-5";        // fast + cheap enough for a public toy; swap if needed
+const MODEL = "claude-sonnet-4-6";        // smarter than 4.5, still fast + cheap for a public toy
 const MAX_TOKENS = 600;                    // keep answers short + cap cost per call
 const MAX_INPUT_CHARS = 800;               // a question, not an essay
 const MAX_HISTORY = 6;                     // turns of prior context we'll accept
@@ -192,7 +192,13 @@ export default async function handler(req) {
       body: JSON.stringify({
         model: MODEL,
         max_tokens: MAX_TOKENS,
-        system: systemPrompt(kb),
+        // Keep it fast + cheap (cost control): no extended thinking, low effort,
+        // and cache the knowledge base so repeat questions bill the KB at ~0.1x.
+        thinking: { type: "disabled" },
+        output_config: { effort: "low" },
+        system: [
+          { type: "text", text: systemPrompt(kb), cache_control: { type: "ephemeral" } },
+        ],
         messages,
       }),
     });
