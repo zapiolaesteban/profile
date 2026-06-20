@@ -785,6 +785,12 @@
       </article>
 
       <article class="build reveal">
+        <div class="build-tag">Multi-agent org</div>
+        <h3>A self-organising "Creative AI Studio"</h3>
+        <p>I stood up a small AI organisation: a CEO agent that hired an HR agent, which in turn recruits specialist agents — engineers, a deep-research agent — into a team I direct. <strong>I set the goals; the agents collaborate to deliver.</strong> It even helped power the hackathon.</p>
+      </article>
+
+      <article class="build reveal">
         <div class="build-tag">Multi-agent system</div>
         <h3>An "LLM Council"</h3>
         <p>Several independent models each draft a plan, get anonymised and shuffled, and a judge model merges them into one — bias-resistant decision support. <strong>I used it to pressure-test this very site's repositioning.</strong></p>
@@ -803,9 +809,15 @@
       </article>
 
       <article class="build reveal">
-        <div class="build-tag">Productivity agent</div>
-        <h3>Monday Dispatch</h3>
-        <p>A daily-brief tool — CLI plus dashboard — that pulls my tasks across multiple systems into one morning briefing. <strong>My own productivity agent.</strong></p>
+        <div class="build-tag">Executive-assistant agent</div>
+        <h3>"Monday" — my daily EA agent</h3>
+        <p>One terminal command: it searches my email and calendar, <strong>triages everything into P1/P2/P3</strong>, surfaces flags and who's away, and summarises threads. It drafts replies and suggests the right response — then keeps a <strong>human in the loop</strong>, popping up and opening Outlook so I decide and send. I use it daily.</p>
+      </article>
+
+      <article class="build reveal">
+        <div class="build-tag">Terminal tool</div>
+        <h3>A terminal email-sender, with UI skins</h3>
+        <p>Send polished HTML email straight from the command line — <strong>choose between several visual skins</strong> and attach files — without leaving the terminal. It also powers my event invites and RSVP auto-tracking.</p>
       </article>
 
       <article class="build reveal">
@@ -1117,12 +1129,47 @@
     }).join('');
   }
 
+  /* Pick the best FREE on-device voice. Prefer local (no network, no cost),
+     then known neural/enhanced voices, then an AU/GB/US accent for Esteban. */
+  var pickedVoice = null;
+  function chooseVoice() {
+    if (!('speechSynthesis' in window)) return null;
+    var voices = window.speechSynthesis.getVoices() || [];
+    if (!voices.length) return null;
+    var en = voices.filter(function (v) { return /^en(-|_|$)/i.test(v.lang || ''); });
+    var pool = en.length ? en : voices;
+    var PREF = ['Ava', 'Zoe', 'Alex', 'Daniel', 'Serena', 'Karen', 'Lee', 'Samantha',
+                'Google', 'Aria', 'Guy', 'Ryan', 'Jenny', 'Sonia', 'Siri'];
+    function score(v) {
+      var s = 0, name = v.name || '', lang = (v.lang || '').toLowerCase();
+      if (v.localService) s += 40;                              // on-device: free, no network
+      if (/enhanced|premium|neural|natural/i.test(name)) s += 24;
+      for (var i = 0; i < PREF.length; i++) {
+        if (name.indexOf(PREF[i]) !== -1) { s += (PREF.length - i); break; }
+      }
+      if (lang.indexOf('en-au') === 0) s += 12;                 // Esteban's in Sydney
+      else if (lang.indexOf('en-gb') === 0) s += 6;
+      else if (lang.indexOf('en-us') === 0) s += 4;
+      if (v.default) s += 1;
+      return s;
+    }
+    return pool.slice().sort(function (a, b) { return score(b) - score(a); })[0] || null;
+  }
+  function refreshVoice() { var v = chooseVoice(); if (v) pickedVoice = v; }
+  if ('speechSynthesis' in window) {
+    refreshVoice();
+    // Voices often load async (esp. Chrome) — re-pick when they arrive.
+    window.speechSynthesis.addEventListener('voiceschanged', refreshVoice);
+  }
+
   function speak(text) {
     if (!voiceOut.checked || !('speechSynthesis' in window)) return;
     try {
       window.speechSynthesis.cancel();
+      if (!pickedVoice) refreshVoice();
       var u = new SpeechSynthesisUtterance(text);
-      u.rate = 1.02; u.pitch = 1.0;
+      if (pickedVoice) { u.voice = pickedVoice; u.lang = pickedVoice.lang; }
+      u.rate = 0.98; u.pitch = 1.0;        // calmer + more natural than the old 1.02
       u.onstart = function () { setEq(true); };
       u.onend = function () { setEq(false); };
       window.speechSynthesis.speak(u);
@@ -1202,13 +1249,19 @@
     var COLORS = ['#0E7A3A', '#00A847', '#00C853', '#5C6066', '#8AE24B'];
     var dpr = 1, w = 0, h = 0, cells = [], raf = null, last = 0;
     function mk(y) {
-      var bold = Math.random() < 0.18;
+      var bold = Math.random() < 0.22;
       return { x: Math.random() * w, y: y, col: COLORS[(Math.random() * COLORS.length) | 0],
         vy: (bold ? 16 : 10) + Math.random() * 30,
-        max: bold ? (0.62 + Math.random() * 0.36) : (0.10 + Math.random() * 0.26),
-        s: bold ? 3 : 2 };
+        max: bold ? (0.78 + Math.random() * 0.22) : (0.18 + Math.random() * 0.38),
+        s: bold ? 4 : 3 };
     }
-    function build() { cells = []; var n = Math.min(300, Math.floor((w * h) / 6500)); for (var i = 0; i < n; i++) cells.push(mk(Math.random() * h)); }
+    // ~45% fewer particles under 600px so phones stay smooth.
+    function build() {
+      cells = [];
+      var base = Math.floor((w * h) / 6500);
+      var n = Math.min(300, w < 600 ? Math.round(base * 0.55) : base);
+      for (var i = 0; i < n; i++) cells.push(mk(Math.random() * h));
+    }
     function resize() {
       dpr = Math.min(window.devicePixelRatio || 1, 2); w = c.clientWidth; h = c.clientHeight;
       c.width = Math.max(1, w * dpr); c.height = Math.max(1, h * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
