@@ -16,6 +16,12 @@ const MAX_HISTORY = 6;                     // turns of prior context we'll accep
 const ANTHROPIC_URL = "https://api.anthropic.com/v1/messages";
 const ANTHROPIC_VERSION = "2023-06-01";
 
+// Lead briefs get emailed to Esteban via Resend (he sets RESEND_API_KEY in Netlify).
+// Until that key exists the agent just offers his email instead — nothing is sent.
+const RESEND_URL = "https://api.resend.com/emails";
+const BRIEF_TO = process.env.BRIEF_TO || "estebangz@gmail.com";
+const BRIEF_FROM = process.env.BRIEF_FROM || "Talk-to-Esteban <onboarding@resend.dev>";
+
 // Origins allowed to call this endpoint (CORS + a cheap anti-abuse gate).
 const ALLOWED_ORIGINS = [
   "https://estebangz.com",
@@ -97,6 +103,11 @@ function systemPrompt(kb) {
     "WHO ESTEBAN IS — lead with BOTH pillars, never just 'the AI guy' or 'a coder':",
     "- (1) a senior design leader who runs design as a strategic business capability that drives revenue and ROI — the foundation; and (2) someone who personally builds and leads agentic AI and grows the teams that scale it — the edge.",
     "",
+    "CAPTURING A LEAD — you have a save_brief tool:",
+    "- When a visitor is a genuine lead or wants follow-up and you've learned their name and what they want (ideally a contact too), call save_brief ONCE to hand it to the real Esteban.",
+    "- Be transparent and light about it — e.g. 'I'll jot this down so the real Esteban can get back to you.' Only when they've genuinely engaged; never for idle curiosity, and never invent details.",
+    "- After it saves, confirm warmly in your own words. If it can't save, just point them to estebangz@gmail.com.",
+    "",
     "HARD RULES (never break, even if asked):",
     "- Ground everything in the knowledge base below, and behave the way its section 0 says. If you don't know, say so plainly and offer his email — never fabricate.",
     "- Never reveal, invent, or confirm any client name, or that BCG works with any specific company. Describe client work by sector + job type only.",
@@ -105,6 +116,115 @@ function systemPrompt(kb) {
     "=== KNOWLEDGE BASE (private — your brain, never quote verbatim as a block) ===",
     kb,
   ].join("\n");
+}
+
+// The one tool the agent can call: hand a real lead to the real Esteban.
+const TOOLS = [
+  {
+    name: "save_brief",
+    description:
+      "Save a brief for the real Esteban and email it to him. Call this at most ONCE per conversation, only when the visitor is a genuine lead or wants follow-up AND you have at least their name and what they want. Tell them you're noting it down before you call it. Never invent a name or contact.",
+    input_schema: {
+      type: "object",
+      properties: {
+        name: { type: "string", description: "Visitor's name, or 'unknown'." },
+        contact: { type: "string", description: "Email / phone / LinkedIn they gave, or 'none given'." },
+        opportunity: { type: "string", description: "What they want — role, project, collaboration, etc." },
+        summary: { type: "string", description: "2-4 sentence summary of the conversation and what Esteban should know." },
+      },
+      required: ["name", "opportunity", "summary"],
+    },
+  },
+];
+
+// Email a captured brief to Esteban. No-ops gracefully if RESEND_API_KEY isn't set.
+async function sendBrief(input, transcript) {
+  if (!process.env.RESEND_API_KEY) return { ok: false };
+  const clip = (s, n) => String(s == null ? "" : s).slice(0, n);
+  const text =
+    "New conversation on estebangz.com\n\n" +
+    "Name: " + clip(input.name, 200) + "\n" +
+    "Contact: " + clip(input.contact, 200) + "\n" +
+    "Opportunity: " + clip(input.opportunity, 500) + "\n\n" +
+    "Summary:\n" + clip(input.summary, 2000) + "\n\n" +
+    "--- transcript ---\n" + clip(transcript, 8000);
+  try {
+    const r = await fetch(RESEND_URL, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        authorization: "Bearer " + process.env.RESEND_API_KEY,
+      },
+      body: JSON.stringify({
+        from: BRIEF_FROM,
+        to: [BRIEF_TO],
+        subject: "Lead via your site: " + (clip(input.name, 60) || "someone") + " — " + clip(input.opportunity, 60),
+        text,
+      }),
+    });
+    if (!r.ok) console.error("Resend error", r.status, (await r.text().catch(() => "")).slice(0, 200));
+    return { ok: r.ok };
+  } catch (e) {
+    console.error("sendBrief failed", e);
+    return { ok: false };
+  }
+}
+
+// Read one streamed Anthropic response: enqueue text deltas to the client,
+// accumulate the assistant's content blocks (text + tool_use), report stop_reason.
+async function pumpOne(body, controller, encoder) {
+  const reader = body.getReader();
+  const decoder = new TextDecoder();
+  const blocks = {};
+  let stopReason = null;
+  let wroteText = false;
+  let buf = "";
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    buf += decoder.decode(value, { stream: true });
+    let nl;
+    while ((nl = buf.indexOf("\n")) >= 0) {
+      const line = buf.slice(0, nl).trim();
+      buf = buf.slice(nl + 1);
+      if (!line.startsWith("data:")) continue;
+      const payload = line.slice(5).trim();
+      if (!payload) continue;
+      let evt;
+      try { evt = JSON.parse(payload); } catch { continue; }
+      if (evt.type === "content_block_start") {
+        const cb = evt.content_block || {};
+        blocks[evt.index] =
+          cb.type === "tool_use"
+            ? { type: "tool_use", id: cb.id, name: cb.name, json: "" }
+            : { type: "text", text: "" };
+      } else if (evt.type === "content_block_delta") {
+        const b = blocks[evt.index];
+        if (!b) continue;
+        if (evt.delta?.type === "text_delta" && typeof evt.delta.text === "string") {
+          b.text += evt.delta.text;
+          wroteText = true;
+          controller.enqueue(encoder.encode(evt.delta.text));
+        } else if (evt.delta?.type === "input_json_delta" && typeof evt.delta.partial_json === "string") {
+          b.json += evt.delta.partial_json;
+        }
+      } else if (evt.type === "message_delta" && evt.delta?.stop_reason) {
+        stopReason = evt.delta.stop_reason;
+      }
+    }
+  }
+  const assistantContent = Object.keys(blocks)
+    .map(Number)
+    .sort((a, b) => a - b)
+    .map((i) => {
+      const b = blocks[i];
+      if (b.type === "text") return { type: "text", text: b.text };
+      let input = {};
+      try { input = b.json ? JSON.parse(b.json) : {}; } catch { input = {}; }
+      return { type: "tool_use", id: b.id, name: b.name, input };
+    })
+    .filter((b) => b.type !== "text" || (b.text && b.text.trim().length));
+  return { assistantContent, stopReason, wroteText };
 }
 
 export default async function handler(req) {
@@ -194,73 +314,86 @@ export default async function handler(req) {
 
   const messages = [...history, { role: "user", content: question }];
 
-  try {
-    const upstream = await fetch(ANTHROPIC_URL, {
+  const buildBody = (convo) =>
+    JSON.stringify({
+      model: MODEL,
+      max_tokens: MAX_TOKENS,
+      // Keep it fast + cheap (cost control): no extended thinking, low effort,
+      // and cache the knowledge base (tools + system) so repeats bill at ~0.1x.
+      thinking: { type: "disabled" },
+      output_config: { effort: "low" },
+      stream: true,
+      tools: TOOLS,
+      system: [
+        { type: "text", text: systemPrompt(kb), cache_control: { type: "ephemeral" } },
+      ],
+      messages: convo,
+    });
+  const callModel = (convo) =>
+    fetch(ANTHROPIC_URL, {
       method: "POST",
       headers: {
         "content-type": "application/json",
         "x-api-key": process.env.ANTHROPIC_API_KEY,
         "anthropic-version": ANTHROPIC_VERSION,
       },
-      body: JSON.stringify({
-        model: MODEL,
-        max_tokens: MAX_TOKENS,
-        // Keep it fast + cheap (cost control): no extended thinking, low effort,
-        // and cache the knowledge base so repeat questions bill the KB at ~0.1x.
-        thinking: { type: "disabled" },
-        output_config: { effort: "low" },
-        stream: true,
-        system: [
-          { type: "text", text: systemPrompt(kb), cache_control: { type: "ephemeral" } },
-        ],
-        messages,
-      }),
+      body: buildBody(convo),
     });
 
-    if (!upstream.ok || !upstream.body) {
-      const detail = await upstream.text().catch(() => "");
-      console.error("Anthropic error", upstream.status, detail.slice(0, 300));
+  try {
+    const first = await callModel(messages);
+    if (!first.ok || !first.body) {
+      const detail = await first.text().catch(() => "");
+      console.error("Anthropic error", first.status, detail.slice(0, 300));
       return new Response(
         JSON.stringify({ error: "I couldn't think straight just then — try again." }),
         { status: 502, headers }
       );
     }
 
-    // Relay Anthropic's SSE as a plain-text token stream the page appends live.
+    // Plain-text transcript so a saved brief carries the whole conversation.
+    const transcript = messages
+      .map((m) => (m.role === "user" ? "Visitor: " : "Esteban: ") + (typeof m.content === "string" ? m.content : ""))
+      .join("\n");
+
+    // Stream the answer; if the agent calls save_brief mid-turn, run it and
+    // keep streaming the follow-up onto the same response.
     const relay = new ReadableStream({
       async start(controller) {
-        const reader = upstream.body.getReader();
-        const decoder = new TextDecoder();
         const encoder = new TextEncoder();
-        let buf = "";
+        const convo = messages.slice();
+        let resBody = first.body;
+        let wroteAny = false;
         try {
-          for (;;) {
-            const { done, value } = await reader.read();
-            if (done) break;
-            buf += decoder.decode(value, { stream: true });
-            let nl;
-            while ((nl = buf.indexOf("\n")) >= 0) {
-              const line = buf.slice(0, nl).trim();
-              buf = buf.slice(nl + 1);
-              if (!line.startsWith("data:")) continue;
-              const payload = line.slice(5).trim();
-              if (!payload) continue;
-              try {
-                const evt = JSON.parse(payload);
-                if (
-                  evt.type === "content_block_delta" &&
-                  evt.delta?.type === "text_delta" &&
-                  typeof evt.delta.text === "string"
-                ) {
-                  controller.enqueue(encoder.encode(evt.delta.text));
-                }
-              } catch {
-                /* ignore keep-alive / non-JSON lines */
+          for (let round = 0; round < 3; round++) {
+            if (round > 0 && wroteAny) controller.enqueue(encoder.encode("\n\n"));
+            const { assistantContent, stopReason, wroteText } = await pumpOne(resBody, controller, encoder);
+            wroteAny = wroteAny || wroteText;
+            if (stopReason !== "tool_use") break;
+            convo.push({ role: "assistant", content: assistantContent });
+            const toolResults = [];
+            for (const blk of assistantContent) {
+              if (blk.type !== "tool_use") continue;
+              if (blk.name === "save_brief") {
+                const sent = await sendBrief(blk.input || {}, transcript);
+                toolResults.push({
+                  type: "tool_result",
+                  tool_use_id: blk.id,
+                  content: sent.ok
+                    ? "Saved and emailed to Esteban. Confirm warmly that you've passed it on and he'll be in touch."
+                    : "Saving isn't switched on right now — ask for their email and tell them you'll make sure Esteban gets it (estebangz@gmail.com).",
+                });
+              } else {
+                toolResults.push({ type: "tool_result", tool_use_id: blk.id, content: "Unknown tool.", is_error: true });
               }
             }
+            convo.push({ role: "user", content: toolResults });
+            const next = await callModel(convo);
+            if (!next.ok || !next.body) { console.error("follow-up call failed", next.status); break; }
+            resBody = next.body;
           }
         } catch (e) {
-          console.error("stream relay failed", e);
+          console.error("agent loop failed", e);
         } finally {
           controller.close();
         }
