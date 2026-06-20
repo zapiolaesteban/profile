@@ -634,6 +634,18 @@
 </head>
 <body>
 
+<!-- Hidden Netlify Form: the agent's backend posts a lead brief here; Netlify stores it
+     and emails Esteban (Netlify → Forms → notifications). Never shown to visitors. -->
+<form name="lead-brief" data-netlify="true" netlify-honeypot="bot-field" hidden aria-hidden="true">
+  <input type="hidden" name="form-name" value="lead-brief">
+  <input type="text" name="name">
+  <input type="text" name="contact">
+  <input type="text" name="opportunity">
+  <textarea name="summary"></textarea>
+  <textarea name="transcript"></textarea>
+  <input type="text" name="bot-field">
+</form>
+
 <canvas id="px" aria-hidden="true"></canvas>
 <div class="scroll-progress" id="scrollProgress" role="presentation" aria-hidden="true"></div>
 

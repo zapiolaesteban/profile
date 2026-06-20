@@ -16,11 +16,10 @@ const MAX_HISTORY = 6;                     // turns of prior context we'll accep
 const ANTHROPIC_URL = "https://api.anthropic.com/v1/messages";
 const ANTHROPIC_VERSION = "2023-06-01";
 
-// Lead briefs get emailed to Esteban via Resend (he sets RESEND_API_KEY in Netlify).
-// Until that key exists the agent just offers his email instead — nothing is sent.
-const RESEND_URL = "https://api.resend.com/emails";
-const BRIEF_TO = process.env.BRIEF_TO || "estebangz@gmail.com";
-const BRIEF_FROM = process.env.BRIEF_FROM || "Talk-to-Esteban <onboarding@resend.dev>";
+// Lead briefs are posted to a hidden Netlify Form ("lead-brief"); Netlify stores
+// them and — once Esteban turns on Form notifications — emails them to him.
+// No third-party account; it all runs inside Netlify.
+const BRIEF_FORM_NAME = "lead-brief";
 
 // Origins allowed to call this endpoint (CORS + a cheap anti-abuse gate).
 const ALLOWED_ORIGINS = [
@@ -137,32 +136,26 @@ const TOOLS = [
   },
 ];
 
-// Email a captured brief to Esteban. No-ops gracefully if RESEND_API_KEY isn't set.
-async function sendBrief(input, transcript) {
-  if (!process.env.RESEND_API_KEY) return { ok: false };
+// Post a captured brief to the hidden Netlify Form on the same deploy the visitor
+// is on. Netlify stores it + emails Esteban (if Form notifications are on).
+async function sendBrief(input, transcript, base) {
+  if (!base) return { ok: false };
   const clip = (s, n) => String(s == null ? "" : s).slice(0, n);
-  const text =
-    "New conversation on estebangz.com\n\n" +
-    "Name: " + clip(input.name, 200) + "\n" +
-    "Contact: " + clip(input.contact, 200) + "\n" +
-    "Opportunity: " + clip(input.opportunity, 500) + "\n\n" +
-    "Summary:\n" + clip(input.summary, 2000) + "\n\n" +
-    "--- transcript ---\n" + clip(transcript, 8000);
+  const form = new URLSearchParams({
+    "form-name": BRIEF_FORM_NAME,
+    name: clip(input.name, 200) || "unknown",
+    contact: clip(input.contact, 200) || "none given",
+    opportunity: clip(input.opportunity, 500),
+    summary: clip(input.summary, 2000),
+    transcript: clip(transcript, 8000),
+  });
   try {
-    const r = await fetch(RESEND_URL, {
+    const r = await fetch(base.replace(/\/+$/, "") + "/", {
       method: "POST",
-      headers: {
-        "content-type": "application/json",
-        authorization: "Bearer " + process.env.RESEND_API_KEY,
-      },
-      body: JSON.stringify({
-        from: BRIEF_FROM,
-        to: [BRIEF_TO],
-        subject: "Lead via your site: " + (clip(input.name, 60) || "someone") + " — " + clip(input.opportunity, 60),
-        text,
-      }),
+      headers: { "content-type": "application/x-www-form-urlencoded" },
+      body: form.toString(),
     });
-    if (!r.ok) console.error("Resend error", r.status, (await r.text().catch(() => "")).slice(0, 200));
+    if (!r.ok) console.error("Netlify Forms submit error", r.status);
     return { ok: r.ok };
   } catch (e) {
     console.error("sendBrief failed", e);
@@ -375,12 +368,12 @@ export default async function handler(req) {
             for (const blk of assistantContent) {
               if (blk.type !== "tool_use") continue;
               if (blk.name === "save_brief") {
-                const sent = await sendBrief(blk.input || {}, transcript);
+                const sent = await sendBrief(blk.input || {}, transcript, origin);
                 toolResults.push({
                   type: "tool_result",
                   tool_use_id: blk.id,
                   content: sent.ok
-                    ? "Saved and emailed to Esteban. Confirm warmly that you've passed it on and he'll be in touch."
+                    ? "Saved for Esteban. Confirm warmly that you've passed it on and he'll be in touch."
                     : "Saving isn't switched on right now — ask for their email and tell them you'll make sure Esteban gets it (estebangz@gmail.com).",
                 });
               } else {
