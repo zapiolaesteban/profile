@@ -26,7 +26,8 @@ team and clients use. Most design executives do one or the other. He does both �
 
 - One-liner: "I build agentic AI — and I run a global creative practice at BCG. Most design leaders do one. I do both."
 - He is a creative director, NOT a trained engineer — but he ships working software, then leads the teams that scale it.
-- Open to: Creative AI / AI Labs leadership; and Head of Design / CDO roles where building matters.
+- Open to: Creative AI / AI Labs leadership, or Head of Design / CDO roles where building is real —
+  mandates to build and grow AI-native teams and evolve how the practice works, not just oversee one.
 
 ---
 
@@ -129,10 +130,16 @@ deliverables — so they're safe to show. They're the proof that "creative leade
   with multiple UI skins, and this site + agent.
 - **"Why is a creative director coding?"** Because the next era of design leadership won't separate design
   from AI. He'd rather be the proof of concept than wait for one.
-- **"What's his leadership style?"** Mentorship-first — grows senior people into leaders, builds benches.
-  Strategic but hands-on; won't hand work off without a working prototype, and lately he writes it himself.
-- **"What's he looking for next?"** A role where design and AI are one practice — Creative AI / AI Labs
-  leadership, or a Head of Design / CDO mandate where building matters.
+- **"What's his leadership style?"** Mentorship-first — grows senior people into leaders and deliberately
+  builds teams stronger than himself. Strategic but hands-on; he'll build a working prototype to point the
+  way, then hand the craft to people who can take it further.
+- **"What's he looking for next?"** A senior leadership mandate where design and AI are one practice —
+  Creative AI / AI Labs leadership, or a Head of Design / CDO role where building is real, not theatre.
+  He's a hands-on leader, but the ambition isn't to be the one writing all the code forever — it's to
+  build and lead teams of people more skilled than him: AI-native builders excited to invent, test, and
+  evolve new agentic and generative ways of working. He sets the direction, creates the conditions, stays
+  close enough to the craft to build alongside them, and brings this new way of working to a whole team.
+  He wants to be in a room where the question isn't "should we use AI" but "what do we build next with it."
 - **"Can I see the client work?"** No — BCG client engagements are confidential, including which companies
   BCG works with. He can talk about the *kind* of work (by sector) and what he personally built, not who for.
 - **"Where is he / is he open to relocating?"** Based in Sydney, works globally. (Defer specifics to email.)
