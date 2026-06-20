@@ -1202,31 +1202,57 @@
     showOutput('<p class="thinking">Thinking…</p>');
     setEq(true);
 
+    function done() { setEq(false); busy = false; }
+
+    function finish(q, full) {
+      full = (full || '').trim();
+      if (full) {
+        showOutput(toParagraphs(full));
+        history.push({ role: 'user', content: q });
+        history.push({ role: 'assistant', content: full });
+        if (history.length > 6) history = history.slice(-6);
+        speak(full);
+      } else {
+        showOutput('<p class="thinking">Sorry — I didn’t catch that. Try rephrasing?</p>');
+      }
+      done();
+    }
+
     fetch('/api/ask', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ question: question, history: history })
     })
-      .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
-      .then(function (res) {
-        if (!res.ok) {
-          showOutput('<p class="thinking">' + escapeHtml(res.d && res.d.error ? res.d.error : 'Something went wrong — try again.') + '</p>');
-          setEq(false);
-          return;
+      .then(function (r) {
+        // Errors arrive as JSON with a non-OK status.
+        if (!r.ok) {
+          return r.json().catch(function () { return {}; }).then(function (d) {
+            showOutput('<p class="thinking">' + escapeHtml(d && d.error ? d.error : 'Something went wrong — try again.') + '</p>');
+            done();
+          });
         }
-        var answer = res.d.answer || '';
-        showOutput(toParagraphs(answer));
-        history.push({ role: 'user', content: question });
-        history.push({ role: 'assistant', content: answer });
-        if (history.length > 6) history = history.slice(-6);
-        setEq(false);
-        speak(answer);
+        // Success streams plain-text tokens — append them as they land.
+        if (!r.body || !r.body.getReader) {
+          return r.text().then(function (full) { finish(question, full); });
+        }
+        var reader = r.body.getReader();
+        var decoder = new TextDecoder();
+        var full = '';
+        function pump() {
+          return reader.read().then(function (res) {
+            if (res.done) { finish(question, full); return; }
+            full += decoder.decode(res.value, { stream: true });
+            showOutput(toParagraphs(full));
+            output.scrollTop = output.scrollHeight;
+            return pump();
+          });
+        }
+        return pump();
       })
       .catch(function () {
         showOutput('<p class="thinking">I couldn’t reach the server. Try again, or email me at estebangz@gmail.com.</p>');
-        setEq(false);
-      })
-      .finally(function () { busy = false; });
+        done();
+      });
   }
 
   form.addEventListener('submit', function (e) { e.preventDefault(); ask(input.value); });

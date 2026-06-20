@@ -196,6 +196,7 @@ export default async function handler(req) {
         // and cache the knowledge base so repeat questions bill the KB at ~0.1x.
         thinking: { type: "disabled" },
         output_config: { effort: "low" },
+        stream: true,
         system: [
           { type: "text", text: systemPrompt(kb), cache_control: { type: "ephemeral" } },
         ],
@@ -203,7 +204,7 @@ export default async function handler(req) {
       }),
     });
 
-    if (!upstream.ok) {
+    if (!upstream.ok || !upstream.body) {
       const detail = await upstream.text().catch(() => "");
       console.error("Anthropic error", upstream.status, detail.slice(0, 300));
       return new Response(
@@ -212,13 +213,56 @@ export default async function handler(req) {
       );
     }
 
-    const data = await upstream.json();
-    const answer =
-      Array.isArray(data?.content) && data.content[0]?.text
-        ? data.content[0].text.trim()
-        : "Sorry — I didn't catch that. Try rephrasing?";
+    // Relay Anthropic's SSE as a plain-text token stream the page appends live.
+    const relay = new ReadableStream({
+      async start(controller) {
+        const reader = upstream.body.getReader();
+        const decoder = new TextDecoder();
+        const encoder = new TextEncoder();
+        let buf = "";
+        try {
+          for (;;) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            buf += decoder.decode(value, { stream: true });
+            let nl;
+            while ((nl = buf.indexOf("\n")) >= 0) {
+              const line = buf.slice(0, nl).trim();
+              buf = buf.slice(nl + 1);
+              if (!line.startsWith("data:")) continue;
+              const payload = line.slice(5).trim();
+              if (!payload) continue;
+              try {
+                const evt = JSON.parse(payload);
+                if (
+                  evt.type === "content_block_delta" &&
+                  evt.delta?.type === "text_delta" &&
+                  typeof evt.delta.text === "string"
+                ) {
+                  controller.enqueue(encoder.encode(evt.delta.text));
+                }
+              } catch {
+                /* ignore keep-alive / non-JSON lines */
+              }
+            }
+          }
+        } catch (e) {
+          console.error("stream relay failed", e);
+        } finally {
+          controller.close();
+        }
+      },
+    });
 
-    return new Response(JSON.stringify({ answer }), { status: 200, headers });
+    return new Response(relay, {
+      status: 200,
+      headers: {
+        ...headers,
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "no-store",
+        "X-Content-Type-Options": "nosniff",
+      },
+    });
   } catch (err) {
     console.error("ask handler failed", err);
     return new Response(
