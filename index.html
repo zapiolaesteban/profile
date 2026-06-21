@@ -97,18 +97,14 @@
 <!-- Inline SVG favicon -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2300C853'/%3E%3Ctext x='50' y='62' font-family='Georgia,serif' font-size='52' font-weight='600' fill='white' text-anchor='middle' font-style='italic'%3EE%3C/text%3E%3C/svg%3E">
 
-<!-- Set theme BEFORE paint to prevent flash: a saved choice wins, else follow the device, else light. -->
+<!-- Set theme BEFORE paint to prevent flash: dark is the default for everyone; a saved choice wins. -->
 <script>
   (function () {
-    function systemTheme() {
-      try { return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; }
-      catch (e) { return 'light'; }
-    }
     try {
-      const stored = localStorage.getItem('theme');
-      document.documentElement.setAttribute('data-theme', stored || systemTheme());
+      var stored = localStorage.getItem('theme');
+      document.documentElement.setAttribute('data-theme', stored || 'dark');
     } catch (e) {
-      document.documentElement.setAttribute('data-theme', 'light');
+      document.documentElement.setAttribute('data-theme', 'dark');
     }
   })();
 </script>
@@ -279,6 +275,18 @@
   .btn-accent { background: var(--accent-bright); border-color: var(--accent-bright); color: #06210F; font-weight: 600; }
   .btn-accent:hover { background: var(--accent); border-color: var(--accent); }
 
+  /* Agent-triggered attention pulse on the CV button (fires when the agent points to the CV) */
+  @keyframes cvCue {
+    0%   { box-shadow: 0 0 0 0 rgba(0, 200, 83, 0.45); }
+    20%  { transform: translateY(-2px) scale(1.05); border-color: var(--accent-bright); color: var(--accent-bright); }
+    70%  { box-shadow: 0 0 0 12px rgba(0, 200, 83, 0); }
+    100% { transform: none; box-shadow: 0 0 0 0 rgba(0, 200, 83, 0); }
+  }
+  .btn.cv-cue { animation: cvCue 1.1s var(--ease) 3 both; }
+  @media (prefers-reduced-motion: reduce) {
+    .btn.cv-cue { animation: none; box-shadow: 0 0 0 3px rgba(0, 200, 83, 0.4); }
+  }
+
   .theme-toggle {
     width: 38px; height: 38px; border-radius: 9px; border: 1px solid var(--rule-strong);
     background: transparent; color: var(--ink); cursor: pointer; display: grid; place-items: center;
@@ -414,6 +422,16 @@
   .msg.bot p { margin-bottom: 10px; }
   .msg.bot p:last-child { margin-bottom: 0; }
   .msg.bot .muted { color: var(--ink-mute); font-style: italic; }
+  .msg.bot a.chat-link { color: var(--accent); font-weight: 500; text-decoration: underline; text-underline-offset: 2px; text-decoration-thickness: 1px; }
+  .msg.bot a.chat-link:hover { color: var(--accent-bright); }
+  .msg.bot a.chat-cv {
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 4px;
+    padding: 8px 14px; border: 1px solid var(--accent); border-radius: 10px;
+    color: var(--accent); font-weight: 600; text-decoration: none;
+    transition: background var(--transition), color var(--transition), transform var(--transition);
+  }
+  .msg.bot a.chat-cv::after { content: "↓"; font-weight: 700; }
+  .msg.bot a.chat-cv:hover { background: var(--accent); color: #06210F; transform: translateY(-1px); }
 
   /* Typing indicator */
   .typing { display: inline-flex; gap: 5px; align-items: center; padding: 4px 0; }
@@ -598,6 +616,21 @@
   }
   .build-link svg { width: 13px; height: 13px; }
 
+  /* Featured lead build — the site itself, given a wide editorial treatment */
+  .build-lead { grid-column: 1 / -1; }
+  .build-lead::before { transform: scaleY(1); }
+  .build-lead h3 { font-size: clamp(1.3rem, 2.4vw, 1.9rem); }
+  @media (min-width: 760px) {
+    .build-lead {
+      display: grid; grid-template-columns: 1.05fr 1fr;
+      column-gap: clamp(28px, 5vw, 60px); align-items: center;
+      padding: clamp(30px, 4vw, 44px);
+    }
+    .build-lead .build-tag { grid-column: 1; grid-row: 1; margin-bottom: 14px; }
+    .build-lead h3 { grid-column: 1; grid-row: 2; margin-bottom: 0; }
+    .build-lead p { grid-column: 2; grid-row: 1 / 3; align-self: center; margin: 0; font-size: 15.5px; }
+  }
+
   /* Experience — editorial cards: a featured lead role + supporting roles */
   .xp { display: flex; flex-direction: column; gap: 18px; }
   .xp-card {
@@ -733,7 +766,7 @@
       <a href="#experience">Experience</a>
       <a href="#contact">Contact</a>
     </div>
-    <a href="Esteban-GZ-Resume.pdf" class="btn" download>
+    <a href="Esteban-Gimenez-Zapiola-Creative-Director-CV.pdf" class="btn" id="cvBtn" download>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
       CV
     </a>
@@ -888,7 +921,7 @@
 
     <div class="builds-grid">
 
-      <article class="build reveal">
+      <article class="build build-lead reveal">
         <div class="build-tag"><span class="live"></span>Live · you're using it</div>
         <h3>This site &amp; the agent you just spoke to</h3>
         <p>Hand-built. The agent is grounded on my real history, answers by voice or text, and runs on a serverless function with my own guardrails. <strong>The medium is the proof.</strong></p>
@@ -1027,7 +1060,7 @@
 
       <div class="xp-cv">
         <span>This is the highlights reel — the full chronology lives in the PDF.</span>
-        <a class="xp-cv-link" href="Esteban-GZ-Resume.pdf" download>
+        <a class="xp-cv-link" href="Esteban-Gimenez-Zapiola-Creative-Director-CV.pdf" download>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           Download full CV
         </a>
@@ -1109,7 +1142,7 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         +61 424 034 069
       </a>
-      <a href="Esteban-GZ-Resume.pdf" download>
+      <a href="Esteban-Gimenez-Zapiola-Creative-Director-CV.pdf" download>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         Download CV
       </a>
@@ -1145,17 +1178,7 @@
   });
   syncToggle();
 
-  // No saved choice yet? Follow the device live if its light/dark setting changes.
-  try {
-    var mq = window.matchMedia('(prefers-color-scheme: dark)');
-    var onScheme = function (e) {
-      var saved = null;
-      try { saved = localStorage.getItem('theme'); } catch (_) {}
-      if (!saved) { root.setAttribute('data-theme', e.matches ? 'dark' : 'light'); syncToggle(); }
-    };
-    if (mq.addEventListener) mq.addEventListener('change', onScheme);
-    else if (mq.addListener) mq.addListener(onScheme);
-  } catch (e) {}
+  // Dark is the default for everyone; light mode only comes from the toggle (saved to localStorage).
 
   /* ---- Nav + scroll progress + back-to-top ---- */
   var nav = document.getElementById('nav');
@@ -1263,10 +1286,60 @@
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
     });
   }
+  var CV_PATH = '/Esteban-Gimenez-Zapiola-Creative-Director-CV.pdf';
+
+  // Allow only safe link targets the agent might emit (paths, https, mailto, tel, anchors).
+  function safeHref(h) {
+    h = h.replace(/&amp;/g, '&').trim();
+    return /^(https?:\/\/|mailto:|tel:|\/[^\s]*|#[^\s]+)/i.test(h) ? h : null;
+  }
+  // Render the agent's plain text into safe HTML: escape first, then linkify
+  // Markdown links and apply **bold**. A link to a PDF renders as a CV button.
   function toParagraphs(text) {
-    return text.split(/\n\n+/).map(function (p) {
-      return '<p>' + escapeHtml(p.trim()).replace(/\n/g, '<br>') + '</p>';
+    return text.split(/\n\n+/).map(function (block) {
+      var s = escapeHtml(block.trim());
+      s = s.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, function (m, label, href) {
+        var h = safeHref(href);
+        if (!h) return label;
+        if (/\.pdf(\?|#|$)/i.test(h)) return '<a class="chat-link chat-cv" download href="' + h + '">' + label + '</a>';
+        if (/^https?:/i.test(h)) return '<a class="chat-link" target="_blank" rel="noopener" href="' + h + '">' + label + '</a>';
+        return '<a class="chat-link" href="' + h + '">' + label + '</a>';
+      });
+      s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+      return '<p>' + s.replace(/\n/g, '<br>') + '</p>';
     }).join('');
+  }
+  // Plain text for the speech engine: drop link syntax + URLs so they're not read aloud.
+  function stripForSpeech(t) {
+    return t.replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+            .replace(/\*\*([^*]+)\*\*/g, '$1')
+            .replace(/https?:\/\/\S+/g, '')
+            .replace(/[ \t]{2,}/g, ' ')
+            .trim();
+  }
+  // Flash the nav CV button when the agent points a visitor to the CV.
+  function cueCVButton() {
+    var cv = document.getElementById('cvBtn');
+    if (!cv) return;
+    cv.classList.remove('cv-cue');
+    void cv.offsetWidth;
+    cv.classList.add('cv-cue');
+    setTimeout(function () { cv.classList.remove('cv-cue'); }, 4000);
+  }
+  // After a bot answer: ensure a one-click CV download is present, then cue the nav button.
+  function maybeCueCV(botEl, text) {
+    var link = botEl.querySelector('a.chat-cv');
+    if (!link && /\b(cv|r[eé]sum[eé]|resume)\b/i.test(text) && /(download|grab|button|top[- ]?right|footer|nav|here|link|page)/i.test(text)) {
+      var p = document.createElement('p');
+      link = document.createElement('a');
+      link.className = 'chat-link chat-cv';
+      link.href = CV_PATH;
+      link.setAttribute('download', '');
+      link.textContent = "Download Esteban's CV";
+      p.appendChild(link);
+      botEl.appendChild(p);
+    }
+    if (link) cueCVButton();
   }
 
   /* Pick the best FREE on-device voice — tuned for an Australian, radio/podcast
@@ -1336,10 +1409,11 @@
       full = (full || '').trim();
       if (full) {
         bot.innerHTML = toParagraphs(full);
+        maybeCueCV(bot, full);
         history.push({ role: 'user', content: q });
         history.push({ role: 'assistant', content: full });
         if (history.length > 6) history = history.slice(-6);
-        speak(full);
+        speak(stripForSpeech(full));
       } else {
         bot.innerHTML = '<p class="muted">Sorry — I didn’t catch that. Try rephrasing?</p>';
       }
