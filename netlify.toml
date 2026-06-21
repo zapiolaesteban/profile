@@ -1,0 +1,24 @@
+# Netlify config for estebangz.com
+# Static single-file site (no build step) + one serverless function for the agent.
+
+[build]
+  command = ""          # no build — it's hand-coded HTML
+  publish = "."         # serve repo root
+  functions = "netlify/functions"
+
+# Bundle the knowledge base so the agent function can read it at runtime.
+[functions]
+  included_files = ["knowledge/esteban.md"]
+  node_bundler = "esbuild"
+
+# Friendly endpoint: POST /api/ask -> the agent function
+[[redirects]]
+  from = "/api/ask"
+  to = "/.netlify/functions/ask"
+  status = 200
+
+# Old CV filename → new full-name file (keeps shared links and bookmarks alive)
+[[redirects]]
+  from = "/Esteban-GZ-Resume.pdf"
+  to = "/Esteban-Gimenez-Zapiola-Creative-Director-CV.pdf"
+  status = 301

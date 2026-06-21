@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root{
+    --paper:#FFFFFF;
+    --ink:#15161B; --ink-soft:#34353C; --ink-mute:#65666E; --ink-faint:#9A9A93;
+    --accent:#00A046; --accent-deep:#00813A;
+    --rule:#E7E3DA;
+    --display:'Fraunces',Georgia,serif; --body:'Geist',-apple-system,system-ui,sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  body{ font-family:var(--body); color:var(--ink-soft); font-size:9.3pt; line-height:1.39; background:var(--paper); }
+  a{ color:var(--accent-deep); text-decoration:none; }
+  em{ font-style:italic; }
+  strong{ color:var(--ink); font-weight:600; }
+
+  .doc{ padding:0 1mm; }
+
+  /* ---- Header ---- */
+  header{ display:grid; grid-template-columns:1fr auto; gap:22px; align-items:flex-end; padding-bottom:8px; }
+  h1{ font-family:var(--display); font-weight:600; font-size:25pt; line-height:0.98; letter-spacing:-0.015em; color:var(--ink); }
+  h1 em{ font-style:italic; color:var(--accent-deep); }
+  .role-now{ font-family:var(--mono); font-size:7.5pt; letter-spacing:0.10em; text-transform:uppercase; color:var(--accent-deep); margin-top:8px; font-weight:500; }
+  .tag{ font-family:var(--display); font-size:10.6pt; line-height:1.3; color:var(--ink); margin-top:7px; max-width:55ch; font-weight:400; }
+  .contact{ display:flex; flex-direction:column; gap:2.5px; text-align:right; font-family:var(--mono); font-size:7.6pt; color:var(--ink-mute); letter-spacing:0.01em; }
+  .contact a{ color:var(--ink-mute); }
+  .contact .loc{ color:var(--ink-faint); }
+  .rule{ height:2px; background:var(--ink); margin:0 0 9px; }
+
+  /* ---- Section scaffold ---- */
+  section{ margin-bottom:8px; }
+  .sec-h{ font-family:var(--mono); font-size:8pt; letter-spacing:0.13em; text-transform:uppercase; color:var(--accent-deep); font-weight:500;
+          display:flex; align-items:center; gap:9px; margin-bottom:7px; }
+  .sec-h::after{ content:""; flex:1; height:1px; background:var(--rule); }
+
+  /* ---- Summary ---- */
+  .summary p{ margin-bottom:4px; max-width:97%; }
+  .summary .lead{ color:var(--ink); }
+  .thesis{ font-family:var(--display); font-style:italic; font-size:10.6pt; color:var(--accent-deep); margin-top:6px; padding-left:10px; border-left:2px solid var(--accent); }
+
+  /* ---- Experience ---- */
+  .role{ display:grid; grid-template-columns:124px 1fr; gap:16px; padding:6px 0; border-top:1px solid var(--rule); break-inside:avoid; }
+  .role.first{ border-top:none; padding-top:1px; }
+  .meta .dates{ display:block; font-family:var(--mono); font-size:7.4pt; color:var(--ink); font-weight:500; letter-spacing:0.01em; white-space:nowrap; }
+  .meta .co{ display:block; font-size:8.3pt; font-weight:600; color:var(--ink-soft); margin-top:4px; line-height:1.22; }
+  .meta .loc{ display:block; font-family:var(--mono); font-size:6.9pt; color:var(--ink-faint); margin-top:3px; letter-spacing:0.02em; }
+  .body h3{ font-family:var(--display); font-size:12pt; font-weight:600; color:var(--ink); line-height:1.1; }
+  .body h3 em{ color:var(--accent-deep); }
+  .body .desc{ color:var(--ink-mute); font-size:9pt; margin:2px 0 4px; font-style:italic; }
+  ul{ list-style:none; }
+  li{ position:relative; padding-left:12px; margin-bottom:2px; }
+  li::before{ content:""; position:absolute; left:0; top:6px; width:5px; height:1.5px; background:var(--accent); }
+  .compact .body p{ font-size:9pt; }
+  .out{ margin-top:4px; padding-left:12px; position:relative; font-size:8.9pt; }
+  .out::before{ content:""; position:absolute; left:0; top:6px; width:5px; height:5px; border-radius:50%; background:var(--accent); }
+  .out b{ color:var(--ink); }
+
+  /* ---- Lower grid: capabilities | honours + education ---- */
+  .lower{ display:grid; grid-template-columns:1.32fr 1fr; gap:24px; break-inside:avoid; padding-top:2px; }
+  .caps .cap{ margin-bottom:4px; }
+  .caps .cap .t{ color:var(--ink); font-weight:600; }
+  .caps .cap .t em{ color:var(--accent-deep); }
+  .caps .cap .d{ color:var(--ink-mute); }
+  .num{ font-family:var(--mono); color:var(--accent-deep); font-size:7.5pt; margin-right:5px; }
+
+  .award{ margin-bottom:5px; }
+  .award .t{ font-family:var(--display); font-size:10.4pt; font-weight:600; color:var(--ink); }
+  .award .t em{ color:var(--accent-deep); }
+  .award .o{ font-family:var(--mono); font-size:6.8pt; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-faint); margin:1px 0 2px; }
+  .award .d{ color:var(--ink-mute); font-size:8.7pt; }
+
+  .edu-item{ margin-bottom:3px; font-size:8.8pt; }
+  .edu-item .t{ color:var(--ink); font-weight:500; }
+  .edu-item .m{ color:var(--ink-faint); font-family:var(--mono); font-size:7.3pt; }
+  .langs{ margin-top:5px; font-size:8.8pt; color:var(--ink-soft); }
+  .langs b{ color:var(--ink); }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <header>
+    <div class="id">
+      <h1>Esteban <em>Gimenez Zapiola</em></h1>
+      <p class="role-now">Global Creative Director &amp; Creative AI Lead · BCG</p>
+      <p class="tag">I run design as a business that drives revenue — and I build the agentic AI that scales it. Most design leaders do one; I do both.</p>
+    </div>
+    <div class="contact">
+      <span class="loc">Sydney, Australia · working globally</span>
+      <a href="mailto:estebangz@gmail.com">estebangz@gmail.com</a>
+      <span>+61 424 034 069</span>
+      <a href="https://www.linkedin.com/in/estebangz/">linkedin.com/in/estebangz</a>
+      <a href="https://www.estebangz.com">estebangz.com</a>
+    </div>
+  </header>
+  <div class="rule"></div>
+
+  <section class="summary">
+    <p class="lead">I lead design as a strategic business capability — and I personally build the agentic AI that scales it. As Global Creative Director at BCG I own the ANZ Creative Studio P&amp;L, sit on the global Design Studios leadership team, and lead a team of 16 with reach into 400+ designers worldwide — partnering with case teams and the Managing Directors, Partners and C-suite clients we serve.</p>
+    <p>I founded and lead BCG Design Studios' Creative AI practice and authored the <em>"Creative Advantage"</em> proposal for a global Creative AI Labs function. I build and ship agentic AI hands-on — multi-agent systems, MCP servers, autonomous agents and custom tooling — prototype to production, not demos. I lead through mentorship: recipient of BCG's <em>"Grow by Growing Others"</em> award.</p>
+    <p class="thesis">Design isn't art. It's a discipline that moves revenue.</p>
+  </section>
+
+  <section class="xp">
+    <div class="sec-h">Experience</div>
+
+    <article class="role first">
+      <div class="meta">
+        <span class="dates">Nov 2024 — Present</span>
+        <span class="co">BCG · Boston Consulting Group</span>
+        <span class="loc">Sydney · Global</span>
+      </div>
+      <div class="body">
+        <h3>Global Creative Director <em>&amp; Creative AI Lead</em></h3>
+        <p class="desc">Leading design as a competitive advantage — and the Creative AI practice — across BCG's global studios.</p>
+        <ul>
+          <li>Founded and lead BCG Design Studios' <strong>Creative AI practice</strong>; authored the <em>"Creative Advantage"</em> proposal positioning a global Creative AI Labs function.</li>
+          <li>Build and ship <strong>agentic AI hands-on</strong> — multi-agent systems, MCP servers, autonomous scheduled agents and custom tooling, prototype to production (including the live agent on estebangz.com).</li>
+          <li>Lead the global design practice across <strong>six disciplines</strong> — Experience, Visualisation, Print, Video &amp; Motion, Editorial and Presentation — setting quality standards and connecting <strong>400+ designers</strong> worldwide.</li>
+          <li>Own the <strong>ANZ Creative Studio P&amp;L</strong> and co-lead its strategy; direct line manager of <strong>16</strong> across ANZ and India; member of the global Design Studios leadership team. Recipient of BCG's <em>"Grow by Growing Others"</em> award.</li>
+          <li>Pitched, launched and executive-produce <strong>Business and Beyond</strong>, BCG ANZ's flagship video podcast — guests incl. MDs/CEOs of major retailers and BCG's Global Chairman.</li>
+        </ul>
+        <p class="out"><b>Outcomes:</b> 9–13% YoY revenue growth · ~2× regional scale · ~80% cross-border delivery · double-digit conversion lifts.</p>
+      </div>
+    </article>
+
+    <article class="role">
+      <div class="meta">
+        <span class="dates">Nov 2021 — Oct 2024</span>
+        <span class="co">BCG · Boston Consulting Group</span>
+        <span class="loc">Sydney</span>
+      </div>
+      <div class="body">
+        <h3>Senior Creative Manager</h3>
+        <p class="desc">Head of Creative ANZ &amp; Co-Lead, Strategy ANZ — built the foundation for the Global role.</p>
+        <ul>
+          <li>Grew ANZ Creative into one of BCG's strongest regional design practices; creative strategy contributing to <strong>9–13% YoY revenue growth</strong> across financial services, energy, retail, public sector, healthcare and tech.</li>
+          <li>Co-led ANZ business strategy — at the table for positioning, growth and investment decisions; partnered with MDs, Partners and C-suite to shape transformation programs. Treated design as a commercial lever, not a service.</li>
+          <li>Began embedding AI into the creative workflow and built a mentorship-driven culture — growing senior designers into leaders and the bench that earned the Global mandate.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="role">
+      <div class="meta">
+        <span class="dates">Jun 2018 — Nov 2021</span>
+        <span class="co">Endeavour Group</span>
+        <span class="loc">Sydney</span>
+      </div>
+      <div class="body">
+        <h3>Design Lead <em>— Dan Murphy's</em></h3>
+        <p class="desc">Creative Lead for Dan Murphy's, Australia's #1 drinks retailer; also across BWS.</p>
+        <ul>
+          <li>Helped grow a small in-house team into a full <strong>in-house agency</strong> serving the entire Endeavour portfolio — the era when digital and retail first collided.</li>
+          <li>Built and governed the Dan Murphy's <strong>Design System</strong> (Frontify, InVision) — single source of truth for print, digital and coded templates.</li>
+          <li>Led the danmurphys.com.au <strong>restyling</strong> (≈<strong>2× audience</strong>) and the <strong>Dan Murphy's app</strong> launch; created sub-brands incl. Dan's Run (UberEats), Direct to Boot and Dan's Cellar.</li>
+          <li>Led and mentored a team of 6 senior designers — the kind of leader people wanted to work for.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="role">
+      <div class="meta">
+        <span class="dates">Jun 2015 — Jun 2018</span>
+        <span class="co">Endeavour Group</span>
+        <span class="loc">Sydney</span>
+      </div>
+      <div class="body">
+        <h3>Senior Digital Designer</h3>
+        <p class="desc">In-house digital at agency pace — Dan Murphy's, BWS, Langtons, Cellarmasters.</p>
+        <ul>
+          <li>Hand-coded EDM templates and implemented dynamic personalisation on Oracle Responsys — foundation of Dan Murphy's segmented email program.</li>
+          <li>Produced wireframes and restyled core components of danmurphys.com.au; led art direction and on-location shoots for tier-1 campaigns, lifting digital ROI.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="role compact">
+      <div class="meta">
+        <span class="dates">Aug 2011 — Aug 2015</span>
+        <span class="co">Kasiopea · Brand Chemistry</span>
+        <span class="loc">Buenos Aires · Sydney</span>
+      </div>
+      <div class="body">
+        <h3>Senior UX/UI Designer</h3>
+        <p>Generalist principal at a Buenos Aires digital agency (pharma, energy, talent, tech) — art director, UX/UI designer, front-end developer, client lead and new-business pitcher. Clients incl. Duke Energy, Engie and Farmacity. Bridged to Brand Chemistry, Sydney.</p>
+      </div>
+    </article>
+
+    <article class="role compact">
+      <div class="meta">
+        <span class="dates">2010</span>
+        <span class="co">Mendioroz Design</span>
+        <span class="loc">Buenos Aires</span>
+      </div>
+      <div class="body">
+        <h3>Graphic Designer</h3>
+        <p>Visual identity and <strong>wayfinding</strong> for airports and shopping centres — signage systems, technical documentation and supplier oversight. Where my interest in how design lives in physical space began.</p>
+      </div>
+    </article>
+
+    <article class="role compact">
+      <div class="meta">
+        <span class="dates">2009 — 2012</span>
+        <span class="co">Crested Butte Mountain Resort</span>
+        <span class="loc">Colorado, USA</span>
+      </div>
+      <div class="body">
+        <h3>Ski Instructor</h3>
+        <p>PSIA-certified across three winter seasons — where I learned to coach beginners with patience. (Discipline shows up everywhere.)</p>
+      </div>
+    </article>
+  </section>
+
+  <div class="lower">
+    <section class="caps">
+      <div class="sec-h">Capabilities</div>
+      <div class="cap"><span class="t"><span class="num">i.</span>Design leadership at scale</span> <span class="d">— high-trust, high-performing teams across regions and disciplines; coaching senior leaders into exceptional ones.</span></div>
+      <div class="cap"><span class="t"><span class="num">ii.</span><em>Agentic AI, hands-on</em></span> <span class="d">— multi-agent systems, MCP servers, autonomous agents and custom tooling; prototype to production, not demos.</span></div>
+      <div class="cap"><span class="t"><span class="num">iii.</span>Product, brand &amp; service</span> <span class="d">— apps, websites, design systems, brand identity, customer journeys, retail experiences, editorial and motion.</span></div>
+      <div class="cap"><span class="t"><span class="num">iv.</span>Strategic partnership</span> <span class="d">— shoulder-to-shoulder with case teams; connecting design to the ambitions of CMOs, CFOs, CEOs and boards.</span></div>
+      <div class="cap"><span class="t"><span class="num">v.</span>Storytelling for complex audiences</span> <span class="d">— boardroom decks, investor narratives, customer journeys, brand storylines.</span></div>
+      <div class="cap"><span class="t"><span class="num">vi.</span>P&amp;L &amp; commercial design</span> <span class="d">— owning a regional studio P&amp;L; treating creative as an asset on the balance sheet.</span></div>
+    </section>
+
+    <section class="side">
+      <div class="sec-h">Honours</div>
+      <div class="award">
+        <div class="t">Grow by Growing <em>Others</em></div>
+        <div class="o">Boston Consulting Group</div>
+        <div class="d">BCG award for leaders who lift the people around them — mentorship, growing senior talent into leaders.</div>
+      </div>
+      <div class="award">
+        <div class="t">Ironman World Championship <em>(Hawaii)</em></div>
+        <div class="o">Elite-amateur triathlete</div>
+        <div class="d">Multiple Ironman 70.3 age-group wins; qualified for the World Championship.</div>
+      </div>
+
+      <div class="sec-h" style="margin-top:10px;">Education &amp; Languages</div>
+      <div class="edu-item"><span class="t">Mini-MBA, Business of Creativity</span> <span class="m">· Future London Academy · 2025</span></div>
+      <div class="edu-item"><span class="t">Branding Now II</span> <span class="m">· Future London Academy · 2022</span></div>
+      <div class="edu-item"><span class="t">Lic. Diseño de Imagen Empresaria</span> <span class="m">· Univ. de Palermo · 2012–13</span></div>
+      <div class="edu-item"><span class="t">Diseñador Gráfico</span> <span class="m">· Univ. de Palermo · 2009–12</span></div>
+      <div class="langs"><b>Languages</b> · Español (native) · English (full professional)</div>
+    </section>
+  </div>
+
+</div>
+</body>
+</html>

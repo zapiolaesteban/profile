@@ -1,0 +1,4 @@
+claude-outputs/
+node_modules/
+.netlify/
+*.log
