@@ -358,105 +358,111 @@
     content: ""; width: 4px; height: 4px; border-radius: 50%; background: var(--rule-strong);
   }
 
-  /* The agent console — signature animated conic-gradient border */
+  /* ---- The agent: a calm, Claude-style console that comes alive when thinking ---- */
   .agent {
     background: var(--paper-card);
-    border-radius: 20px; padding: 22px; max-width: 720px;
-    box-shadow: 0 30px 70px -34px var(--shadow), 0 0 0 1px var(--rule);
+    border-radius: 22px; padding: 20px; max-width: 680px;
+    box-shadow: 0 26px 64px -38px var(--shadow), 0 0 0 1px var(--rule);
     position: relative; overflow: hidden; isolation: isolate;
-    border: 1.5px solid transparent;
-    background-clip: padding-box;
+    border: 1.5px solid transparent; background-clip: padding-box;
   }
-  /* Rotating conic ring sits behind, masked to the border only */
+  /* Signature conic ring — invisible at rest, fades in and spins only while busy */
   .agent::after {
     content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
     padding: 1.5px;
     background: conic-gradient(from var(--angle),
-      transparent 0deg, var(--accent-bright) 60deg, transparent 140deg,
-      transparent 200deg, var(--accent) 260deg, transparent 340deg);
+      transparent 0deg, var(--accent-bright) 70deg, transparent 150deg,
+      transparent 210deg, var(--accent) 290deg, transparent 350deg);
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor; mask-composite: exclude;
-    animation: spin-border 7s linear infinite; opacity: 0.9;
+    opacity: 0; transition: opacity 0.45s ease;
   }
+  .agent.is-busy::after { opacity: 0.95; animation: spin-border 3s linear infinite; }
   @keyframes spin-border { to { --angle: 360deg; } }
-  @media (prefers-reduced-motion: reduce) { .agent::after { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .agent.is-busy::after { animation: none; } }
   .agent::before {
-    content: ""; position: absolute; inset: 0; pointer-events: none;
-    background: radial-gradient(120% 90% at 0% 0%, var(--accent-glow), transparent 42%);
-    opacity: 0.35;
+    content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
+    background: radial-gradient(130% 90% at 0% 0%, var(--accent-glow), transparent 46%);
+    opacity: 0.22;
   }
-  .agent-head {
-    display: flex; align-items: center; gap: 12px; margin-bottom: 16px; position: relative;
-  }
-  .agent-viz {
-    flex: 1; height: 40px; display: flex; align-items: center; justify-content: flex-start;
-  }
-  .agent-label {
-    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em;
-    color: var(--ink-mute); text-transform: uppercase;
-  }
-  .agent-label b { color: var(--accent); font-weight: 500; }
 
-  /* Equalizer bars */
-  .eq { display: flex; align-items: center; gap: 3px; height: 28px; }
-  .eq span {
-    display: block; width: 3px; height: 6px; border-radius: 2px;
-    background: var(--accent-bright); opacity: 0.85;
+  /* Empty-state greeting */
+  .agent-intro { display: flex; gap: 13px; align-items: flex-start; padding: 6px 2px 20px; }
+  .agent-avatar {
+    flex-shrink: 0; width: 36px; height: 36px; border-radius: 11px;
+    background: var(--accent-bright); color: #06210F;
+    font-family: var(--font-display); font-style: italic; font-weight: 600;
+    display: grid; place-items: center; font-size: 20px;
   }
-  .eq.active span { animation: eqbar 0.9s ease-in-out infinite; }
-  .eq span:nth-child(1) { animation-delay: 0s; }
-  .eq span:nth-child(2) { animation-delay: 0.12s; }
-  .eq span:nth-child(3) { animation-delay: 0.24s; }
-  .eq span:nth-child(4) { animation-delay: 0.36s; }
-  .eq span:nth-child(5) { animation-delay: 0.18s; }
-  .eq span:nth-child(6) { animation-delay: 0.30s; }
-  .eq span:nth-child(7) { animation-delay: 0.06s; }
-  @keyframes eqbar { 0%, 100% { height: 6px; } 50% { height: 26px; } }
+  .agent-greet { font-size: 16.5px; line-height: 1.45; color: var(--ink); font-weight: 500; }
+  .agent-greet-sub { font-size: 14.5px; line-height: 1.5; color: var(--ink-mute); margin-top: 4px; }
+  .agent.chatting .agent-intro { display: none; }
 
-  .agent-output {
-    min-height: 0; max-height: 0; overflow: hidden; opacity: 0;
-    transition: max-height 0.4s ease, opacity 0.3s ease, margin 0.3s ease;
-    font-size: 15.5px; line-height: 1.6; color: var(--ink-soft); position: relative;
+  /* Conversation thread — you / Esteban */
+  .agent-thread {
+    display: none; flex-direction: column; gap: 14px;
+    max-height: min(48vh, 420px); overflow-y: auto; overscroll-behavior: contain;
+    margin-bottom: 16px; padding-right: 4px; scroll-behavior: smooth;
   }
-  .agent-output.show { max-height: 460px; overflow-y: auto; opacity: 1; margin-bottom: 16px; }
-  .agent-output p { margin-bottom: 10px; }
-  .agent-output p:last-child { margin-bottom: 0; }
-  .agent-output .thinking { color: var(--ink-mute); font-style: italic; }
+  .agent.chatting .agent-thread { display: flex; }
+  .msg { font-size: 15.5px; line-height: 1.6; max-width: 88%; }
+  .msg.user {
+    align-self: flex-end; background: var(--accent-soft); color: var(--ink);
+    border-radius: 16px 16px 5px 16px; padding: 10px 14px; white-space: pre-wrap;
+  }
+  .msg.bot { align-self: flex-start; max-width: 100%; color: var(--ink-soft); }
+  .msg.bot p { margin-bottom: 10px; }
+  .msg.bot p:last-child { margin-bottom: 0; }
+  .msg.bot .muted { color: var(--ink-mute); font-style: italic; }
 
-  .agent-form { display: flex; gap: 9px; align-items: center; position: relative; }
+  /* Typing indicator */
+  .typing { display: inline-flex; gap: 5px; align-items: center; padding: 4px 0; }
+  .typing span { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); opacity: 0.45; animation: typing 1.2s infinite ease-in-out; }
+  .typing span:nth-child(2) { animation-delay: 0.18s; }
+  .typing span:nth-child(3) { animation-delay: 0.36s; }
+  @keyframes typing { 0%,100% { transform: translateY(0); opacity: 0.4; } 50% { transform: translateY(-4px); opacity: 1; } }
+
+  /* Composer — one rounded field, controls tucked inside */
+  .agent-composer {
+    display: flex; align-items: flex-end; gap: 6px;
+    background: var(--paper); border: 1.5px solid var(--rule-strong); border-radius: 16px;
+    padding: 6px 6px 6px 16px; transition: border-color var(--transition), box-shadow var(--transition);
+  }
+  .agent-composer:focus-within { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
   .agent-input {
-    flex: 1; background: var(--paper); border: 1px solid var(--rule-strong);
-    border-radius: 12px; padding: 13px 15px; font-family: var(--font-body); font-size: 15px;
-    color: var(--ink); transition: border-color var(--transition); resize: none;
+    flex: 1; background: transparent; border: none; outline: none; resize: none;
+    font-family: var(--font-body); font-size: 15.5px; line-height: 1.5; color: var(--ink);
+    padding: 9px 0; max-height: 132px; overflow-y: auto;
   }
   .agent-input::placeholder { color: var(--ink-faint); }
-  .agent-input:focus { outline: none; border-color: var(--accent); }
-
-  .agent-btn {
-    width: 46px; height: 46px; border-radius: 12px; border: 1px solid var(--rule-strong);
-    background: var(--paper); color: var(--ink); cursor: pointer; display: grid; place-items: center;
-    transition: all var(--transition); flex-shrink: 0;
+  .composer-actions { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
+  .icon-btn {
+    width: 38px; height: 38px; border-radius: 11px; border: none; background: transparent;
+    color: var(--ink-mute); cursor: pointer; display: grid; place-items: center;
+    transition: background var(--transition), color var(--transition), transform 0.3s var(--spring);
   }
-  .agent-btn:hover { border-color: var(--ink); }
-  .agent-btn svg { width: 19px; height: 19px; }
-  .agent-btn.send { background: var(--accent-bright); border-color: var(--accent-bright); color: #06210F; }
-  .agent-btn.send:hover { background: var(--accent); }
-  .agent-btn.mic.listening { background: #E4002B; border-color: #E4002B; color: #fff; animation: micpulse 1.3s infinite; }
+  .icon-btn svg { width: 18px; height: 18px; }
+  .icon-btn:hover { background: var(--paper-warm); color: var(--ink); }
+  .icon-btn.send { background: var(--accent-bright); color: #06210F; }
+  .icon-btn.send:hover { background: var(--accent); color: #06210F; }
+  .icon-btn.send:disabled { background: var(--rule); color: var(--ink-faint); cursor: default; }
+  .icon-btn.mic.listening { background: #E4002B; color: #fff; animation: micpulse 1.3s infinite; }
   @keyframes micpulse { 0%,100% { box-shadow: 0 0 0 0 rgba(228,0,43,.5);} 50%{ box-shadow: 0 0 0 8px transparent;} }
 
-  .agent-suggest { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; position: relative; }
+  /* Suggestions — quiet pills; gone once the conversation starts */
+  .agent-suggest { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .agent.chatting .agent-suggest { display: none; }
   .chip {
-    font-size: 12.5px; color: var(--ink-mute); background: var(--paper);
-    border: 1px solid var(--rule); border-radius: 20px; padding: 6px 12px; cursor: pointer;
-    transition: all var(--transition);
+    font-size: 13px; color: var(--ink-mute); background: transparent;
+    border: 1px solid var(--rule); border-radius: 12px; padding: 7px 13px; cursor: pointer;
+    transition: border-color var(--transition), color var(--transition), background var(--transition), transform 0.3s var(--spring);
   }
-  .chip { transition: border-color var(--transition), color var(--transition), transform 0.3s var(--spring); }
-  .chip:hover { border-color: var(--accent); color: var(--ink); transform: translateY(-1px); }
-  .btn:active, .chip:active, .agent-btn:active, .theme-toggle:active { transform: scale(0.95); }
+  .chip:hover { border-color: var(--accent); color: var(--ink); background: var(--paper-card); transform: translateY(-1px); }
+  .btn:active, .chip:active, .icon-btn:active, .theme-toggle:active { transform: scale(0.95); }
 
   .agent-foot {
-    margin-top: 12px; font-size: 11.5px; color: var(--ink-faint); display: flex;
-    align-items: center; gap: 7px; position: relative;
+    margin-top: 13px; font-size: 11.5px; color: var(--ink-faint); display: flex;
+    align-items: center; gap: 7px;
   }
   .agent-voice-toggle {
     margin-left: auto; display: inline-flex; align-items: center; gap: 6px;
@@ -687,28 +693,29 @@
       <span>18 years, brief to production</span>
     </div>
 
-    <!-- THE AGENT -->
-    <div class="agent reveal" id="agent" aria-label="Talk to Esteban — an AI agent grounded on his real history">
-      <div class="agent-head">
-        <div class="agent-viz">
-          <div class="eq" id="eq" aria-hidden="true">
-            <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-          </div>
+    <!-- THE AGENT — minimal, Claude-style composer -->
+    <div class="agent reveal" id="agent" aria-label="Esteban's AI — grounded on his real history">
+      <div class="agent-intro" id="agentIntro">
+        <div class="agent-avatar" aria-hidden="true">E</div>
+        <div>
+          <p class="agent-greet">Hi, I'm Esteban's AI.</p>
+          <p class="agent-greet-sub">Grounded on his real history — ask about the work, the agentic AI he builds, or what's next. By text or voice.</p>
         </div>
-        <div class="agent-label">Talk to <b>Esteban</b> · live agent</div>
       </div>
 
-      <div class="agent-output" id="agentOutput" aria-live="polite"></div>
+      <div class="agent-thread" id="agentOutput" role="log" aria-live="polite" aria-label="Conversation"></div>
 
-      <form class="agent-form" id="agentForm">
-        <input class="agent-input" id="agentInput" type="text" autocomplete="off"
-          placeholder="What do you want to know about Esteban?" aria-label="Ask the agent a question" />
-        <button type="button" class="agent-btn mic" id="micBtn" aria-label="Ask by voice">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-        </button>
-        <button type="submit" class="agent-btn send" id="sendBtn" aria-label="Send question">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </button>
+      <form class="agent-composer" id="agentForm">
+        <textarea class="agent-input" id="agentInput" rows="1" autocomplete="off"
+          placeholder="Ask me anything…" aria-label="Ask Esteban's AI a question"></textarea>
+        <div class="composer-actions">
+          <button type="button" class="icon-btn mic" id="micBtn" aria-label="Ask by voice">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          </button>
+          <button type="submit" class="icon-btn send" id="sendBtn" aria-label="Send">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+          </button>
+        </div>
       </form>
 
       <div class="agent-suggest" id="agentSuggest">
@@ -719,7 +726,7 @@
       </div>
 
       <div class="agent-foot">
-        <span>Grounded on Esteban's real history. He'll tell you if he doesn't know.</span>
+        <span>Answers come from his real history — he'll say so if he doesn't know.</span>
         <label class="agent-voice-toggle"><input type="checkbox" id="voiceOut"> Speak answers</label>
       </div>
     </div>
@@ -1132,19 +1139,38 @@
   /* ============================================================
      THE AGENT
      ============================================================ */
+  var agentEl = document.getElementById('agent');
   var form = document.getElementById('agentForm');
   var input = document.getElementById('agentInput');
   var output = document.getElementById('agentOutput');
   var sendBtn = document.getElementById('sendBtn');
   var micBtn = document.getElementById('micBtn');
-  var eq = document.getElementById('eq');
   var voiceOut = document.getElementById('voiceOut');
   var suggest = document.getElementById('agentSuggest');
   var history = [];
   var busy = false;
 
-  function setEq(on) { eq.classList.toggle('active', on); }
-  function showOutput(html) { output.innerHTML = html; output.classList.add('show'); }
+  // The conic ring + thinking cues are driven by an "is-busy" state on the card.
+  function setBusy(on) { agentEl.classList.toggle('is-busy', on); }
+  // The first message switches the card from its greeting into conversation mode.
+  function startChat() { agentEl.classList.add('chatting'); }
+  function scrollThread() { output.scrollTop = output.scrollHeight; }
+
+  // Render helpers — a simple two-role thread (you / Esteban).
+  function addUser(text) {
+    var el = document.createElement('div');
+    el.className = 'msg user';
+    el.textContent = text;
+    output.appendChild(el);
+    return el;
+  }
+  function addBot() {
+    var el = document.createElement('div');
+    el.className = 'msg bot';
+    el.innerHTML = '<span class="typing" aria-label="Thinking"><span></span><span></span><span></span></span>';
+    output.appendChild(el);
+    return el;
+  }
 
   function escapeHtml(s) {
     return s.replace(/[&<>"']/g, function (c) {
@@ -1201,32 +1227,37 @@
       if (pickedVoice) { u.voice = pickedVoice; u.lang = pickedVoice.lang; }
       else { u.lang = 'en-AU'; }            // nudge the engine toward an AU accent
       u.rate = 0.93; u.pitch = 0.96; u.volume = 1.0;   // measured, warm broadcast cadence
-      u.onstart = function () { setEq(true); };
-      u.onend = function () { setEq(false); };
+      u.onstart = function () { setBusy(true); };
+      u.onend = function () { setBusy(false); };
       window.speechSynthesis.speak(u);
     } catch (e) {}
   }
 
   function ask(question) {
-    if (busy || !question.trim()) return;
-    busy = true;
-    input.value = '';
-    showOutput('<p class="thinking">Thinking…</p>');
-    setEq(true);
+    question = (question || '').trim();
+    if (busy || !question) return;
+    busy = true; sendBtn.disabled = true;
+    input.value = ''; autoGrow();
+    startChat();
+    addUser(question);
+    var bot = addBot();
+    scrollThread();
+    setBusy(true);
 
-    function done() { setEq(false); busy = false; }
+    function done() { setBusy(false); busy = false; sendBtn.disabled = false; }
 
     function finish(q, full) {
       full = (full || '').trim();
       if (full) {
-        showOutput(toParagraphs(full));
+        bot.innerHTML = toParagraphs(full);
         history.push({ role: 'user', content: q });
         history.push({ role: 'assistant', content: full });
         if (history.length > 6) history = history.slice(-6);
         speak(full);
       } else {
-        showOutput('<p class="thinking">Sorry — I didn’t catch that. Try rephrasing?</p>');
+        bot.innerHTML = '<p class="muted">Sorry — I didn’t catch that. Try rephrasing?</p>';
       }
+      scrollThread();
       done();
     }
 
@@ -1239,8 +1270,8 @@
         // Errors arrive as JSON with a non-OK status.
         if (!r.ok) {
           return r.json().catch(function () { return {}; }).then(function (d) {
-            showOutput('<p class="thinking">' + escapeHtml(d && d.error ? d.error : 'Something went wrong — try again.') + '</p>');
-            done();
+            bot.innerHTML = '<p class="muted">' + escapeHtml(d && d.error ? d.error : 'Something went wrong — try again.') + '</p>';
+            scrollThread(); done();
           });
         }
         // Success streams plain-text tokens — append them as they land.
@@ -1254,23 +1285,33 @@
           return reader.read().then(function (res) {
             if (res.done) { finish(question, full); return; }
             full += decoder.decode(res.value, { stream: true });
-            showOutput(toParagraphs(full));
-            output.scrollTop = output.scrollHeight;
+            bot.innerHTML = toParagraphs(full);
+            scrollThread();
             return pump();
           });
         }
         return pump();
       })
       .catch(function () {
-        showOutput('<p class="thinking">I couldn’t reach the server. Try again, or email me at estebangz@gmail.com.</p>');
-        done();
+        bot.innerHTML = '<p class="muted">I couldn’t reach the server. Try again, or email me at estebangz@gmail.com.</p>';
+        scrollThread(); done();
       });
   }
+
+  // Auto-grow the composer like a chat app; Enter sends, Shift+Enter = newline.
+  function autoGrow() {
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 132) + 'px';
+  }
+  input.addEventListener('input', autoGrow);
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ask(input.value); }
+  });
 
   form.addEventListener('submit', function (e) { e.preventDefault(); ask(input.value); });
   suggest.addEventListener('click', function (e) {
     var chip = e.target.closest('.chip');
-    if (chip) { input.value = chip.textContent; ask(chip.textContent); }
+    if (chip) { ask(chip.textContent); }
   });
 
   /* ---- Voice input (Web Speech API) ---- */
@@ -1283,9 +1324,9 @@
       if (listening) { rec.stop(); return; }
       try { rec.start(); } catch (e) {}
     });
-    rec.onstart = function () { listening = true; micBtn.classList.add('listening'); setEq(true); input.placeholder = 'Listening…'; };
-    rec.onend = function () { listening = false; micBtn.classList.remove('listening'); setEq(false); input.placeholder = 'What do you want to know about Esteban?'; };
-    rec.onerror = function () { listening = false; micBtn.classList.remove('listening'); setEq(false); };
+    rec.onstart = function () { listening = true; micBtn.classList.add('listening'); setBusy(true); input.placeholder = 'Listening…'; };
+    rec.onend = function () { listening = false; micBtn.classList.remove('listening'); setBusy(false); input.placeholder = 'Ask me anything…'; };
+    rec.onerror = function () { listening = false; micBtn.classList.remove('listening'); setBusy(false); };
     rec.onresult = function (e) {
       var t = e.results[0][0].transcript;
       input.value = t;
