@@ -598,28 +598,46 @@
   }
   .build-link svg { width: 13px; height: 13px; }
 
-  /* Experience */
-  .roles { display: flex; flex-direction: column; gap: 0; }
-  .role {
-    display: grid; grid-template-columns: 200px 1fr; gap: clamp(20px, 4vw, 56px);
-    padding: 36px 0; border-top: 1px solid var(--rule);
+  /* Experience — editorial cards: a featured lead role + supporting roles */
+  .xp { display: flex; flex-direction: column; gap: 18px; }
+  .xp-card {
+    background: var(--paper-card); border: 1px solid var(--rule); border-radius: 16px;
+    padding: 28px; position: relative; overflow: hidden;
+    transition: transform 0.4s var(--ease), border-color 0.3s var(--ease), box-shadow 0.4s var(--ease);
   }
-  .role:first-child { border-top: none; }
-  .role-dates { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink-mute); margin-bottom: 10px; }
-  .role-co { font-weight: 600; font-size: 15px; display: inline-flex; align-items: center; gap: 9px; }
-  .role-mark {
-    font-family: var(--font-display); font-size: 11px; font-weight: 700; background: var(--ink); color: var(--paper);
-    padding: 2px 7px; border-radius: 5px; letter-spacing: 0.02em;
+  .xp-card::before {
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    background: linear-gradient(var(--accent-bright), var(--accent));
+    transform: scaleY(0); transform-origin: top; transition: transform 0.45s var(--ease);
   }
-  .role-loc { font-size: 12.5px; color: var(--ink-faint); margin-top: 8px; }
-  .role-body h3 { font-size: 1.4rem; margin-bottom: 6px; }
-  .role-body h3 em { color: var(--accent); }
-  .role-tag { color: var(--ink-mute); font-size: 14.5px; margin-bottom: 16px; }
-  .role-bullets { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-  .role-bullets li { position: relative; padding-left: 22px; font-size: 14.5px; color: var(--ink-soft); line-height: 1.55; }
-  .role-bullets li::before { content: ""; position: absolute; left: 0; top: 9px; width: 8px; height: 2px; background: var(--accent); }
-  .role-bullets strong { color: var(--ink); font-weight: 600; }
-  .role-bullets em { color: var(--accent); font-style: italic; }
+  .xp-card:hover { transform: translateY(-4px); border-color: var(--rule-strong); box-shadow: 0 18px 44px -26px var(--shadow); }
+  .xp-card:hover::before, .xp-lead::before { transform: scaleY(1); }
+  .xp-lead { padding: clamp(28px, 4vw, 40px); }
+  .xp-mark { font-family: var(--font-display); font-size: 11px; font-weight: 700; background: var(--ink); color: var(--paper); padding: 2px 7px; border-radius: 5px; letter-spacing: 0.02em; }
+  .xp-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 7px 16px; margin-bottom: 15px; }
+  .xp-co { font-weight: 600; font-size: 15px; display: inline-flex; align-items: center; gap: 9px; }
+  .xp-dates { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink-mute); }
+  .xp-loc { font-size: 12.5px; color: var(--ink-faint); }
+  .xp-title { font-size: 1.2rem; font-family: var(--font-display); line-height: 1.18; margin-bottom: 6px; }
+  .xp-lead .xp-title { font-size: clamp(1.5rem, 3vw, 2rem); }
+  .xp-title em { color: var(--accent); font-style: italic; }
+  .xp-tag { color: var(--ink-mute); font-size: 14.5px; margin-bottom: 18px; }
+  .xp-points { list-style: none; display: flex; flex-direction: column; gap: 11px; margin-bottom: 22px; }
+  .xp-points li { position: relative; padding-left: 22px; font-size: 14.5px; color: var(--ink-soft); line-height: 1.55; }
+  .xp-points li::before { content: ""; position: absolute; left: 0; top: 9px; width: 8px; height: 2px; background: var(--accent); }
+  .xp-points strong { color: var(--ink); font-weight: 600; }
+  .xp-stats { display: flex; flex-wrap: wrap; gap: 9px 10px; }
+  .xp-stats span { font-size: 12.5px; color: var(--ink-mute); background: var(--paper-warm); border: 1px solid var(--rule); border-radius: 20px; padding: 6px 13px; }
+  .xp-stats b { color: var(--accent); font-weight: 600; }
+  .xp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .xp-grid .xp-title { font-size: 1.12rem; }
+  .xp-note { font-size: 14px; color: var(--ink-mute); line-height: 1.55; }
+  .xp-note strong { color: var(--ink-soft); font-weight: 600; }
+  .xp-cv { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: 8px; }
+  .xp-cv span { color: var(--ink-mute); font-size: 14px; }
+  .xp-cv-link { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; color: var(--accent); border: 1px solid var(--rule-strong); border-radius: 10px; padding: 9px 15px; transition: border-color var(--transition), transform var(--transition); }
+  .xp-cv-link:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .xp-cv-link svg { width: 15px; height: 15px; }
 
   /* Capabilities */
   .caps-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 16px; overflow: hidden; }
@@ -678,7 +696,7 @@
   @media (max-width: 860px) {
     .about-grid { grid-template-columns: 1fr; }
     .pull-card { position: static; }
-    .role { grid-template-columns: 1fr; gap: 14px; }
+    .xp-grid { grid-template-columns: 1fr; }
     .nav-links { display: none; }
   }
   @media (max-width: 560px) {
@@ -951,76 +969,69 @@
       <h2 id="experience-title" class="sec-title">A career across <em>brand, product &amp; scale.</em></h2>
     </div>
 
-    <div class="roles">
+    <div class="xp">
 
-      <article class="role reveal">
-        <header>
-          <p class="role-dates">Nov 2024 — Present</p>
-          <p class="role-co"><span class="role-mark">BCG</span>Boston Consulting Group</p>
-          <p class="role-loc">Sydney · Global</p>
-        </header>
-        <div class="role-body">
-          <h3>Global Creative Director &amp; <em>Creative AI Lead</em></h3>
-          <p class="role-tag">Running the Creative AI practice — and building the systems behind it, hands-on.</p>
-          <ul class="role-bullets">
-            <li><strong>Founded and run the Creative AI practice</strong> for BCG Design Studios; authored the <em>"Creative Advantage"</em> proposal positioning a Global Creative AI Labs function.</li>
-            <li><strong>Personally build and ship agentic AI</strong> — multi-agent systems, MCP servers, autonomous scheduled agents, custom Claude Code skills and hooks, and a Creative-AI hackathon platform with an automated skill-review pipeline.</li>
-            <li>Lead the global design practice across six disciplines — <strong>Experience Design, Visualisation, Print, Video &amp; Motion, Publications &amp; Editorial, Presentation</strong> — connecting 400+ designers worldwide.</li>
-            <li>Own the ANZ Creative Studio <strong>P&amp;L</strong>; sit on the Global Design Studios leadership team; direct line manager of 16. <em>Recipient of BCG's "Grow by Growing Others" award.</em></li>
-            <li>Pitched, launched and executive-produce <strong>Business and Beyond</strong>, BCG ANZ's flagship video podcast hosted by MD &amp; Partner Sanjay Chari, with guests including BCG Global Chairman Rich Lesser.</li>
-            <li><strong>Outcomes:</strong> contributed to 9–13% YoY revenue growth, ~2× regional scale, double-digit conversion lifts across engagements.</li>
-          </ul>
+      <article class="xp-card xp-lead reveal">
+        <div class="xp-meta">
+          <span class="xp-co"><span class="xp-mark">BCG</span>Boston Consulting Group</span>
+          <span class="xp-dates">Nov 2024 — Present</span>
+          <span class="xp-loc">Sydney · Global</span>
+        </div>
+        <h3 class="xp-title">Global Creative Director &amp; <em>Creative AI Lead</em></h3>
+        <p class="xp-tag">Running the Creative AI practice — and building the systems behind it, hands-on.</p>
+        <ul class="xp-points">
+          <li><strong>Founded and run</strong> BCG Design Studios' Global Creative AI practice; authored the <em>"Creative Advantage"</em> proposal for a global Creative AI Labs function.</li>
+          <li><strong>Build and ship agentic AI personally</strong> — multi-agent systems, MCP servers, autonomous scheduled agents, and a Creative-AI hackathon platform with an automated skill-review pipeline.</li>
+          <li><strong>Lead across six disciplines</strong> — experience, visualisation, print, video &amp; motion, editorial and presentation — connecting 400+ designers worldwide.</li>
+          <li>Pitched, launched and executive-produce <strong>Business and Beyond</strong>, BCG ANZ's flagship video podcast.</li>
+        </ul>
+        <div class="xp-stats">
+          <span><b>9–13%</b> YoY revenue growth</span>
+          <span><b>~2×</b> regional scale</span>
+          <span><b>P&amp;L</b> owner · ANZ Studio</span>
+          <span><b>"Grow by Growing Others"</b> award</span>
         </div>
       </article>
 
-      <article class="role reveal">
-        <header>
-          <p class="role-dates">Nov 2021 — Oct 2024</p>
-          <p class="role-co"><span class="role-mark">BCG</span>Boston Consulting Group</p>
-          <p class="role-loc">Sydney · Hybrid</p>
-        </header>
-        <div class="role-body">
-          <h3>Senior Creative Manager</h3>
-          <p class="role-tag">Head of Creative ANZ + Co-Lead Strategy ANZ.</p>
-          <ul class="role-bullets">
-            <li>Built ANZ Creative into one of BCG's strongest regional practices; contributed to <strong>9–13% YoY revenue growth.</strong></li>
-            <li>Led creative direction on transformation programs across financial services, mining &amp; resources, and more — customer journeys, board and exec storytelling, rapid prototyping.</li>
-            <li>Began embedding AI into the creative workflow — the foundation for the practice I run today.</li>
-          </ul>
-        </div>
-      </article>
+      <div class="xp-grid">
+        <article class="xp-card reveal">
+          <div class="xp-meta">
+            <span class="xp-co"><span class="xp-mark">BCG</span>Boston Consulting Group</span>
+            <span class="xp-dates">Nov 2021 — Oct 2024</span>
+          </div>
+          <h3 class="xp-title">Senior Creative Manager</h3>
+          <p class="xp-tag">Head of Creative ANZ · Co-Lead Strategy ANZ</p>
+          <p class="xp-note">Built ANZ Creative into one of BCG's strongest regional practices — contributing to 9–13% YoY growth — and began embedding AI into the creative workflow: the foundation for the practice I run today.</p>
+        </article>
 
-      <article class="role reveal">
-        <header>
-          <p class="role-dates">2014 — 2021</p>
-          <p class="role-co"><span class="role-mark">EG</span>Endeavour Group</p>
-          <p class="role-loc">Sydney</p>
-        </header>
-        <div class="role-body">
-          <h3>Design Lead &amp; <em>Senior Digital Designer</em>, Dan Murphy's</h3>
-          <p class="role-tag">7 years building the design craft of Australia's #1 drinks retailer.</p>
-          <ul class="role-bullets">
-            <li>Built the Dan Murphy's <strong>design system</strong>; led the website restyling that <strong>doubled the audience</strong>; launched the app; shipped sub-brands.</li>
-            <li>Helped grow a small in-house team into a full in-house agency serving the entire portfolio.</li>
-          </ul>
-        </div>
-      </article>
+        <article class="xp-card reveal">
+          <div class="xp-meta">
+            <span class="xp-co"><span class="xp-mark">EG</span>Endeavour Group</span>
+            <span class="xp-dates">2014 — 2021</span>
+          </div>
+          <h3 class="xp-title">Design Lead — Dan Murphy's</h3>
+          <p class="xp-tag">7 years · Australia's #1 drinks retailer</p>
+          <p class="xp-note">Built the design system, led the website restyling that <strong>doubled the audience</strong>, launched the app, and helped grow a small in-house team into a full agency.</p>
+        </article>
 
-      <article class="role reveal">
-        <header>
-          <p class="role-dates">Earlier</p>
-          <p class="role-co">Agencies · BA + Sydney</p>
-          <p class="role-loc">Buenos Aires · Sydney</p>
-        </header>
-        <div class="role-body">
-          <h3>Senior UX/UI Designer &amp; <em>Generalist Principal</em></h3>
-          <p class="role-tag">Art director, UX/UI, front-end dev, client lead, pitcher.</p>
-          <ul class="role-bullets">
-            <li>Full-stack creative generalist across agencies in two countries; also graphic design for airport &amp; retail wayfinding.</li>
-            <li>PSIA-certified ski instructor, Colorado — three seasons. (Discipline shows up everywhere.)</li>
-          </ul>
-        </div>
-      </article>
+        <article class="xp-card reveal">
+          <div class="xp-meta">
+            <span class="xp-co">Agencies · BA + Sydney</span>
+            <span class="xp-dates">Earlier</span>
+          </div>
+          <h3 class="xp-title">Senior UX/UI &amp; Creative Generalist</h3>
+          <p class="xp-tag">Art direction · UX/UI · front-end · client lead</p>
+          <p class="xp-note">A full-stack creative generalist across agencies in two countries, plus wayfinding for airports and retail. (And three seasons as a PSIA-certified ski instructor in Colorado — discipline shows up everywhere.)</p>
+        </article>
+      </div>
+
+      <div class="xp-cv">
+        <span>This is the highlights reel — the full chronology lives in the PDF.</span>
+        <a class="xp-cv-link" href="Esteban-GZ-Resume.pdf" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download full CV
+        </a>
+      </div>
 
     </div>
   </div>
@@ -1162,7 +1173,7 @@
   backTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
 
   /* ---- Stagger: index reveal children inside grids ---- */
-  document.querySelectorAll('.builds-grid, .caps-grid, .honours-grid, .roles').forEach(function (grid) {
+  document.querySelectorAll('.builds-grid, .caps-grid, .honours-grid, .xp-grid').forEach(function (grid) {
     var kids = grid.querySelectorAll('.reveal');
     kids.forEach(function (el, i) { el.style.setProperty('--i', Math.min(i, 5)); });
   });
