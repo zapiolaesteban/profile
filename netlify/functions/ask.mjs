@@ -10,6 +10,8 @@ import { dirname, join } from "node:path";
 
 // ---- config ---------------------------------------------------------------
 const MODEL = "claude-sonnet-4-6";        // smarter than 4.5, still fast + cheap for a public toy
+const FALLBACK_MODEL = "claude-sonnet-4-5"; // if the primary is overloaded/rate-limited, still answer
+const FALLBACK_STATUSES = [429, 500, 502, 503, 529]; // availability errors worth a second try
 const MAX_TOKENS = 600;                    // keep answers short + cap cost per call
 const MAX_INPUT_CHARS = 800;               // a question, not an essay
 const MAX_HISTORY = 6;                     // turns of prior context we'll accept
@@ -308,9 +310,9 @@ export default async function handler(req) {
 
   const messages = [...history, { role: "user", content: question }];
 
-  const buildBody = (convo) =>
+  const buildBody = (convo, model) =>
     JSON.stringify({
-      model: MODEL,
+      model,
       max_tokens: MAX_TOKENS,
       // Keep it fast + cheap (cost control): no extended thinking, low effort,
       // and cache the knowledge base (tools + system) so repeats bill at ~0.1x.
@@ -323,7 +325,7 @@ export default async function handler(req) {
       ],
       messages: convo,
     });
-  const callModel = (convo) =>
+  const callOnce = (convo, model) =>
     fetch(ANTHROPIC_URL, {
       method: "POST",
       headers: {
@@ -331,8 +333,17 @@ export default async function handler(req) {
         "x-api-key": process.env.ANTHROPIC_API_KEY,
         "anthropic-version": ANTHROPIC_VERSION,
       },
-      body: buildBody(convo),
+      body: buildBody(convo, model),
     });
+  // Try the primary model; if it's overloaded or rate-limited, fall back to a
+  // second model once so a public visitor still gets an answer.
+  const callModel = async (convo) => {
+    const primary = await callOnce(convo, MODEL);
+    if (primary.ok || !FALLBACK_STATUSES.includes(primary.status)) return primary;
+    console.warn("primary model", MODEL, "returned", primary.status, "— falling back to", FALLBACK_MODEL);
+    primary.body?.cancel?.().catch(() => {});
+    return callOnce(convo, FALLBACK_MODEL);
+  };
 
   try {
     const first = await callModel(messages);
