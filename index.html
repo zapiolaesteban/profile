@@ -1397,9 +1397,16 @@
     setTimeout(function () { cv.classList.remove('cv-cue'); }, 4000);
   }
   // After a bot answer: ensure a one-click CV download is present, then cue the nav button.
-  function maybeCueCV(botEl, text) {
+  /* Surface a real download button whenever the CV is relevant. This used to require
+     BOTH the word "CV" and a location word ("button", "footer"...), so an answer like
+     "I can share his CV if that helps" produced no button at all. Now any mention of
+     the CV is enough, and hiring-shaped questions cue it even if the agent didn't
+     think to mention it. */
+  var CV_INTENT = /\b(hiring|recruit\w*|role|position|vacancy|opportunit\w+|mandate|interview|shortlist|candidate|apply|application|background|experience|track record)\b/i;
+  function maybeCueCV(botEl, text, question) {
     var link = botEl.querySelector('a.chat-cv');
-    if (!link && /\b(cv|r[eé]sum[eé]|resume)\b/i.test(text) && /(download|grab|button|top[- ]?right|footer|nav|here|link|page)/i.test(text)) {
+    var wanted = /\b(cv|r[eé]sum[eé]|resume)\b/i.test(text) || CV_INTENT.test(question || '');
+    if (!link && wanted) {
       var p = document.createElement('p');
       link = document.createElement('a');
       link.className = 'chat-link chat-cv';
@@ -1540,7 +1547,7 @@
       full = (full || '').trim();
       if (full) {
         bot.innerHTML = toParagraphs(full);
-        maybeCueCV(bot, full);
+        maybeCueCV(bot, full, q);
         history.push({ role: 'user', content: q });
         history.push({ role: 'assistant', content: full });
         if (history.length > 6) history = history.slice(-6);
