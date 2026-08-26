@@ -1402,7 +1402,11 @@
      "I can share his CV if that helps" produced no button at all. Now any mention of
      the CV is enough, and hiring-shaped questions cue it even if the agent didn't
      think to mention it. */
-  var CV_INTENT = /\b(hiring|recruit\w*|role|position|vacancy|opportunit\w+|mandate|interview|shortlist|candidate|apply|application|background|experience|track record)\b/i;
+  var CV_INTENT = new RegExp(
+    '\\b(hiring|hire|recruit\\w*|talent|headhunt\\w*|search|role|position|vacancy|job|' +
+    'opportunit\\w+|mandate|interview|shortlist|candidate|apply|application|' +
+    'background|experience|track record|looking for|head of design|chief design|cdo|' +
+    'creative director|design lead|leadership team|reach out|open to)\\b', 'i');
   function maybeCueCV(botEl, text, question) {
     var link = botEl.querySelector('a.chat-cv');
     var wanted = /\b(cv|r[eé]sum[eé]|resume)\b/i.test(text) || CV_INTENT.test(question || '');
