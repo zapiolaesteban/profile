@@ -95,7 +95,7 @@
 </script>
 
 <!-- Inline SVG favicon -->
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2300C853'/%3E%3Ctext x='50' y='62' font-family='Helvetica Neue,Arial,sans-serif' font-size='54' font-weight='700' fill='white' text-anchor='middle' font-style='italic'%3EE%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2300C853'/%3E%3Ctext x='50' y='50' font-family='Helvetica Neue,Arial,sans-serif' font-size='58' font-weight='700' fill='white' text-anchor='middle' dominant-baseline='central'%3EE%3C/text%3E%3C/svg%3E">
 
 <!-- Set theme BEFORE paint to prevent flash: dark is the default for everyone; a saved choice wins. -->
 <script>
@@ -255,9 +255,16 @@
     display: inline-flex; align-items: center; gap: 9px;
     font-family: var(--font-display); font-weight: 600; font-size: 18px; letter-spacing: -0.02em;
   }
+  /* Wordmark is one unit, so the flex gap above only separates the tile from the name.
+     "GZ" sits tight against "Esteban" rather than a whole gap away. */
+  .brand-logo .wordmark { display: inline-flex; align-items: baseline; gap: 4px; }
+  .brand-logo .gz { color: var(--ink-faint); font-weight: 400; }
   .brand-logo .mark {
     width: 26px; height: 26px; border-radius: 7px; background: var(--accent-bright);
-    color: #fff; display: grid; place-items: center; font-style: italic; font-size: 16px;
+    color: #fff; display: grid; place-items: center;
+    /* Bold, upright, optically centred in the tile. */
+    font-style: normal; font-weight: 700; font-size: 16px; line-height: 1;
+    letter-spacing: 0; padding-bottom: 1px;
   }
   .nav-right { display: flex; align-items: center; gap: 8px; }
 
@@ -407,8 +414,10 @@
   .agent-avatar {
     flex-shrink: 0; width: 36px; height: 36px; border-radius: 11px;
     background: var(--accent-bright); color: #06210F;
-    font-family: var(--font-display); font-style: italic; font-weight: 600;
-    display: grid; place-items: center; font-size: 20px;
+    /* Same mark as the nav: bold, upright, centred. */
+    font-family: var(--font-display); font-style: normal; font-weight: 700;
+    display: grid; place-items: center; font-size: 21px; line-height: 1;
+    letter-spacing: 0; padding-bottom: 1px;
   }
   .agent-greet { font-size: 16.5px; line-height: 1.45; color: var(--ink); font-weight: 500; }
   .agent-greet-sub { font-size: 14.5px; line-height: 1.5; color: var(--ink-mute); margin-top: 4px; }
@@ -564,7 +573,8 @@
     color: var(--ink-mute); margin-bottom: 16px;
   }
   .sec-num strong { color: var(--accent); }
-  .sec-title { font-size: clamp(1.9rem, 4.5vw, 3.1rem); line-height: 1.05; }
+  /* balance stops a section headline stranding its last word at narrow widths */
+  .sec-title { font-size: clamp(1.9rem, 4.5vw, 3.1rem); line-height: 1.05; text-wrap: balance; }
   .sec-title em { color: var(--accent); }
 
   /* About */
@@ -766,7 +776,7 @@
 <div class="scroll-progress" id="scrollProgress" role="presentation" aria-hidden="true"></div>
 
 <nav id="nav" aria-label="Primary">
-  <a href="#top" class="brand-logo"><span class="mark">E</span>Esteban<span style="color:var(--ink-faint);font-weight:400;">GZ</span></a>
+  <a href="#top" class="brand-logo"><span class="mark">E</span><span class="wordmark">Esteban<span class="gz">GZ</span></span></a>
   <div class="nav-right">
     <div class="nav-links">
       <a href="#about">About</a>
@@ -1010,10 +1020,22 @@
         <p>Any source document, a PowerPoint, a PDF, a Word file or a pile of notes, becomes a finished on-brand presentation. Beside it: a token and stylesheet layer in light and dark that is now the standard for the studio's pages, and a nine-skill UX/UI system handed to the design team covering review, patterns, microcopy, dashboards and agent-specific UX.</p>
       </article>
 
+      <article class="build build-lead reveal">
+        <div class="build-tag">Client work · by sector only</div>
+        <h3>Coded proof-of-concepts inside the pitch, and we won the work</h3>
+        <p>Design Studios runs as case team services, so I am client-facing <strong>through the case team</strong>: alongside the MDs, Partners and Principals who own the relationship, and alongside the client's own scientists and engineers. I help shape the strategy and sharpen how it is told, then <strong>build the working proof that makes it real</strong>, inside the proposal rather than after it. For an <strong>agri-food co-operative</strong> the POC I led won the proposal and opened a pipeline that is still running, and I have done the same on pitches for an <strong>energy retailer</strong>, a <strong>convenience retail chain</strong>, a <strong>global beverage company</strong> and a <strong>bank</strong>.</p>
+      </article>
+
       <article class="build reveal">
-        <div class="build-tag">Enterprise · by sector only</div>
-        <h3>Coded proof-of-concepts that won the work</h3>
-        <p>I lead the working prototype <strong>inside the pitch, not after it</strong>. For an <strong>agri-food co-operative</strong> the POC I led won the proposal and opened a further pipeline; there were pitches for an <strong>energy retailer</strong>, a <strong>convenience retail chain</strong> and a <strong>global beverage company</strong>. For an <strong>aviation ground-services operator in Asia</strong>, a proposal with a web experience, a working tool POC connected to real data and a video walkthrough, client-approved. For an <strong>automotive brand</strong>, a pitch microsite you can question out loud instead of reading. And with a <strong>mining-sector</strong> client, a field-maintenance tool taken from concept to production handoff with engineering. Client identities are confidential; the craft is the point.</p>
+        <div class="build-tag">Resources sector</div>
+        <h3>A scientist team's agentic tool, turned into something usable</h3>
+        <p>A client's own scientific team had built a genuinely working agentic tool with no interface worth using. I did the <strong>UI and front-end uplift</strong>, then handed it on to a team of around <strong>10 specialists with a proper brief</strong>, which they had never been given before, and produced a <strong>video demo</strong> so the work could travel to people who were never in the room. That is the pattern I am best at: take something technically real but unusable, make it land, and leave a team able to run it.</p>
+      </article>
+
+      <article class="build reveal">
+        <div class="build-tag">Prototype to production</div>
+        <h3>Agentic tools taken all the way into production</h3>
+        <p>In <strong>mining</strong>, a field-maintenance scoping tool from concept through to production handoff, embedded with the engineering team. For an <strong>aviation ground-services operator in Asia</strong>, a proposal with a full web experience, a working tool POC <strong>connected to real data</strong> and a video walkthrough, client-approved. For an <strong>automotive brand</strong>, a pitch microsite you can question out loud instead of reading. Client identities stay confidential, so the craft has to be the point.</p>
       </article>
 
       <article class="build reveal">
@@ -1425,25 +1447,86 @@
     window.speechSynthesis.addEventListener('voiceschanged', refreshVoice);
   }
 
-  function speak(text) {
-    if (!voiceOut.checked || !('speechSynthesis' in window)) return;
-    try {
-      window.speechSynthesis.cancel();
-      if (!pickedVoice) refreshVoice();
-      var u = new SpeechSynthesisUtterance(text);
-      if (pickedVoice) { u.voice = pickedVoice; u.lang = pickedVoice.lang; }
-      else { u.lang = 'en-AU'; }            // nudge the engine toward an AU accent
-      u.rate = 0.93; u.pitch = 0.96; u.volume = 1.0;   // measured, warm broadcast cadence
-      u.onstart = function () { setBusy(true); };
-      u.onend = function () { setBusy(false); };
-      window.speechSynthesis.speak(u);
-    } catch (e) {}
+  /* ---- speech queue -------------------------------------------------------
+     The agent used to wait for the whole answer, then start talking. That reads
+     as a chatbot with a delay. Instead we queue each finished SENTENCE as it
+     streams in, so it starts speaking almost immediately and keeps going, which
+     is what makes it feel like an agent rather than a transcript being read. */
+  var speechQ = [];          // sentences waiting their turn
+  var speaking = false;      // an utterance is currently on air
+  var spokenUpTo = 0;        // how much of the streamed answer we've already queued
+  var handsFree = false;     // last question came by voice, so reopen the mic after
+  // No-op until the speech-recognition block below replaces it. Declared here so
+  // drainSpeech() can always call it, even on browsers with no SpeechRecognition.
+  var startListening = function () {};
+
+  function utter(text) {
+    if (!pickedVoice) refreshVoice();
+    var u = new SpeechSynthesisUtterance(text);
+    if (pickedVoice) { u.voice = pickedVoice; u.lang = pickedVoice.lang; }
+    else { u.lang = 'en-AU'; }            // nudge the engine toward an AU accent
+    u.rate = 0.97; u.pitch = 0.98; u.volume = 1.0;   // conversational, not newsreader
+    u.onend = function () { speaking = false; drainSpeech(); };
+    u.onerror = function () { speaking = false; drainSpeech(); };
+    return u;
   }
+
+  function drainSpeech() {
+    if (speaking || !('speechSynthesis' in window)) return;
+    if (!speechQ.length) {
+      setBusy(false);
+      // Hands-free: it finished its turn, so open the mic for the next one.
+      if (handsFree && voiceOut.checked && !busy) { handsFree = false; startListening(); }
+      return;
+    }
+    var next = speechQ.shift();
+    if (!next) return drainSpeech();
+    speaking = true;
+    setBusy(true);
+    try { window.speechSynthesis.speak(utter(next)); }
+    catch (e) { speaking = false; }
+  }
+
+  function enqueueSpeech(text) {
+    text = (text || '').trim();
+    if (!text || !voiceOut.checked || !('speechSynthesis' in window)) return;
+    speechQ.push(text);
+    drainSpeech();
+  }
+
+  function resetSpeech() {
+    speechQ = []; speaking = false; spokenUpTo = 0;
+    try { window.speechSynthesis.cancel(); } catch (e) {}
+  }
+
+  /* Pull any COMPLETE sentences out of the answer so far and queue them.
+     A sentence is only complete once we've seen its terminator followed by a
+     space or the stream ending, so we never speak half a clause. */
+  function speakStreamed(full, isFinal) {
+    if (!voiceOut.checked || !('speechSynthesis' in window)) return;
+    var pending = full.slice(spokenUpTo);
+    if (!pending) return;
+    var re = /[^.!?…]+[.!?…]+(?=\s|$)/g, m, consumed = 0, out = [];
+    while ((m = re.exec(pending)) !== null) {
+      out.push(m[0].trim());
+      consumed = m.index + m[0].length;
+    }
+    if (isFinal && consumed < pending.length) {
+      var tail = pending.slice(consumed).trim();
+      if (tail) { out.push(tail); consumed = pending.length; }
+    }
+    if (!consumed) return;
+    spokenUpTo += consumed;
+    out.forEach(function (s) { enqueueSpeech(stripForSpeech(s)); });
+  }
+
+  function speak(text) { resetSpeech(); enqueueSpeech(text); }
 
   function ask(question) {
     question = (question || '').trim();
     if (busy || !question) return;
     busy = true; sendBtn.disabled = true;
+    resetSpeech();               // a new question cuts off the previous answer
     input.value = ''; autoGrow();
     startChat();
     addUser(question);
@@ -1461,7 +1544,8 @@
         history.push({ role: 'user', content: q });
         history.push({ role: 'assistant', content: full });
         if (history.length > 6) history = history.slice(-6);
-        speak(stripForSpeech(full));
+        // Flush whatever sentence is left over; the rest is already speaking.
+        speakStreamed(full, true);
       } else {
         bot.innerHTML = '<p class="muted">Sorry, I didn’t catch that. Try rephrasing?</p>';
       }
@@ -1494,6 +1578,7 @@
             if (res.done) { finish(question, full); return; }
             full += decoder.decode(res.value, { stream: true });
             bot.innerHTML = toParagraphs(full);
+            speakStreamed(full, false);   // start talking before the answer finishes
             scrollThread();
             return pump();
           });
@@ -1532,22 +1617,31 @@
     input.value = ''; autoGrow(); input.focus();
   });
 
-  /* ---- Voice input (Web Speech API) ---- */
+  /* ---- Voice input (Web Speech API) ----
+     Ask by voice once and it stays a conversation: it speaks its answer, then
+     reopens the mic for your next question, so you can talk to it hands-free
+     instead of reaching for the button every turn. Speaking or typing stops it. */
   var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  var listening = false;
   if (SR) {
     var rec = new SR();
     rec.lang = 'en-AU'; rec.interimResults = false; rec.maxAlternatives = 1;
-    var listening = false;
-    micBtn.addEventListener('click', function () {
-      if (listening) { rec.stop(); return; }
+    startListening = function () {
+      if (listening || busy || speaking) return;
       try { rec.start(); } catch (e) {}
+    };
+    micBtn.addEventListener('click', function () {
+      if (listening) { rec.stop(); handsFree = false; return; }
+      resetSpeech();            // interrupt it mid-sentence if it's still talking
+      startListening();
     });
     rec.onstart = function () { listening = true; micBtn.classList.add('listening'); setBusy(true); input.placeholder = 'Listening…'; };
-    rec.onend = function () { listening = false; micBtn.classList.remove('listening'); setBusy(false); input.placeholder = 'Ask me anything…'; };
-    rec.onerror = function () { listening = false; micBtn.classList.remove('listening'); setBusy(false); };
+    rec.onend = function () { listening = false; micBtn.classList.remove('listening'); if (!busy && !speaking) setBusy(false); input.placeholder = 'Ask me anything…'; };
+    rec.onerror = function () { listening = false; handsFree = false; micBtn.classList.remove('listening'); if (!busy && !speaking) setBusy(false); };
     rec.onresult = function (e) {
       var t = e.results[0][0].transcript;
       input.value = t;
+      handsFree = true;         // came in by voice, so hand the mic back afterwards
       ask(t);
     };
   } else {

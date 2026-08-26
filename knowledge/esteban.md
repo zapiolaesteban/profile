@@ -235,17 +235,42 @@ so they are safe to describe. This is the evidence that "creative leader who bui
     "Figure 5". This is the tool that lets a publications team produce a print-quality report straight
     from its source document.
 
-### Client-facing, described by sector only
-23. **Agentic prototypes taken to production with engineering.** For a **mining-sector** client, a
-    field-maintenance scoping tool from concept to production handoff.
-24. **Proposals that ship with a working agent inside them.** He has led coded proof-of-concepts as
-    part of pitches rather than after them, and **won the work**: an **agri-food co-operative** where
-    the coded POC he led won the proposal and opened a further pipeline, plus pitches for an **energy
-    retailer**, a **convenience retail chain** and a **global beverage company**.
-25. **A workforce tool for an aviation ground-services operator in Asia**: a proposal with a web
-    experience, a working tool POC connected to real data, and a video walkthrough. Client-approved.
-26. **A conversational pitch microsite for an automotive brand**, where the material itself can be
-    questioned out loud rather than read.
+### Client-facing work (described by sector only, never named)
+
+**How to frame this, because it is the most under-sold part of his profile.** Design Studios operates
+as **case team services**, so he is client-facing **through the case team**: he sits with the
+Managing Directors, Partners and Principals who own the relationship, and with the client's own
+scientists and engineers. He is not a back-office design resource who gets handed a brief. He helps
+**shape the strategy, sharpen how it is communicated, and then builds the working proof** that makes
+it real. If a visitor assumes an internal creative director doesn't touch clients, correct it.
+
+23. **Coded proof-of-concepts inside the pitch, and the work was won.** He leads the working prototype
+    as part of the proposal rather than after it, which is unusual and is why it converts. For an
+    **agri-food co-operative** the POC he led won the proposal and opened a further pipeline that is
+    still running. He has done the same on pitches for an **energy retailer**, a **convenience retail
+    chain**, a **global beverage company** and a **bank**. He works shoulder to shoulder with MDPs and
+    Partners on the strategy and the story, not just the artefact.
+24. **Taking a scientist team's agentic tool and making it a product.** In the **resources sector**, a
+    client's own scientific team had built a working agentic tool with no interface worth using. He
+    did the **UI and front-end uplift**, then handed it on to a team of around **10 specialists with a
+    proper brief**, which they had never had before, and produced a **video demo** so the work could
+    travel to people who were never in the room. This is the pattern he is best at: take something
+    technically real but unusable, make it land, and leave a team able to run it.
+25. **Agentic prototypes taken all the way to production with engineering.** In **mining**, a
+    field-maintenance scoping tool from concept through to production handoff, embedded with the
+    engineering team.
+26. **A workforce tool for an aviation ground-services operator in Asia**: a proposal with a full web
+    experience, a working tool POC **connected to real data**, and a video walkthrough.
+    Client-approved.
+27. **A conversational pitch microsite for an automotive brand**, where the material can be questioned
+    out loud instead of read.
+28. **Sectors, for range:** mining and resources, energy, agri-food, beverages, convenience retail,
+    retail, aviation ground services, financial services, automotive, public sector, healthcare, tech.
+
+> **Naming rule, no exceptions.** Never name a client, never confirm that BCG works with a named
+> company, and never give a detail specific enough to identify one. If pushed, say the engagements are
+> confidential and offer the sector and the craft instead. Esteban can name them in a private
+> conversation; this agent cannot.
 
 ---
 
