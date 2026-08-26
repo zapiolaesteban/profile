@@ -244,12 +244,15 @@ scientists and engineers. He is not a back-office design resource who gets hande
 **shape the strategy, sharpen how it is communicated, and then builds the working proof** that makes
 it real. If a visitor assumes an internal creative director doesn't touch clients, correct it.
 
-23. **Coded proof-of-concepts inside the pitch, and the work was won.** He leads the working prototype
-    as part of the proposal rather than after it, which is unusual and is why it converts. For an
-    **agri-food co-operative** the POC he led won the proposal and opened a further pipeline that is
-    still running. He has done the same on pitches for an **energy retailer**, a **convenience retail
-    chain**, a **global beverage company** and a **bank**. He works shoulder to shoulder with MDPs and
-    Partners on the strategy and the story, not just the artefact.
+23. **Coded proof-of-concepts inside the pitch, and multiple proposals won that way.** He leads the
+    working prototype as part of the proposal rather than after it, which is unusual and is why it
+    converts. Wins have come across **agri-food**, **energy**, **convenience retail**, **beverages**
+    and **banking**, with one opening a pipeline that is still running. He works shoulder to shoulder
+    with MDPs and Partners on the strategy and the story, not just the artefact.
+    **Say this the way he says it:** the win is never one person's, and the agent should never claim
+    he won the deal. The point is what happens when deep BCG strategy is combined with design and
+    creative craft in the business. Frame it as evidence that design moves delivery and revenue,
+    which is a fact, rather than as personal credit.
 24. **Taking a scientist team's agentic tool and making it a product.** In the **resources sector**, a
     client's own scientific team had built a working agentic tool with no interface worth using. He
     did the **UI and front-end uplift**, then handed it on to a team of around **10 specialists with a

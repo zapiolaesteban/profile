@@ -1,9 +1,26 @@
 // Regenerate the downloadable CV PDF from resume.html.
-//   cd cv && npm i puppeteer && node render.js   (needs network for Google Fonts)
-const puppeteer = require('puppeteer');
+//   cd cv && npm i puppeteer-core && node render.js   (needs network for Google Fonts)
+//
+// Uses puppeteer-core against the Chrome already installed on this machine, so there's
+// no 150MB Chromium download. Falls back to full puppeteer if that's what's installed.
 const fs = require('fs'); const path = require('path');
+let puppeteer, launchOpts = { args:['--no-sandbox','--disable-setuid-sandbox'], headless:'new' };
+try {
+  puppeteer = require('puppeteer');                       // bundles its own browser
+} catch {
+  puppeteer = require('puppeteer-core');                  // needs an explicit browser
+  const candidates = [
+    process.env.CHROME_PATH,
+    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+    '/Applications/Chromium.app/Contents/MacOS/Chromium',
+    '/usr/bin/google-chrome',
+  ].filter(Boolean);
+  const found = candidates.find(p => { try { return fs.existsSync(p); } catch { return false; } });
+  if (!found) throw new Error('No Chrome found. Set CHROME_PATH, or npm i puppeteer.');
+  launchOpts.executablePath = found;
+}
 (async () => {
-  const browser = await puppeteer.launch({ args:['--no-sandbox','--disable-setuid-sandbox'], headless:'new' });
+  const browser = await puppeteer.launch(launchOpts);
   const page = await browser.newPage();
   await page.setContent(fs.readFileSync(path.join(__dirname,'resume.html'),'utf8'), { waitUntil:'networkidle0', timeout:60000 });
   try { await page.evaluate(() => document.fonts.ready); } catch(e){}
@@ -15,6 +32,6 @@ const fs = require('fs'); const path = require('path');
   await page.pdf({ path: path.join(__dirname,'..','Esteban-Gimenez-Zapiola-Creative-Director-CV.pdf'),
     format:'A4', printBackground:true,
     displayHeaderFooter:true, headerTemplate:'<span></span>', footerTemplate:foot,
-    margin:{ top:'13mm', bottom:'12mm', left:'13mm', right:'13mm' } });
+    margin:{ top:'11mm', bottom:'11mm', left:'13mm', right:'13mm' } });
   await browser.close(); console.log('CV regenerated');
 })();
