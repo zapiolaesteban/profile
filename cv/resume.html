@@ -3,18 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
   :root{
     --paper:#FFFFFF;
     --ink:#15161B; --ink-soft:#34353C; --ink-mute:#65666E; --ink-faint:#9A9A93;
     --accent:#00A046; --accent-deep:#00813A;
     --rule:#E7E3DA;
-    --display:'Fraunces',Georgia,serif; --body:'Geist',-apple-system,system-ui,sans-serif; --mono:'JetBrains Mono',monospace;
+    --display:'Bricolage Grotesque','Helvetica Neue',Arial,sans-serif; --body:'Geist',-apple-system,system-ui,sans-serif; --mono:'JetBrains Mono',monospace;
   }
   *{ box-sizing:border-box; margin:0; padding:0; }
   html{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-  body{ font-family:var(--body); color:var(--ink-soft); font-size:9.5pt; line-height:1.42; background:var(--paper); }
+
+  /* ---- Typographic contract (print) --------------------------------------
+     No word left alone on a last line, no orphan or widow at a page break, and
+     no headline broken mid-phrase. `pretty` is what actually kills runts in
+     Chrome; `balance` evens out short headings. Kerning and ligatures on so
+     the type is set, not just placed. */
+  p, li, .d, .desc, .out{
+    orphans:2; widows:2;
+    text-wrap:pretty;
+    -webkit-hyphens:none; hyphens:none;
+  }
+  h1, h2, h3, .tag, .thesis, .sec-h, .award .t{
+    text-wrap:balance;
+    orphans:3; widows:3;
+  }
+  body{
+    font-kerning:normal;
+    font-variant-ligatures:common-ligatures;
+    text-rendering:geometricPrecision;
+  }
+  .role, .cap, .award, .edu-item{ break-inside:avoid; }
+  body{ font-family:var(--body); color:var(--ink-soft); font-size:9.2pt; line-height:1.40; background:var(--paper); }
   a{ color:var(--accent-deep); text-decoration:none; }
   em{ font-style:italic; }
   strong{ color:var(--ink); font-weight:600; }
@@ -22,15 +43,15 @@
   .doc{ padding:0 1mm; }
 
   /* ---- Header ---- */
-  header{ display:grid; grid-template-columns:1fr auto; gap:22px; align-items:flex-end; padding-bottom:11px; }
-  h1{ font-family:var(--display); font-weight:600; font-size:26pt; line-height:0.98; letter-spacing:-0.015em; color:var(--ink); }
+  header{ display:grid; grid-template-columns:1fr auto; gap:22px; align-items:flex-end; padding-bottom:9px; }
+  h1{ font-family:var(--display); font-weight:600; font-size:24pt; line-height:0.98; letter-spacing:-0.015em; color:var(--ink); }
   h1 em{ font-style:italic; color:var(--accent-deep); }
   .role-now{ font-family:var(--mono); font-size:7.6pt; letter-spacing:0.10em; text-transform:uppercase; color:var(--accent-deep); margin-top:9px; font-weight:500; }
   .tag{ font-family:var(--display); font-size:11.2pt; line-height:1.32; color:var(--ink); margin-top:9px; max-width:55ch; font-weight:400; }
   .contact{ display:flex; flex-direction:column; gap:3px; text-align:right; font-family:var(--mono); font-size:7.7pt; color:var(--ink-mute); letter-spacing:0.01em; }
   .contact a{ color:var(--ink-mute); }
   .contact .loc{ color:var(--ink-faint); }
-  .rule{ height:2px; background:var(--ink); margin:0 0 13px; }
+  .rule{ height:2px; background:var(--ink); margin:0 0 10px; }
 
   /* ---- Section scaffold ---- */
   section{ margin-bottom:6px; }
@@ -44,7 +65,7 @@
   .thesis{ font-family:var(--display); font-style:italic; font-size:11.2pt; color:var(--accent-deep); margin-top:8px; padding-left:12px; border-left:2px solid var(--accent); }
 
   /* ---- Experience ---- */
-  .role{ display:grid; grid-template-columns:128px 1fr; gap:18px; padding:7px 0; border-top:1px solid var(--rule); break-inside:avoid; }
+  .role{ display:grid; grid-template-columns:128px 1fr; gap:18px; padding:6px 0; border-top:1px solid var(--rule); break-inside:avoid; }
   .role.first{ border-top:none; padding-top:2px; }
   .meta .dates{ display:block; font-family:var(--mono); font-size:7.5pt; color:var(--ink); font-weight:500; letter-spacing:0.01em; white-space:nowrap; }
   .meta .co{ display:block; font-size:8.4pt; font-weight:600; color:var(--ink-soft); margin-top:5px; line-height:1.25; }
@@ -61,8 +82,11 @@
   .out b{ color:var(--ink); }
 
   /* ---- Lower grid: capabilities | honours + education ---- */
-  .lower{ display:grid; grid-template-columns:1.32fr 1fr; gap:26px; break-inside:avoid; padding-top:1px; }
-  .caps .cap{ margin-bottom:4px; }
+  /* Deliberately breakable: as one atomic block it was 380px, which wouldn't fit in
+     what page 2 had left and forced a third page of mostly whitespace. Its children
+     stay atomic instead, so a capability or award never splits across pages. */
+  .lower{ display:grid; grid-template-columns:1.32fr 1fr; gap:26px; padding-top:1px; }
+  .caps .cap{ margin-bottom:3px; }
   .caps .cap .t{ color:var(--ink); font-weight:600; }
   .caps .cap .t em{ color:var(--accent-deep); }
   .caps .cap .d{ color:var(--ink-mute); }
@@ -74,10 +98,10 @@
   .award .o{ font-family:var(--mono); font-size:6.9pt; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-faint); margin:1px 0 2px; }
   .award .d{ color:var(--ink-mute); font-size:8.9pt; }
 
-  .edu-item{ margin-bottom:3px; font-size:8.9pt; }
+  .edu-item{ margin-bottom:2px; font-size:8.8pt; }
   .edu-item .t{ color:var(--ink); font-weight:500; }
   .edu-item .m{ color:var(--ink-faint); font-family:var(--mono); font-size:7.4pt; }
-  .langs{ margin-top:7px; font-size:8.9pt; color:var(--ink-soft); }
+  .langs{ margin-top:5px; font-size:8.8pt; color:var(--ink-soft); }
   .langs b{ color:var(--ink); }
 </style>
 </head>
@@ -88,7 +112,7 @@
     <div class="id">
       <h1>Esteban <em>Gimenez Zapiola</em></h1>
       <p class="role-now">Global Creative Director &amp; Creative AI Lead · BCG</p>
-      <p class="tag">I run design as a business that drives revenue — and I build the agentic AI that scales it. Most design leaders do one; I do both.</p>
+      <p class="tag">I run design as a business that drives revenue, and I built the Creative AI practice that scales&nbsp;it: 33 nodes, a lab of 10, 24 builders in&nbsp;squads.</p>
     </div>
     <div class="contact">
       <span class="loc">Sydney, Australia · working globally</span>
@@ -101,8 +125,8 @@
   <div class="rule"></div>
 
   <section class="summary">
-    <p class="lead">I lead design as a strategic business capability — and I personally build the agentic AI that scales it. As Global Creative Director at BCG I own the ANZ Creative Studio P&amp;L, sit on the global Design Studios leadership team, and lead a team of 16 with reach into 400+ designers worldwide — partnering with case teams and the Managing Directors, Partners and C-suite clients we serve.</p>
-    <p>I founded and lead BCG Design Studios' Creative AI practice and authored the <em>"Creative Advantage"</em> proposal for a global Creative AI Labs function. I build and ship agentic AI hands-on — multi-agent systems, MCP servers, autonomous agents and custom tooling — prototype to production, not demos. I lead through mentorship: recipient of BCG's <em>"Grow by Growing Others"</em> award.</p>
+    <p class="lead">I lead design as a commercial capability that moves revenue, and I built the Creative AI practice that scales it. As Global Creative Director at BCG I own the ANZ Creative Studio P&amp;L, sit on the global leadership team, and lead <strong>33 Creative AI nodes across the regions</strong> and a <strong>global lab of 10 creative technologists</strong>, with reach into 400+ designers. I work through the case team, alongside the MDs, Partners and client scientists and engineers we serve.</p>
+    <p>I founded the practice and authored the <em>"Creative Advantage"</em> proposal positioning it as the firm's Creative AI centre of excellence. I build agentic AI hands-on and take it to production, but the building is how I lead: I write the first working version so the direction is arguable rather than theoretical, then hand it to people who take it further.</p>
     <p class="thesis">Design isn't art. It's a discipline that moves revenue.</p>
   </section>
 
@@ -117,16 +141,16 @@
       </div>
       <div class="body">
         <h3>Global Creative Director <em>&amp; Creative AI Lead</em></h3>
-        <p class="desc">Leading design as a competitive advantage — and the Creative AI practice — across BCG's global studios.</p>
         <ul>
-          <li>Founded and lead BCG Design Studios' <strong>Creative AI practice</strong>; authored the <em>"Creative Advantage"</em> proposal positioning a global Creative AI Labs function.</li>
-          <li>Build and ship <strong>agentic AI hands-on</strong> — multi-agent systems, MCP servers, autonomous scheduled agents and custom tooling, prototype to production (including the live agent on estebangz.com).</li>
-          <li>Lead the global design practice across <strong>six disciplines</strong> — Experience, Visualisation, Print, Video &amp; Motion, Editorial and Presentation — setting quality standards and connecting <strong>400+ designers</strong> worldwide.</li>
-          <li>Own the <strong>ANZ Creative Studio P&amp;L</strong> and co-lead its strategy; direct line manager of <strong>16</strong> across ANZ and India; member of the global Design Studios leadership team. Recipient of BCG's <em>"Grow by Growing Others"</em> award.</li>
-          <li>Conceived, organised and built end-to-end a <strong>global Creative-AI hackathon</strong> for BCG's creative community — the participant platform plus an automated skill-review pipeline.</li>
-          <li>Pitched, launched and executive-produce <strong>Business and Beyond</strong>, BCG ANZ's flagship video podcast.</li>
+          <li>Founded and lead BCG Design Studios' <strong>Creative AI practice</strong>, and authored the <em>"Creative Advantage"</em> proposal positioning it as the firm's Creative AI centre of excellence.</li>
+          <li>Lead <strong>33 Creative AI nodes across the regions</strong> and a <strong>global lab of 10 creative technologists</strong>, taking tools from proof-of-concept to working internal product. Designed the structure, defined the roles and wrote the playbook so a node runs without me.</li>
+          <li><strong>Orchestrated 24 builders across squads</strong> to ship a seven-product self-serve suite for senior partners, delivered with handover docs and briefed to named owners in other regions.</li>
+          <li>Designed and ran the <strong>Power Up Weeks region by region</strong> through the regional leads, wrote and deliver the deep-dive curriculum (graph and context engineering, prompting, agent loops, building agents in Claude and GPT), and ran a <strong>global Creative AI hackathon</strong> end to end out of London, now a shared library of <strong>49 skills</strong> behind an automated review pipeline.</li>
+          <li><strong>Client-facing through the case team</strong>, alongside MDPs and the client's own scientists and engineers. I lead the coded proof-of-concept <strong>inside the pitch rather than after it</strong>, and <strong>multiple proposals have been won that way</strong> across agri-food, energy, convenience retail, beverages and banking. The win is never one person's. It is what happens when deep BCG strategy is combined with design and creative craft in the business, and it shows up as delivery and revenue rather than adjectives.</li>
+          <li>Build and ship <strong>agentic AI hands-on</strong>: multi-agent systems, MCP servers, autonomous agents, a native macOS app, an AI video pipeline, and a report engine that typesets long-form publications from their source document.</li>
+          <li>Lead the global practice across <strong>six disciplines</strong> and <strong>400+ designers</strong>, own the <strong>ANZ Creative Studio P&amp;L</strong>, sit on the global Design Studios leadership team, and hold BCG's <em>"Grow by Growing Others"</em> award. Pitched, launched and executive-produce <strong>Business and Beyond</strong>, BCG ANZ's flagship video podcast.</li>
         </ul>
-        <p class="out"><b>Outcomes:</b> 9–13% YoY revenue growth · ~2× regional scale · ~80% cross-border delivery · double-digit conversion lifts.</p>
+        <p class="out"><b>Outcomes:</b> 9–13% YoY revenue growth · ~2× regional scale · ~80% cross-border delivery · double-digit conversion lifts · 33 nodes and a lab of 10 · 24 builders orchestrated.</p>
       </div>
     </article>
 
@@ -138,11 +162,11 @@
       </div>
       <div class="body">
         <h3>Senior Creative Manager</h3>
-        <p class="desc">Head of Creative ANZ &amp; Co-Lead, Strategy ANZ — built the foundation for the Global role.</p>
+        <p class="desc">Head of Creative ANZ &amp; Co-Lead, Strategy ANZ. Built the foundation for the Global role.</p>
         <ul>
           <li>Grew ANZ Creative into one of BCG's strongest regional design practices; creative strategy contributing to <strong>9–13% YoY revenue growth</strong> across financial services, energy, retail, public sector, healthcare and tech.</li>
-          <li>Co-led ANZ business strategy — at the table for positioning, growth and investment decisions; partnered with MDs, Partners and C-suite to shape transformation programs. Treated design as a commercial lever, not a service.</li>
-          <li>Began embedding AI into the creative workflow and built a mentorship-driven culture — growing senior designers into leaders and the bench that earned the Global mandate.</li>
+          <li>Co-led ANZ business strategy, at the table for positioning, growth and investment decisions; partnered with MDs, Partners and C-suite to shape transformation programs. Treated design as a commercial lever, not a service.</li>
+          <li>Began embedding AI into the creative workflow and built a mentorship-driven culture, growing senior designers into leaders and the bench that earned the Global mandate.</li>
         </ul>
       </div>
     </article>
@@ -154,13 +178,13 @@
         <span class="loc">Sydney</span>
       </div>
       <div class="body">
-        <h3>Design Lead <em>— Dan Murphy's</em></h3>
+        <h3>Creative Lead, Endeavour Drinks <em>· Dan Murphy's</em></h3>
         <p class="desc">Creative Lead for Dan Murphy's, Australia's #1 drinks retailer; also across BWS.</p>
         <ul>
-          <li>Helped grow a small in-house team into a full <strong>in-house agency</strong> serving the entire Endeavour portfolio — the era when digital and retail first collided.</li>
-          <li>Built and governed the Dan Murphy's <strong>Design System</strong> (Frontify, InVision) — single source of truth for print, digital and coded templates.</li>
+          <li>Helped grow a small in-house team into a full <strong>in-house agency</strong> serving the entire Endeavour portfolio, the era when digital and retail first collided.</li>
+          <li>Built and governed the Dan Murphy's <strong>Design System</strong> (Frontify, InVision), the single source of truth for print, digital and coded templates.</li>
           <li>Led the danmurphys.com.au <strong>restyling</strong> (≈<strong>2× audience</strong>) and the <strong>Dan Murphy's app</strong> launch; created sub-brands incl. Dan's Run (UberEats), Direct to Boot and Dan's Cellar.</li>
-          <li>Led and mentored a team of 6 senior designers — the kind of leader people wanted to work for.</li>
+          <li>Led and mentored a team of 6 senior designers, and was the kind of leader people wanted to work for.</li>
         </ul>
       </div>
     </article>
@@ -173,9 +197,9 @@
       </div>
       <div class="body">
         <h3>Senior Digital Designer</h3>
-        <p class="desc">In-house digital at agency pace — Dan Murphy's, BWS, Langtons, Cellarmasters.</p>
+        <p class="desc">In-house digital at agency pace, across Dan Murphy's, BWS, Langtons and Cellarmasters.</p>
         <ul>
-          <li>Hand-coded EDM templates and implemented dynamic personalisation on Oracle Responsys — foundation of Dan Murphy's segmented email program.</li>
+          <li>Hand-coded EDM templates and implemented dynamic personalisation on Oracle Responsys, the foundation of Dan Murphy's segmented email program.</li>
           <li>Produced wireframes and restyled core components of danmurphys.com.au; led art direction and on-location shoots for tier-1 campaigns, lifting digital ROI.</li>
         </ul>
       </div>
@@ -189,31 +213,19 @@
       </div>
       <div class="body">
         <h3>Senior UX/UI Designer</h3>
-        <p>Generalist principal at a Buenos Aires digital agency (pharma, energy, talent, tech) — art director, UX/UI designer, front-end developer, client lead and new-business pitcher. Clients incl. Duke Energy, Engie and Farmacity. Bridged to Brand Chemistry, Sydney.</p>
-      </div>
-    </article>
-
-    <article class="role compact">
-      <div class="meta">
-        <span class="dates">2010</span>
-        <span class="co">Mendioroz Design</span>
-        <span class="loc">Buenos Aires</span>
-      </div>
-      <div class="body">
-        <h3>Graphic Designer</h3>
-        <p>Visual identity and <strong>wayfinding</strong> for airports and shopping centres — signage systems, technical documentation and supplier oversight. Where my interest in how design lives in physical space began.</p>
+        <p>Generalist principal at a Buenos Aires digital agency (pharma, energy, talent, tech): art director, UX/UI designer, front-end developer, client lead and new-business pitcher. Clients incl. Duke Energy, Engie and Farmacity. Bridged to Brand Chemistry, Sydney.</p>
       </div>
     </article>
 
     <article class="role compact">
       <div class="meta">
         <span class="dates">2009 — 2012</span>
-        <span class="co">Crested Butte Mountain Resort</span>
-        <span class="loc">Colorado, USA</span>
+        <span class="co">Mendioroz Design · Crested Butte</span>
+        <span class="loc">Buenos Aires · Colorado</span>
       </div>
       <div class="body">
-        <h3>Ski Instructor</h3>
-        <p>PSIA-certified across three winter seasons — where I learned to coach beginners with patience. (Discipline shows up everywhere.)</p>
+        <h3>Graphic Designer <em>· Ski Instructor</em></h3>
+        <p>Visual identity and <strong>wayfinding</strong> for airports and shopping centres: signage systems, technical documentation and supplier oversight, where my interest in how design lives in physical space began. Plus three winter seasons as a PSIA-certified ski instructor, coaching beginners with patience.</p>
       </div>
     </article>
   </section>
@@ -221,12 +233,11 @@
   <div class="lower">
     <section class="caps">
       <div class="sec-h">Capabilities</div>
-      <div class="cap"><span class="t"><span class="num">i.</span>Design leadership at scale</span> <span class="d">— high-trust, high-performing teams across regions and disciplines; coaching senior leaders into exceptional ones.</span></div>
-      <div class="cap"><span class="t"><span class="num">ii.</span><em>Agentic AI, hands-on</em></span> <span class="d">— multi-agent systems, MCP servers, autonomous agents and custom tooling; prototype to production, not demos.</span></div>
-      <div class="cap"><span class="t"><span class="num">iii.</span>Product, brand &amp; service</span> <span class="d">— apps, websites, design systems, brand identity, customer journeys, retail experiences, editorial and motion.</span></div>
-      <div class="cap"><span class="t"><span class="num">iv.</span>Strategic partnership</span> <span class="d">— shoulder-to-shoulder with case teams; connecting design to the ambitions of CMOs, CFOs, CEOs and boards.</span></div>
-      <div class="cap"><span class="t"><span class="num">v.</span>Storytelling for complex audiences</span> <span class="d">— boardroom decks, investor narratives, customer journeys, brand storylines.</span></div>
-      <div class="cap"><span class="t"><span class="num">vi.</span>P&amp;L &amp; commercial design</span> <span class="d">— owning a regional studio P&amp;L; treating creative as an asset on the balance sheet.</span></div>
+      <div class="cap"><span class="t"><span class="num">i.</span><em>Agentic AI, hands-on</em></span> <span class="d">· multi-agent systems, MCP servers, autonomous agents, a native app, prototype to&nbsp;production.</span></div>
+      <div class="cap"><span class="t"><span class="num">ii.</span><em>Building the practice, not just the tool</em></span> <span class="d">· 33 nodes, a lab of 10 technologists, and 24 builders across squads who shipped a seven-product suite at my direction; playbooks and handover docs so it runs without&nbsp;me.</span></div>
+      <div class="cap"><span class="t"><span class="num">iii.</span>Teaching it so it sticks</span> <span class="d">· Power Up Weeks run region by region, plus the deep dives I write and&nbsp;deliver.</span></div>
+      <div class="cap"><span class="t"><span class="num">iv.</span>Design leadership at scale</span> <span class="d">· high-trust teams across regions and disciplines, coaching leaders into exceptional ones, across apps, websites, design systems, brand, journeys, editorial and&nbsp;motion.</span></div>
+      <div class="cap"><span class="t"><span class="num">v.</span>Strategic partnership &amp; commercial design</span> <span class="d">· shoulder-to-shoulder with case teams, MDPs and the C-suite; owning a studio P&amp;L, creative as a balance-sheet&nbsp;asset.</span></div>
     </section>
 
     <section class="side">
@@ -234,7 +245,7 @@
       <div class="award">
         <div class="t">Grow by Growing <em>Others</em></div>
         <div class="o">Boston Consulting Group</div>
-        <div class="d">BCG award for leaders who lift the people around them — mentorship, growing senior talent into leaders.</div>
+        <div class="d">BCG award for leaders who lift the people around them: mentorship, and growing senior talent into leaders.</div>
       </div>
       <div class="award">
         <div class="t">Ironman World Championship <em>(Hawaii)</em></div>
@@ -245,8 +256,7 @@
       <div class="sec-h" style="margin-top:11px;">Education &amp; Languages</div>
       <div class="edu-item"><span class="t">Mini-MBA, Business of Creativity</span> <span class="m">· Future London Academy · 2025</span></div>
       <div class="edu-item"><span class="t">Branding Now II</span> <span class="m">· Future London Academy · 2022</span></div>
-      <div class="edu-item"><span class="t">Lic. Diseño de Imagen Empresaria</span> <span class="m">· Univ. de Palermo · 2012–13</span></div>
-      <div class="edu-item"><span class="t">Diseñador Gráfico</span> <span class="m">· Univ. de Palermo · 2009–12</span></div>
+      <div class="edu-item"><span class="t">Lic. Diseño de Imagen Empresaria</span> <span class="m">· 2012–13</span> <span class="t">&amp; Diseñador Gráfico</span> <span class="m">· 2009–12 · Univ. de Palermo</span></div>
       <div class="langs"><b>Languages</b> · Español (native) · English (full professional)</div>
     </section>
   </div>

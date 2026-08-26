@@ -9,7 +9,8 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
 // ---- config ---------------------------------------------------------------
-const MODEL = "claude-sonnet-4-6";        // smarter than 4.5, still fast + cheap for a public toy
+const MODEL = "claude-sonnet-5";          // current Sonnet: fast, cheap enough for a public endpoint
+const FALLBACK_MODEL = "claude-haiku-4-5-20251001"; // if the primary is overloaded, still answer
 const MAX_TOKENS = 600;                    // keep answers short + cap cost per call
 const MAX_INPUT_CHARS = 800;               // a question, not an essay
 const MAX_HISTORY = 6;                     // turns of prior context we'll accept
@@ -100,8 +101,12 @@ function systemPrompt(kb) {
     "- If they seem to be hiring, scouting, or exploring an opportunity, get curious — the role, the team, what they want to build with design and AI. If it's a real lead, warmly offer to take it to email (estebangz@gmail.com).",
     "- Stay warm and never pushy. If they just want information, give it and stop.",
     "",
-    "WHO ESTEBAN IS — lead with BOTH pillars, never just 'the AI guy' or 'a coder':",
-    "- (1) a senior design leader who runs design as a strategic business capability that drives revenue and ROI — the foundation; and (2) someone who personally builds and leads agentic AI and grows the teams that scale it — the edge.",
+    "WHO ESTEBAN IS — three parts, and the third is the rare one. Never reduce him to 'the AI guy' or 'a coder':",
+    "- (1) A senior design leader who runs design as a commercial capability that moves revenue. This is the foundation.",
+    "- (2) Someone who genuinely builds, hands-on and to production: multi-agent systems, MCP servers, autonomous agents, a native app, this site and the agent you are.",
+    "- (3) Someone who turns that into a practice other people run. He leads 33 Creative AI nodes across the regions and a global lab of 10 creative technologists, orchestrated 24 builders across squads to ship a seven-product suite, wrote the playbooks, and teaches the deep dives. This is the part most AI-fluent leaders never reach, so lead with it whenever the question is about scale, leadership or impact.",
+    "- AI is HOW he leads, not what he is. He is not a CTO, not an engineer, not a resident prototyper. He builds the first working version so the direction is arguable rather than theoretical, then hands it to people who take it further.",
+    "- His written title is Creative Director and the job has outgrown the label. If someone asks 'so he's a creative director?', say yes, and then say what he actually runs. He is genuinely bad at selling himself, so let the numbers and the shipped things do the arguing, and never inflate them.",
     "",
     "CAPTURING A LEAD — you have a save_brief tool:",
     "- When a visitor is a genuine lead or wants follow-up and you've learned their name and what they want (ideally a contact too), call save_brief ONCE to hand it to the real Esteban.",
@@ -308,9 +313,9 @@ export default async function handler(req) {
 
   const messages = [...history, { role: "user", content: question }];
 
-  const buildBody = (convo) =>
+  const buildBody = (convo, model) =>
     JSON.stringify({
-      model: MODEL,
+      model,
       max_tokens: MAX_TOKENS,
       // Keep it fast + cheap (cost control): no extended thinking, low effort,
       // and cache the knowledge base (tools + system) so repeats bill at ~0.1x.
@@ -323,7 +328,7 @@ export default async function handler(req) {
       ],
       messages: convo,
     });
-  const callModel = (convo) =>
+  const callOnce = (convo, model) =>
     fetch(ANTHROPIC_URL, {
       method: "POST",
       headers: {
@@ -331,8 +336,17 @@ export default async function handler(req) {
         "x-api-key": process.env.ANTHROPIC_API_KEY,
         "anthropic-version": ANTHROPIC_VERSION,
       },
-      body: buildBody(convo),
+      body: buildBody(convo, model),
     });
+
+  // Try the primary model. If it's overloaded or rate-limited, fall back once to
+  // a second model so a visitor still gets an answer instead of an error.
+  const callModel = async (convo) => {
+    const primary = await callOnce(convo, MODEL);
+    if (primary.ok || ![429, 500, 502, 503, 529].includes(primary.status)) return primary;
+    console.warn("primary model", MODEL, "returned", primary.status, "; falling back to", FALLBACK_MODEL);
+    return callOnce(convo, FALLBACK_MODEL);
+  };
 
   try {
     const first = await callModel(messages);
@@ -340,7 +354,7 @@ export default async function handler(req) {
       const detail = await first.text().catch(() => "");
       console.error("Anthropic error", first.status, detail.slice(0, 300));
       return new Response(
-        JSON.stringify({ error: "I couldn't think straight just then — try again." }),
+        JSON.stringify({ error: "I couldn't think straight just then, try again." }),
         { status: 502, headers }
       );
     }
