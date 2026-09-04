@@ -357,6 +357,11 @@
     100% { box-shadow: 0 0 0 0 transparent; }
   }
 
+  /* Headlines already use text-wrap:balance. This is the body-copy half of the
+     same rule: pretty stops a single word stranding on a paragraph's last line.
+     Applied globally so it holds as copy is edited, not just where it was caught. */
+  p, li { text-wrap: pretty; }
+
   .hero-title {
     font-size: clamp(2.6rem, 6.5vw, 5rem); line-height: 1.0; max-width: 18ch;
     margin-bottom: 22px; letter-spacing: -0.025em;
