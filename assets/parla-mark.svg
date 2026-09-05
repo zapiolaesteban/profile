@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="512" height="512">
+  <rect width="100" height="100" rx="22" fill="#14140f"/>
+
+  <!-- Head + crest: one continuous silhouette. -->
+  <path d="M38 78
+           C 26 78, 18 68, 18 55
+           C 18 48, 20 42, 24 38
+           C 25 30, 28 22, 32 16
+           L 36 32
+           C 38 30, 40 29, 42 28
+           L 44 8
+           L 50 30
+           C 52 29.5, 54 29.5, 56 30
+           L 60 10
+           L 64 32
+           C 66 33, 68 34, 70 36
+           L 76 20
+           L 74 40
+           C 78 44, 80 49, 80 55
+           C 80 68, 70 78, 58 78
+           Z"
+        fill="#2B2A27"/>
+
+  <!-- Beak: one solid, chunky hooked mass — deliberately thick, not needle-thin, so it reads as
+       a beak rather than another crest spike. -->
+  <path d="M36 36
+           C 20 34, 6 40, 2 52
+           C 0 60, 6 68, 16 70
+           C 24 71, 30 66, 32 58
+           C 34 52, 34 44, 36 36
+           Z"
+        fill="#2B2A27"/>
+  <!-- The notch: a small wedge of the background colour cut into the beak near its tip,
+       separating the upper mandible (the mass above) from the lower (the point below). -->
+  <path d="M14 60 L30 56 L18 68 Z" fill="#14140f"/>
+
+  <!-- The one accent: a compact, contained cheek patch on the face, above the beak. -->
+  <ellipse cx="44" cy="46" rx="8.5" ry="9" fill="#D8442E"/>
+
+  <!-- Negative-space eye. -->
+  <circle cx="46" cy="32" r="2.6" fill="#14140f"/>
+</svg>
