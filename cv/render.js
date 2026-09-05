@@ -26,7 +26,7 @@ try {
   try { await page.evaluate(() => document.fonts.ready); } catch(e){}
   await new Promise(r => setTimeout(r, 400));
   const foot = `<div style="width:100%; font-family:'JetBrains Mono',monospace; font-size:6.6pt; color:#A8A6A0; padding:0 14mm; display:flex; justify-content:space-between; align-items:center; -webkit-print-color-adjust:exact;">
-    <span>Esteban Gimenez Zapiola &nbsp;·&nbsp; Global Creative Director &amp; Creative AI Lead</span>
+    <span>Esteban Gimenez Zapiola &nbsp;·&nbsp; Creative Director &amp; Creative AI Lead</span>
     <span>estebangz.com &nbsp;·&nbsp; <span class="pageNumber"></span>/<span class="totalPages"></span></span>
   </div>`;
   await page.pdf({ path: path.join(__dirname,'..','Esteban-Gimenez-Zapiola-Creative-Director-CV.pdf'),

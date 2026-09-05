@@ -36,7 +36,7 @@
       "name": "Esteban Gimenez Zapiola",
       "givenName": "Esteban",
       "familyName": "Gimenez Zapiola",
-      "jobTitle": "Global Creative Director & Creative AI Lead",
+      "jobTitle": "Creative Director & Creative AI Lead",
       "worksFor": {
         "@type": "Organization",
         "name": "Boston Consulting Group",
@@ -356,6 +356,11 @@
     70% { box-shadow: 0 0 0 9px transparent; }
     100% { box-shadow: 0 0 0 0 transparent; }
   }
+
+  /* Headlines already use text-wrap:balance. This is the body-copy half of the
+     same rule: pretty stops a single word stranding on a paragraph's last line.
+     Applied globally so it holds as copy is edited, not just where it was caught. */
+  p, li { text-wrap: pretty; }
 
   .hero-title {
     font-size: clamp(2.6rem, 6.5vw, 5rem); line-height: 1.0; max-width: 18ch;
@@ -892,9 +897,9 @@
 
     <div class="about-grid">
       <div class="about-prose reveal">
-        <p class="about-lead"><em>I build the thing, then I lead the team that scales it.</em></p>
+        <p class="about-lead"><em>I build the thing, then I lead the team that&nbsp;scales&nbsp;it.</em></p>
 
-        <p><strong>I run the Global Creative AI practice at BCG Design Studios.</strong> I founded it, I lead it, and I authored the "Creative Advantage" proposal that positions the studio as the firm's Creative AI centre of excellence. Today that means <strong>33 nodes across the regions</strong> and a <strong>global lab of 10 creative technologists</strong>, taking tools from proof-of-concept to working internal product. My formal title is Global Creative Director. I own the ANZ Creative Studio P&amp;L and sit on the global Design Studios leadership team, and I am the only creative director here carrying a region, a global craft remit and a global transformation programme at the same time.</p>
+        <p><strong>I run the Global Creative AI practice at BCG Design Studios.</strong> I founded it, I lead it, and I authored the "Creative Advantage" proposal that positions the studio as the firm's Creative AI centre of excellence. Today that means <strong>33 nodes across the regions</strong> and a <strong>global lab of 10 creative technologists</strong>, taking tools from proof-of-concept to working internal product. I own the ANZ Creative Studio P&amp;L and sit on the global Design Studios leadership team.</p>
 
         <p><strong>I write and ship agentic software, hands-on.</strong> Multi-agent systems, MCP servers, autonomous scheduled agents, a native app, custom tooling, prototype through to production. But the building is how I lead, not what I am. I write the first working version so the direction is arguable instead of theoretical, then hand it to people who take it further. The seven-product suite is the clearest case: I shaped it, <strong>24 builders coded it in squads</strong> at my orchestration, and it shipped with handover docs so it runs without me.</p>
 
@@ -904,7 +909,7 @@
 
         <p><strong>Before BCG: almost 7 years at <span>Endeavour Group</span></strong>, where I arrived as a senior designer and left as Creative Lead for Endeavour Drinks, running Dan Murphy's, the group's biggest account and Australia's largest drinks retailer. I built and governed the design system, led the site restyle that roughly doubled the audience, launched the app, created sub-brands, and helped grow a small in-house team into a full agency.</p>
 
-        <p class="about-closer" style="color:var(--ink);"><em>I won't hand work off without a working prototype. Then I hand the craft to people who can take it further than I can.</em></p>
+        <p class="about-closer" style="color:var(--ink);"><em>I won't hand work off without a working prototype. Then I hand the craft to people who can take it further than&nbsp;I&nbsp;can.</em></p>
       </div>
 
       <aside class="pull-card reveal" aria-label="How I operate">
@@ -926,7 +931,7 @@
 <section class="thesis" aria-label="Operating principle">
   <div class="wrap">
     <div class="sec-num reveal"><strong>02</strong> &nbsp;/&nbsp; Operating principle</div>
-    <p class="thesis-quote reveal">Design isn't art. It's a <em>discipline</em> that moves revenue.</p>
+    <p class="thesis-quote reveal">Design isn't art. It's a <em>discipline</em> that moves&nbsp;revenue.</p>
     <div class="thesis-attr reveal">— My career thesis, 18 years in the making</div>
   </div>
 </section>
@@ -1017,7 +1022,7 @@
       <article class="build reveal">
         <div class="build-tag">Systems others build on</div>
         <h3>Two deck engines, a design-system layer and a UX skill set</h3>
-        <p>Any source document, a PowerPoint, a PDF, a Word file or a pile of notes, becomes a finished on-brand presentation. Beside it: a token and stylesheet layer in light and dark that is now the standard for the studio's pages, and a nine-skill UX/UI system handed to the design team covering review, patterns, microcopy, dashboards and agent-specific UX.</p>
+        <p>Any source document, a PowerPoint, a PDF, a Word file or a pile of notes, becomes a finished on-brand presentation. Beside it: a token and stylesheet layer in light and dark that is now the standard for the studio's pages, and a nine-skill UX/UI system handed to the design team covering review, patterns, microcopy, dashboards and agent-specific&nbsp;UX.</p>
       </article>
 
       <article class="build build-lead reveal">
@@ -1073,14 +1078,14 @@
           <span class="xp-dates">Nov 2024 — Present</span>
           <span class="xp-loc">Sydney · Global</span>
         </div>
-        <h3 class="xp-title">Global Creative Director &amp; <em>Creative AI Lead</em></h3>
+        <h3 class="xp-title">Creative Director &amp; <em>Creative AI Lead</em></h3>
         <p class="xp-tag">Running the Creative AI practice, and building the systems behind it, hands-on.</p>
         <ul class="xp-points">
           <li><strong>Founded and run</strong> BCG Design Studios' Global Creative AI practice, and authored the <em>"Creative Advantage"</em> proposal positioning the studio as the firm's Creative AI centre of excellence.</li>
-          <li><strong>Lead 33 Creative AI nodes across the regions and a global lab of 10 creative technologists</strong>, taking tools from proof-of-concept to working internal product. I designed the structure, defined the roles and wrote the playbook so a node runs without me.</li>
+          <li><strong>Lead the Creative AI practice across 33 nodes in the regions and a global lab of 10 creative technologists</strong>, taking tools from proof-of-concept to working internal product. Functional leadership for Creative AI is mine; people leadership sits with the regional managers. I designed the structure, defined the roles and wrote the playbook so a node runs without me.</li>
           <li><strong>Orchestrated 24 builders across squads</strong> to ship a seven-product self-serve suite, shipped with handover docs and briefed to owners in other regions.</li>
           <li><strong>Designed and ran the Power Up Weeks region by region</strong> through the regional leads, plus the deep-dive curriculum: graph engineering, context engineering, prompt engineering, agent loops and building agents in Claude and GPT.</li>
-          <li><strong>Conceived and ran a global Creative AI hackathon end to end</strong> out of London: the participant platform, timed mission unlocks, RSVP automation and an automated skill-review pipeline.</li>
+          <li><strong>Conceived and ran a global Creative AI hackathon end to end</strong> out of London: the participant platform, timed mission unlocks, RSVP automation and an automated skill-review&nbsp;pipeline.</li>
           <li><strong>Build and ship agentic AI personally</strong>: multi-agent systems, MCP servers, autonomous scheduled agents, a native macOS app, and a report engine that typesets long-form publications from their source document.</li>
           <li><strong>Lead across six disciplines</strong>, being experience, visualisation, print, video and motion, editorial and presentation, connecting 400+ designers worldwide.</li>
           <li>Pitched, launched and executive-produce <strong>Business and Beyond</strong>, BCG ANZ's flagship video podcast.</li>
@@ -1122,7 +1127,7 @@
           </div>
           <h3 class="xp-title">Senior UX/UI &amp; Creative Generalist</h3>
           <p class="xp-tag">Art direction · UX/UI · front-end · client lead</p>
-          <p class="xp-note">A full-stack creative generalist across agencies in two countries, plus wayfinding for airports and retail. (And three seasons as a PSIA-certified ski instructor in Colorado, because discipline shows up everywhere.)</p>
+          <p class="xp-note">A full-stack creative generalist across agencies in two countries, plus wayfinding for airports and retail. (And three seasons as a PSIA-certified ski instructor in Colorado, because discipline shows up&nbsp;everywhere.)</p>
         </article>
       </div>
 
@@ -1176,7 +1181,7 @@
       <div class="honour reveal">
         <div class="h-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></div>
         <h3>Ironman World Championship</h3>
-        <p>Qualified for Hawaii. Multiple 70.3 age-group wins.</p>
+        <p>Qualified for Hawaii. Multiple 70.3 age-group&nbsp;wins.</p>
       </div>
       <div class="honour reveal">
         <div class="h-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>

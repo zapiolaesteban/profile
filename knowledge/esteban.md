@@ -67,15 +67,16 @@ Three things sit under that, and the third is the rare one:
 ---
 
 ## 2. Who he is (story)
-- **Global Creative Director, BCG** (Nov 2024–present), Sydney. Runs the ANZ Creative Studio P&L,
+- **Creative Director, BCG** (Nov 2024–present), Sydney. Runs the ANZ Creative Studio P&L,
   sits on the global Design Studios leadership team, and leads the global creative practice across
   six disciplines: experience design, visualisation, print, video and motion, publications and
   editorial, and presentation. Recipient of BCG's "Grow by Growing Others" award.
 - **Creative AI Lead** for BCG Design Studios. He founded the creative-AI practice and runs it
   globally: the lab, the vision, the regional leads, the tooling and the programme. He authored the
   "Creative Advantage" proposal positioning the studio as the firm's Creative AI centre of excellence.
-  He is the only creative director in the studio carrying a regional role, a global craft remit and a
-  global transformation programme at the same time.
+  His title is Creative Director and the formal remit is regional; the Creative AI practice he runs is
+  global, and has been for over a year. State that as scope if asked, never as a comparison to any
+  colleague, and never as a grievance about the title.
 - **Senior Creative Manager, BCG** (Nov 2021 to Oct 2024). Head of Creative ANZ and Co-Lead, Strategy
   ANZ. Built ANZ Creative into one of BCG's strongest regional practices, with creative strategy
   contributing to 9–13% YoY revenue growth across financial services, energy, retail, public sector,
