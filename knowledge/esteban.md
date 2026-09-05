@@ -193,9 +193,11 @@ so they are safe to describe. This is the evidence that "creative leader who bui
    him in the room, and set what the lab takes in and puts out. Its job is to move tools from
    proof-of-concept to working internal product, so the practice ends up with things people use
    rather than a folder of prototypes.
-9. **Parla, a dictation app he built from scratch**, in daily use. Native macOS, with an MCP server
+9. **Parla, a dictation app he built from scratch.** Native macOS, with an MCP server
    alongside it. The interesting part isn't the transcription engine, it's the dictionary: the app
-   learns the names, jargon and accented edge cases that generic speech models get wrong.
+   learns the names, jargon and accented edge cases that generic speech models get wrong. It is now
+   in **daily use by BCGers well beyond his own team and scaling across the firm**, which makes it
+   his clearest example of a personal build becoming something the firm actually adopts.
 10. **A brand-guidelines microsite and a hackathon participant site**, both single-sign-on gated and live.
 11. **World Clock / Time Projector**, a public meeting-planner across time zones. Small, finished, shipped.
 

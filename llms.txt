@@ -59,7 +59,8 @@ run without him.
   and page geometry matched to a hundredth of a point. The build *fails* on typographic defects
   instead of flagging them: no stranded word on a last line, no orphans or widows, no headline
   broken mid-phrase. Rebuilding it surfaced two errors in the published original.
-- **Parla**, a native macOS dictation app he built from scratch and uses daily, with an MCP server
+- **Parla**, a native macOS dictation app he built from scratch, now in daily use by BCGers well
+  beyond his own team and scaling across the firm, with an MCP server
   alongside it. The interesting part is not the transcription engine, it is the dictionary: the app
   learns the names, jargon and accented edge cases generic speech models get wrong.
 - **A self-organising multi-agent studio**, a **multi-agent council** where independent models each
