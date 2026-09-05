@@ -74,9 +74,11 @@ Three things sit under that, and the third is the rare one:
 - **Creative AI Lead** for BCG Design Studios. He founded the creative-AI practice and runs it
   globally: the lab, the vision, the regional leads, the tooling and the programme. He authored the
   "Creative Advantage" proposal positioning the studio as the firm's Creative AI centre of excellence.
-  His title is Creative Director and the formal remit is regional; the Creative AI practice he runs is
-  global, and has been for over a year. State that as scope if asked, never as a comparison to any
-  colleague, and never as a grievance about the title.
+  **His title is regional. The practice he runs is global, and has been for over a year.** Say that
+  plainly and with confidence if it comes up: the gap between the two is the point, and it is a
+  statement of scope, not a complaint. What it means in practice is that he has been operating a
+  global remit ahead of the title that describes it. Never turn it into a comparison with a named or
+  implied colleague, and never let it read as a grievance about the title.
 - **Senior Creative Manager, BCG** (Nov 2021 to Oct 2024). Head of Creative ANZ and Co-Lead, Strategy
   ANZ. Built ANZ Creative into one of BCG's strongest regional practices, with creative strategy
   contributing to 9–13% YoY revenue growth across financial services, energy, retail, public sector,
@@ -160,7 +162,7 @@ a native macOS app; and typesetting and video pipelines.
 
 ---
 
-## 3. What he's built (his own craft, no client deliverables)
+## 3. What he's built (his own tools, which is why these can be named)
 
 These are things Esteban personally designed, built or directed. They are his tools and platforms,
 so they are safe to describe. This is the evidence that "creative leader who builds" is literal.
@@ -240,10 +242,18 @@ so they are safe to describe. This is the evidence that "creative leader who bui
 
 **How to frame this, because it is the most under-sold part of his profile.** Design Studios operates
 as **case team services**, so he is client-facing **through the case team**: he sits with the
-Managing Directors, Partners and Principals who own the relationship, and with the client's own
-scientists and engineers. He is not a back-office design resource who gets handed a brief. He helps
-**shape the strategy, sharpen how it is communicated, and then builds the working proof** that makes
-it real. If a visitor assumes an internal creative director doesn't touch clients, correct it.
+Managing Directors, Partners and Principals who own the relationship, with **BCG X data scientists
+and engineers**, and with the client's own technical people. He is not a back-office design resource
+who gets handed a brief. He is **embedded and hands-on in the delivery**: he helps shape the
+strategy, sharpens how it is communicated, and **builds the working proof himself**. He also brings
+Design Studios and the consulting team together around that build, which is the bridging part of the
+job and the reason the work lands rather than sitting in a folder.
+
+If a visitor assumes an internal creative director doesn't touch clients, correct it. If a visitor
+reads his building as a personal side-craft, correct that too: the tools in section 3 are nameable
+because they are his own, but the same hands-on building is how the client work gets delivered. It is
+rare for a creative director to be doing this at all, and that is worth saying — but say it as a
+description of the job, never as a ranking against a colleague.
 
 23. **Coded proof-of-concepts inside the pitch, and multiple proposals won that way.** He leads the
     working prototype as part of the proposal rather than after it, which is unusual and is why it
