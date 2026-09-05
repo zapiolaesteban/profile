@@ -610,48 +610,74 @@
   .thesis-quote em { color: var(--accent); font-style: italic; }
   .thesis-attr { font-family: var(--font-mono); font-size: 13px; color: var(--ink-mute); margin-top: 24px; }
 
-  /* Builds */
-  .builds-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 18px; }
+  /* Builds — a horizontal rail. Chosen over a grid because 18 stacked text cards
+     read as a wall; 8 cards with a visual anchor read as a gallery. Vertical
+     scrolling is never intercepted: this is plain overflow-x + scroll-snap. */
+  .builds-railwrap { margin-top: 26px; }
+  .rail-controls { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+  .rail-hint { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em;
+    text-transform: uppercase; color: var(--ink-mute); margin: 0; }
+  .rail-btns { display: flex; gap: 8px; flex-shrink: 0; }
+  .rail-btn {
+    width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center;
+    background: transparent; border: 1px solid var(--rule); color: var(--ink-soft);
+    cursor: pointer; transition: border-color 0.25s var(--ease), color 0.25s var(--ease);
+  }
+  .rail-btn svg { width: 17px; height: 17px; }
+  .rail-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+  .rail-btn:disabled { opacity: 0.3; cursor: default; }
+  .rail-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .builds-rail {
+    display: grid; grid-auto-flow: column; grid-auto-columns: min(84vw, 380px);
+    gap: 18px; overflow-x: auto; overflow-y: hidden;
+    scroll-snap-type: x mandatory; scroll-behavior: smooth;
+    padding: 4px 4px 18px; margin: -4px -4px 0;
+    scrollbar-width: thin; scrollbar-color: var(--rule-strong) transparent;
+    overscroll-behavior-x: contain;   /* stop the swipe escaping to page history */
+  }
+  .builds-rail:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 18px; }
+  .builds-rail::-webkit-scrollbar { height: 6px; }
+  .builds-rail::-webkit-scrollbar-thumb { background: var(--rule-strong); border-radius: 3px; }
+
   .build {
-    background: var(--paper-card); border: 1px solid var(--rule); border-radius: 16px;
-    padding: 24px 24px 24px 27px; display: flex; flex-direction: column; position: relative; overflow: hidden;
-    transition: transform 0.4s var(--ease), border-color 0.3s var(--ease), box-shadow 0.4s var(--ease);
+    scroll-snap-align: start; background: var(--paper-card); border: 1px solid var(--rule);
+    border-radius: 16px; overflow: hidden; display: flex; flex-direction: column;
+    transition: border-color 0.3s var(--ease);
   }
-  /* Accent strip — scales in when card is the scroll focus, or on hover */
-  .build::before {
-    content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
-    background: linear-gradient(var(--accent-bright), var(--accent));
-    transform: scaleY(0); transform-origin: top; transition: transform 0.45s var(--ease);
-  }
-  .build:hover { transform: translateY(-4px); border-color: var(--rule-strong); box-shadow: 0 18px 44px -26px var(--shadow); }
-  .build:hover::before, .build.is-active::before { transform: scaleY(1); }
-  .build.is-active { border-color: var(--rule-strong); }
+  .build:hover { border-color: var(--rule-strong); }
+
+  .build-media { aspect-ratio: 16 / 10; background: var(--paper-deep); border-bottom: 1px solid var(--rule);
+    display: grid; place-items: center; overflow: hidden; }
+  .build-media img { width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block; }
+  .build-media--stat { flex-direction: column; text-align: center; padding: 18px; gap: 6px; }
+  .stat-a { display: block; font-family: var(--font-display); font-size: clamp(2.4rem, 6vw, 3.4rem);
+    line-height: 1; color: var(--ink); }
+  .stat-b { display: block; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em;
+    text-transform: uppercase; color: var(--ink-mute); max-width: 22ch; }
+
+  .build-body { padding: 20px 22px 24px; display: flex; flex-direction: column; }
   .build-tag {
     font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 13px; display: inline-flex; align-items: center; gap: 7px;
+    color: var(--accent); margin-bottom: 11px; display: inline-flex; align-items: center; gap: 7px;
   }
-  .build-tag .live { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-bright); }
-  .build h3 { font-size: 1.18rem; font-family: var(--font-display); margin-bottom: 10px; line-height: 1.2; }
-  .build p { font-size: 14.5px; color: var(--ink-mute); line-height: 1.55; margin-bottom: 14px; flex: 1; }
+  .build-tag .live { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-bright); flex-shrink: 0; }
+  .build h3 { font-size: 1.12rem; font-family: var(--font-display); margin-bottom: 9px; line-height: 1.22; }
+  .build p { font-size: 14px; color: var(--ink-mute); line-height: 1.58; margin: 0; }
   .build p strong { color: var(--ink-soft); font-weight: 600; }
-  .build-link {
-    font-size: 13px; font-weight: 500; color: var(--accent); display: inline-flex; align-items: center; gap: 6px;
-  }
-  .build-link svg { width: 13px; height: 13px; }
 
-  /* Featured lead build — the site itself, given a wide editorial treatment */
-  .build-lead { grid-column: 1 / -1; }
-  .build-lead::before { transform: scaleY(1); }
-  .build-lead h3 { font-size: clamp(1.3rem, 2.4vw, 1.9rem); }
-  @media (min-width: 760px) {
-    .build-lead {
-      display: grid; grid-template-columns: 1.05fr 1fr;
-      column-gap: clamp(28px, 5vw, 60px); align-items: center;
-      padding: clamp(30px, 4vw, 44px);
-    }
-    .build-lead .build-tag { grid-column: 1; grid-row: 1; margin-bottom: 14px; }
-    .build-lead h3 { grid-column: 1; grid-row: 2; margin-bottom: 0; }
-    .build-lead p { grid-column: 2; grid-row: 1 / 3; align-self: center; margin: 0; font-size: 15.5px; }
+  .rail-progress { height: 2px; background: var(--rule); border-radius: 2px; overflow: hidden; margin-top: 2px; }
+  .rail-progress-bar { display: block; height: 100%; width: 0; background: var(--accent);
+    transition: width 0.2s linear; }
+
+  .builds-also { margin-top: 22px; font-size: 13.5px; line-height: 1.6; color: var(--ink-mute); max-width: 92ch; }
+  .builds-also span { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em;
+    text-transform: uppercase; color: var(--ink-soft); margin-right: 8px; }
+  .builds-also a { color: var(--accent); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .builds-rail { scroll-behavior: auto; }
+    .build, .rail-btn { transition: none; }
   }
 
   /* Experience — editorial cards: a featured lead role + supporting roles */
@@ -945,120 +971,113 @@
       <p style="color:var(--ink-mute);margin-top:18px;max-width:62ch;">These are my own tools, which is why I can show them. The client work runs the same way and stays confidential. I am embedded in the case team, building the prototype and the POC with BCG X data scientists and engineers and the client's own technical people, and bringing the studio and the consulting team with&nbsp;me.</p>
     </div>
 
-    <div class="builds-grid">
+  <div class="builds-railwrap reveal">
+    <div class="rail-controls">
+      <p class="rail-hint" id="rail-hint">Drag, scroll sideways, or use the arrow keys.</p>
+      <div class="rail-btns">
+        <button type="button" class="rail-btn" data-dir="-1" aria-label="Previous build" aria-controls="builds-rail">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button type="button" class="rail-btn" data-dir="1" aria-label="Next build" aria-controls="builds-rail">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </div>
 
-      <article class="build build-lead reveal">
+    <div class="builds-rail" id="builds-rail" tabindex="0" role="region"
+         aria-label="Things I built, horizontally scrollable" aria-describedby="rail-hint">
+    <article class="build" id="build-1" role="group" aria-roledescription="slide" aria-label="1 of 8">
+      <div class="build-media build-media--stat" aria-hidden="true">
+        <span class="stat-a">33</span>
+        <span class="stat-b">nodes across the regions</span>
+      </div>
+      <div class="build-body">
         <div class="build-tag"><span class="live"></span>The programme I run</div>
         <h3>A global Creative AI practice, and the people who run it</h3>
-        <p>I founded it and I lead it: <strong>33 Creative AI nodes across the regions</strong> and a <strong>global lab of 10 creative technologists</strong>, whose job is to take a tool from proof-of-concept to a working internal product. Under that sits a <strong>seven-product self-serve suite that 24 builders coded in squads</strong> at my orchestration, shipped with handover docs and briefed to named owners in other regions so it runs without me. I also wrote the playbook, so a node can operate with me out of the room.</p>
-      </article>
-
-      <article class="build reveal">
+        <p>I founded it and I lead it. Functional leadership for Creative AI is mine; people leadership sits with the regional managers. I wrote the playbook so a node runs with me out of the room.</p>
+      </div>
+    </article>
+    <article class="build" id="build-2" role="group" aria-roledescription="slide" aria-label="2 of 8">
+      <div class="build-media build-media--stat" aria-hidden="true">
+        <span class="stat-a">every</span>
+        <span class="stat-b">region, not just one</span>
+      </div>
+      <div class="build-body">
         <div class="build-tag">Upskilling, globally</div>
         <h3>Power Up Weeks, run region by region</h3>
-        <p>I designed and orchestrated them, then ran them <strong>through the regional leads rather than myself</strong>, so the whole practice got hands-on with AI in its own timezone instead of watching one central webinar. Alongside them I write and teach the deep dives. <strong>Graph engineering</strong> is the core one: map a real workflow into stages and nodes, lay the orchestration over it, prove the path runs, then automate it as a loop. The rest cover context engineering, prompt engineering, agent loops, building agents in Claude and in GPT, and how to build your own AI employee.</p>
-      </article>
-
-      <article class="build reveal">
-        <div class="build-tag">Delivered · global</div>
-        <h3>A global Creative AI hackathon, conceived and built end to end</h3>
-        <p>Run out of London for the firm's creative community worldwide. I built the whole participant experience: the agenda, timed auto-unlock mission cards, RSVP automation, <strong>and a skill-sharing library with an automated review pipeline behind it</strong>. Contributors drop in a skill, an automated reviewer assesses it against a published bar, and on approval it publishes to the library.</p>
-      </article>
-
-      <article class="build reveal">
+        <p>Designed by me, then run <strong>through the regional leads rather than by me</strong>, so every region got hands-on in its own timezone instead of watching one central webinar.</p>
+      </div>
+    </article>
+    <article class="build" id="build-3" role="group" aria-roledescription="slide" aria-label="3 of 8">
+      <div class="build-media build-media--stat" aria-hidden="true">
+        <span class="stat-a">49</span>
+        <span class="stat-b">skills, reviewed and published</span>
+      </div>
+      <div class="build-body">
         <div class="build-tag">Skills marketplace</div>
-        <h3>A shared library of 49 skills, with an AI reviewer on the door</h3>
-        <p>The thing that turned my own tooling into something a whole practice contributes to. Drop, automated review, approve, publish. <strong>49 skills in it</strong>, and a live tracker carrying <strong>79 cards of work across 15 owners</strong> so everyone can see what is being built and by whom.</p>
-      </article>
-
-      <article class="build reveal">
-        <div class="build-tag"><span class="live"></span>Live · you're using it</div>
-        <h3>This site and the agent you just spoke to</h3>
-        <p>Hand-built. The agent is grounded on a knowledge base I maintain by hand, answers by voice or text, streams token by token, and runs on a serverless function with my own guardrails. You are not reading a claim that I build agentic AI. You are talking to one.</p>
-      </article>
-
-      <article class="build reveal">
+        <h3>A library of 49 skills, with an AI reviewer on the door</h3>
+        <p>Drop a skill, an automated reviewer scores it against a published bar, approved work publishes. A live tracker carries <strong>79 cards across 15 owners</strong>.</p>
+      </div>
+    </article>
+    <article class="build" id="build-4" role="group" aria-roledescription="slide" aria-label="4 of 8">
+      <div class="build-media build-media--stat" aria-hidden="true">
+        <span class="stat-a">you</span>
+        <span class="stat-b">are talking to the proof</span>
+      </div>
+      <div class="build-body">
+        <div class="build-tag"><span class="live"></span>Live · you are using it</div>
+        <h3>This site, and the agent you just spoke to</h3>
+        <p>Hand-built. Grounded on a knowledge base I maintain by hand, answers by voice or text, streams token by token, runs on a serverless function with my own guardrails.</p>
+      </div>
+    </article>
+    <article class="build" id="build-5" role="group" aria-roledescription="slide" aria-label="5 of 8">
+      <div class="build-media">
+        <img src="assets/parla-app.jpg" alt="The Parla settings pane, running on macOS" loading="lazy" decoding="async" width="1200" height="820">
+      </div>
+      <div class="build-body">
         <div class="build-tag">Native app · scaling across the firm</div>
         <h3>Parla, a dictation app I built from scratch</h3>
-        <p>Native macOS, with an MCP server alongside it. The transcription engine is the easy part. <strong>The dictionary is the product</strong>: it learns the names, the jargon and the accented edge cases that generic speech models reliably get wrong. It is now in <strong>daily use by BCGers well beyond my own team</strong>, and scaling across the&nbsp;firm.</p>
-      </article>
-
-      <article class="build reveal">
+        <p>Native macOS, with an MCP server beside it. The transcription engine is the easy part. <strong>The dictionary is the product</strong>: it learns the names, jargon and accented edge cases generic speech models get wrong. In daily use by BCGers well beyond my own team.</p>
+      </div>
+    </article>
+    <article class="build" id="build-6" role="group" aria-roledescription="slide" aria-label="6 of 8">
+      <div class="build-media build-media--stat" aria-hidden="true">
+        <span class="stat-a">40pp</span>
+        <span class="stat-b">and no InDesign in the loop</span>
+      </div>
+      <div class="build-body">
         <div class="build-tag">Publications &amp; editorial</div>
         <h3>A report engine that typesets from the source document</h3>
-        <p>I rebuilt a 40-page report straight from its original Word file, with <strong>no InDesign in the loop</strong>. Real brand fonts embedded, page geometry matched to within a hundredth of a point, exhibits rebuilt as vector from their source geometry. The build <strong>fails</strong> on typographic defects instead of flagging them, so no word is ever stranded on a last line and no headline breaks mid-phrase. Rebuilding it also surfaced two errors in the published original.</p>
-      </article>
-
-      <article class="build reveal">
-        <div class="build-tag">Video, cut in code</div>
-        <h3>An AI video pipeline, from stills to a finished MP4</h3>
-        <p>Headless-browser frames, generated voiceover, motion, a music bed and the final cut, end to end and repeatable. <strong>I edit video from the terminal</strong> rather than in an editing suite. It produced the 90-second film for the practice launch, and there is a motion engine for branded GIFs and MP4s beside it, plus a read-along tool that plays a script with word-by-word highlighting so it can be judged before anything is shot.</p>
-      </article>
-
-      <article class="build reveal">
-        <div class="build-tag">Multi-agent org</div>
-        <h3>A self-organising "Creative AI Studio"</h3>
-        <p>I stood up a small AI organisation: a CEO agent that hired an HR agent, which recruits specialist agents, engineers and a deep-research agent, into a team I direct. <strong>I set the goals and the agents collaborate to deliver.</strong> It helped power the hackathon.</p>
-      </article>
-
-      <article class="build reveal">
-        <div class="build-tag">Multi-agent system</div>
-        <h3>An "LLM Council"</h3>
-        <p>Several independent models each draft a plan, get anonymised and shuffled, and a judge model merges them into one, which makes the answer resistant to any single model's bias. <strong>I used it to pressure-test this very site's repositioning.</strong></p>
-      </article>
-
-      <article class="build reveal">
-        <div class="build-tag">Executive-assistant agent</div>
-        <h3>"Monday", my daily EA agent</h3>
-        <p>One terminal command: it searches my email and calendar, <strong>triages everything into P1/P2/P3</strong>, surfaces flags and who's away, and summarises threads. It drafts replies and suggests the right kind of response, then keeps a <strong>human in the loop</strong> by opening Outlook so I decide and send. I use it daily.</p>
-      </article>
-
-      <article class="build reveal">
-        <div class="build-tag">Personal infrastructure</div>
-        <h3>A portable, version-controlled AI operating system</h3>
-        <p>A full Claude Code setup backed by a private repo so it survives any machine: dozens of custom skills and slash-commands, MCP integrations, autonomous scheduled agents including a weekly one that audits and self-maintains the whole setup unattended, and clone-survivable git safety hooks with automated secret-scanning. Plus a terminal email sender with several visual templates, which runs my event invites and RSVP tracking.</p>
-      </article>
-
-      <article class="build reveal">
-        <div class="build-tag">Systems others build on</div>
-        <h3>Two deck engines, a design-system layer and a UX skill set</h3>
-        <p>Any source document, a PowerPoint, a PDF, a Word file or a pile of notes, becomes a finished on-brand presentation. Beside it: a token and stylesheet layer in light and dark that is now the standard for the studio's pages, and a nine-skill UX/UI system handed to the design team covering review, patterns, microcopy, dashboards and agent-specific&nbsp;UX.</p>
-      </article>
-
-      <article class="build build-lead reveal">
+        <p>A 40-page report rebuilt straight from its Word file. The build <strong>fails</strong> on typographic defects instead of flagging them. Rebuilding it surfaced two errors in the published original.</p>
+      </div>
+    </article>
+    <article class="build" id="build-7" role="group" aria-roledescription="slide" aria-label="7 of 8">
+      <div class="build-media build-media--stat" aria-hidden="true">
+        <span class="stat-a">5</span>
+        <span class="stat-b">sectors where it won work</span>
+      </div>
+      <div class="build-body">
         <div class="build-tag">Client work · by sector only</div>
-        <h3>Coded proof-of-concepts inside the pitch, and we won the work</h3>
-        <p>Design Studios runs as case team services, so I am client-facing <strong>through the case team</strong>: alongside the MDs, Partners and Principals who own the relationship, alongside <strong>BCG X data scientists and engineers</strong>, and alongside the client's own technical people. I am <strong>the only creative director in Design Studios running a global Creative AI programme while also delivering client work hands-on with ANZ case teams</strong>, building the working proof myself rather than briefing it from the studio. I help shape the strategy and sharpen how it is told, then <strong>build the working proof that makes it real</strong>, inside the proposal rather than after it, and I bring the studio and the consulting team together around it. <strong>Multiple proposals have been won that way</strong>, across <strong>agri-food</strong>, <strong>energy</strong>, <strong>convenience retail</strong>, <strong>beverages</strong> and <strong>banking</strong>, with one opening a pipeline that is still running. The win is never one person's. It is what happens when deep BCG strategy gets combined with design and creative craft in the business, and it shows up as delivery and revenue rather than adjectives.</p>
-      </article>
-
-      <article class="build reveal">
-        <div class="build-tag">Resources sector</div>
-        <h3>A scientist team's agentic tool, turned into something usable</h3>
-        <p>A client's own scientific team had built a genuinely working agentic tool with no interface worth using. I did the <strong>UI and front-end uplift</strong>, then handed it on to a team of around <strong>10 specialists with a proper brief</strong>, which they had never been given before. I also made a <strong>video demo</strong>, so the work could travel to people who were never in the room. That is the pattern I am best at: take something technically real but unusable, make it land, and leave a team able to run it.</p>
-      </article>
-
-      <article class="build reveal">
-        <div class="build-tag">Prototype to production</div>
-        <h3>Agentic tools taken all the way into production</h3>
-        <p>In <strong>mining</strong>, a field-maintenance scoping tool from concept through to production handoff, embedded with the engineering team. For an <strong>aviation ground-services operator in Asia</strong>, I delivered the whole proposal: a pitch site, a film, and a <strong>working product POC connected to real data</strong>. Client-approved. For an <strong>automotive brand</strong>, a pitch microsite you can question out loud instead of reading. Client identities stay confidential, so the craft has to be the point.</p>
-      </article>
-
-      <article class="build reveal">
-        <div class="build-tag">Unblocking</div>
-        <h3>Getting it built, and keeping it safe</h3>
-        <p>Most creative leaders stall at enterprise IT. I <strong>found and closed a Critical security exposure on our own hosting</strong>, a publicly readable git directory, and the fix is now standard practice for the team. I drove a subdomain and single-sign-on path through IT for 30+ gated users, and I work directly with global cyber security on what the firm can actually stand up, so the next person doesn't spend three months finding out.</p>
-      </article>
-
-      <article class="build reveal">
-        <div class="build-tag">Public app</div>
-        <h3>World Clock / Time Projector</h3>
-        <p>A meeting-planner across time zones. Public and linkable, and a small finished thing rather than a demo.</p>
-        <a class="build-link" href="https://www.estebangz.com/world-clock/v2/" target="_blank" rel="noopener">Open it
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
-        </a>
-      </article>
-
+        <h3>Coded proof-of-concepts inside the pitch</h3>
+        <p>Embedded in the case team with BCG X data scientists and engineers and the client's own technical people. Proposals won across agri-food, energy, convenience retail, beverages and banking. The win is never one person's.</p>
+      </div>
+    </article>
+    <article class="build" id="build-8" role="group" aria-roledescription="slide" aria-label="8 of 8">
+      <div class="build-media build-media--stat" aria-hidden="true">
+        <span class="stat-a">MP4</span>
+        <span class="stat-b">built from the command line</span>
+      </div>
+      <div class="build-body">
+        <div class="build-tag">Motion, cut in code</div>
+        <h3>An AI video pipeline, from stills to a finished MP4</h3>
+        <p>Headless-browser stills, generated voiceover, motion, a music bed and the final cut. End to end to a finished film, from the terminal rather than an editing suite.</p>
+      </div>
+    </article>
     </div>
+
+    <div class="rail-progress" aria-hidden="true"><span class="rail-progress-bar"></span></div>
+    <p class="builds-also"><span>Also built</span> A global Creative AI hackathon built end to end &middot; a self-organising multi-agent studio &middot; an LLM council that anonymises and merges rival models &middot; Monday, my daily EA agent &middot; a portable version-controlled AI operating system &middot; two deck engines and a design-system layer &middot; a nine-skill UX system for the design team &middot; a scientist team's agentic tool made usable &middot; agentic tools taken into production with engineering &middot; <a href="https://www.estebangz.com/world-clock/v2/" target="_blank" rel="noopener">World Clock</a>.</p>
+  </div>
   </div>
 </section>
 
@@ -1271,10 +1290,63 @@
   backTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
 
   /* ---- Stagger: index reveal children inside grids ---- */
-  document.querySelectorAll('.builds-grid, .caps-grid, .honours-grid, .xp-grid').forEach(function (grid) {
+  document.querySelectorAll('.caps-grid, .honours-grid, .xp-grid').forEach(function (grid) {
     var kids = grid.querySelectorAll('.reveal');
     kids.forEach(function (el, i) { el.style.setProperty('--i', Math.min(i, 5)); });
   });
+
+  /* ---- Builds rail: arrows, keyboard, progress ----
+     Deliberately does NOT touch wheel or touch events. Horizontal movement is
+     native overflow-x, so vertical page scrolling can never be hijacked. */
+  (function () {
+    var rail = document.getElementById('builds-rail');
+    if (!rail) return;
+    var btns = Array.prototype.slice.call(document.querySelectorAll('.rail-btn'));
+    var bar = document.querySelector('.rail-progress-bar');
+
+    function step() {
+      var card = rail.querySelector('.build');
+      if (!card) return rail.clientWidth;
+      return card.getBoundingClientRect().width + 18;
+    }
+    function maxScroll() { return rail.scrollWidth - rail.clientWidth; }
+
+    /* The rail has inline padding and scroll-snap, so scrollLeft RESTS a few px
+       above 0 at the first card rather than at 0. Deriving the tolerance from the
+       real padding instead of guessing a number keeps the end-state buttons
+       correct if that padding ever changes. */
+    function slack() {
+      var pad = parseFloat(getComputedStyle(rail).paddingLeft) || 0;
+      return pad + 6;
+    }
+
+    function sync() {
+      var max = maxScroll(), eps = slack(), x = rail.scrollLeft;
+      var pct = max <= eps ? 100 : Math.min(100, Math.max(0, ((x - eps) / (max - eps)) * 100));
+      if (bar) bar.style.width = pct + '%';
+      btns.forEach(function (b) {
+        var dir = parseInt(b.getAttribute('data-dir'), 10);
+        b.disabled = dir < 0 ? x <= eps : x >= max - eps;
+      });
+    }
+
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        rail.scrollBy({ left: parseInt(b.getAttribute('data-dir'), 10) * step(), behavior: 'smooth' });
+      });
+    });
+
+    rail.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') { e.preventDefault(); rail.scrollBy({ left: step(), behavior: 'smooth' }); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); rail.scrollBy({ left: -step(), behavior: 'smooth' }); }
+      else if (e.key === 'Home') { e.preventDefault(); rail.scrollTo({ left: 0, behavior: 'smooth' }); }
+      else if (e.key === 'End') { e.preventDefault(); rail.scrollTo({ left: maxScroll(), behavior: 'smooth' }); }
+    });
+
+    rail.addEventListener('scroll', sync, { passive: true });
+    window.addEventListener('resize', sync);
+    sync();
+  })();
 
   /* ---- Reveal on scroll ---- */
   var io = new IntersectionObserver(function (entries) {

@@ -3,3 +3,6 @@ node_modules/
 .netlify/
 *.log
 audit-*/
+
+# rail build working shots
+tools/_rail*.png
