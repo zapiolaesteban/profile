@@ -81,8 +81,16 @@ case team services, which makes him client-facing **through** the case team, not
 **embedded and hands-on in delivery**: he builds the prototype and the working POC himself, next to
 the MDs and Partners who own the relationship, **BCG X data scientists and engineers**, and the
 client's own technical people. He also brings the studio and the consulting team together around the
-build. That bridging is the part of the job that makes the work land instead of sitting in a folder,
-and it is rare for a creative director to be doing it at all.
+build, and that bridging is what makes the work land instead of sitting in a folder.
+
+**He is the only creative director in Design Studios running a global Creative AI programme while
+also delivering client work hands-on with ANZ case teams.** His peers lead the craft. He leads the
+craft, runs the global programme, and is embedded in case-team delivery building the prototypes and
+POCs himself. That combination is the single clearest answer to "does he lead, or does he build".
+
+State it as a fact about the operating model, with the evidence above behind it. Do not turn it into
+a ranking of individuals, do not give a headcount of his peer group, and never name or characterise
+a colleague to make the point.
 
 He leads the coded proof-of-concept **inside the pitch rather than after it**. That is unusual, and
 it is why it converts. Wins have come across agri-food, energy, convenience retail, beverages and
