@@ -87,7 +87,7 @@ Three things sit under that, and the third is the rare one:
 - **Before BCG: almost 7 years at Endeavour Group** (Jun 2015 to Nov 2021). He **started as Senior
   Digital Designer** and left as **Creative Lead for Endeavour Drinks**, where he led **Dan Murphy's,
   the group's biggest account** and Australia's largest drinks retailer, and also worked across
-  BWS, Jimmy Brings, MilkRun, Langtons and Cellarmasters. **He was leading designers from the year he
+  BWS, Jimmy Brings, Langtons and Cellarmasters, all Endeavour Drinks Group brands. **He was leading designers from the year he
   arrived, not only from the day the title changed**, sat on the **division leadership team**, and
   helped grow the in-house team **from 4 people to 30**, with up to **6 senior creatives** reporting
   to him. The pattern is the same one as today: he was operating above the title he held. He built and governed the
