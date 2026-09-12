@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The work · Esteban Gimenez Zapiola</title>
+<meta name="description" content="Four groups of work from Esteban Gimenez Zapiola: the agentic pitch, the Creative AI practice, the products and tools, and the brand and experience craft underneath. Client work is rebuilt with invented branding rather than redacted.">
+<link rel="canonical" href="https://www.estebangz.com/showcase.html">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2300C853'/%3E%3Ctext x='50' y='50' font-family='Helvetica Neue,Arial,sans-serif' font-size='58' font-weight='700' fill='white' text-anchor='middle' dominant-baseline='central'%3EE%3C/text%3E%3C/svg%3E">
+
+<!-- Set theme BEFORE paint to prevent flash: dark is the default for everyone; a saved choice wins. -->
+<script>
+  (function () {
+    try {
+      var stored = localStorage.getItem('theme');
+      document.documentElement.setAttribute('data-theme', stored || 'dark');
+    } catch (e) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  })();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Geist:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/tokens.css">
+
+<style>
+  /* ============================================================
+     BASE
+     ============================================================ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--paper); color: var(--ink);
+    font-family: var(--font-body); font-size: 17px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.4s var(--ease), color 0.4s var(--ease);
+  }
+  a { color: inherit; text-decoration: none; }
+  em { font-style: italic; }
+  ::selection { background: var(--accent-glow); color: var(--ink); }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 3px; }
+
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 500; line-height: 1.05; letter-spacing: -0.022em; }
+
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+
+  /* ============================================================
+     NAV
+     ============================================================ */
+  /* Scoped to the id on purpose: there is a second <nav> in the hero (the jump list),
+     and a bare `nav` selector would make it position:fixed on top of this one. */
+  #nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px var(--gutter);
+    background: color-mix(in srgb, var(--paper) 82%, transparent);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition), background var(--transition);
+  }
+  #nav.scrolled { border-bottom-color: var(--rule); }
+  .brand-logo { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-display); font-weight: 600; font-size: 18px; letter-spacing: -0.02em; }
+  .brand-logo .wordmark { display: inline-flex; align-items: baseline; gap: 4px; }
+  .brand-logo .gz { color: var(--ink-faint); font-weight: 400; }
+  .brand-logo .mark {
+    width: 26px; height: 26px; border-radius: 7px; background: var(--accent-bright);
+    color: #fff; display: grid; place-items: center;
+    font-style: normal; font-weight: 700; font-size: 16px; line-height: 1; letter-spacing: 0; padding-bottom: 1px;
+  }
+  .nav-right { display: flex; align-items: center; gap: 8px; }
+  .nav-links { display: flex; gap: 4px; margin-right: 6px; }
+  .nav-links a { font-size: 13px; color: var(--ink-mute); padding: 7px 11px; border-radius: 8px; transition: color var(--transition), background var(--transition); }
+  .nav-links a:hover { color: var(--ink); background: var(--paper-warm); }
+  .nav-links a.active { color: var(--accent); }
+  .btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: var(--font-body); font-size: 13px; font-weight: 500;
+    padding: 9px 15px; border-radius: 9px; border: 1px solid var(--rule-strong);
+    transition: border-color var(--transition), transform var(--transition);
+  }
+  .btn:hover { border-color: var(--ink); transform: translateY(-1px); }
+  .btn svg { width: 15px; height: 15px; }
+  .theme-toggle {
+    width: 36px; height: 36px; border-radius: 9px; border: 1px solid var(--rule-strong);
+    background: transparent; color: var(--ink); cursor: pointer; display: grid; place-items: center;
+    transition: border-color var(--transition);
+  }
+  .theme-toggle:hover { border-color: var(--ink); }
+  .theme-toggle svg { width: 16px; height: 16px; }
+  .theme-toggle .sun { display: none; }
+  [data-theme="dark"] .theme-toggle .sun { display: block; }
+  [data-theme="dark"] .theme-toggle .moon { display: none; }
+
+  /* ============================================================
+     HERO
+     ============================================================ */
+  .hero { padding: 190px 0 clamp(60px, 8vw, 100px); }
+  .hero h1 { font-size: var(--step-h1); max-width: 15ch; text-wrap: balance; margin-bottom: 28px; }
+  .hero h1 em { color: var(--accent); }
+  .hero-note { font-size: 1.05rem; color: var(--ink-soft); max-width: 60ch; text-wrap: pretty; }
+  .hero-note + .hero-note { margin-top: 16px; }
+  .hero-back {
+    display: inline-flex; align-items: center; gap: 9px; margin-bottom: 30px;
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.05em;
+    text-transform: uppercase; color: var(--ink-mute);
+    transition: color var(--transition);
+  }
+  .hero-back:hover { color: var(--accent); }
+  .hero-back svg { width: 14px; height: 14px; }
+
+  /* Jump list. Four groups, so no artificial row of three. */
+  .jump { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 40px; }
+  .jump a {
+    font-size: 14px; padding: 11px 17px; border: 1px solid var(--rule-strong); border-radius: 11px;
+    color: var(--ink-soft); transition: border-color var(--transition), color var(--transition), transform var(--transition);
+  }
+  .jump a:hover { border-color: var(--accent); color: var(--ink); transform: translateY(-1px); }
+  .jump b { font-family: var(--font-mono); font-weight: 500; color: var(--accent); margin-right: 9px; }
+
+  /* ============================================================
+     GROUPS
+     ============================================================ */
+  .group { padding: var(--step-section) 0; border-top: 1px solid var(--rule); }
+  .sec-num { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 18px; }
+  .sec-num strong { color: var(--accent); }
+  .group h2 { font-size: var(--step-h2); max-width: 20ch; text-wrap: balance; margin-bottom: 26px; }
+  .group h2 em { color: var(--accent); }
+  .group-prose { max-width: 68ch; }
+  .group-prose p { color: var(--ink-soft); text-wrap: pretty; }
+  .group-prose p + p { margin-top: 16px; }
+  .group-prose strong { color: var(--ink); font-weight: 600; }
+
+  .sanitise {
+    margin-top: 26px; padding: 16px 20px; border-left: 2px solid var(--accent);
+    background: var(--paper-warm); border-radius: 0 12px 12px 0;
+    font-size: 14.5px; color: var(--ink-mute); max-width: 68ch; text-wrap: pretty;
+  }
+  .sanitise b { color: var(--ink-soft); font-weight: 600; }
+
+  /* ============================================================
+     MEDIA: video reels and typographic panels
+     ============================================================ */
+  .reels { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 22px; margin-top: 44px; }
+  /* A single reel would otherwise stretch to the full column, turning one empty
+     16:9 slot into a very large hole. Cap it at a sane film width instead. */
+  .reels:has(> .reel:only-child) { grid-template-columns: minmax(0, 640px); }
+  .reel { display: flex; flex-direction: column; gap: 14px; }
+  .reel-frame {
+    position: relative; aspect-ratio: 16 / 9; overflow: hidden;
+    background: var(--paper-card); border: 1px solid var(--rule); border-radius: 16px;
+    display: grid; place-items: center; text-align: center; padding: 24px;
+  }
+  .reel-frame img, .reel-frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  /* Pending state: designed, not broken. Swap the inner div for a <video controls
+     poster="…"><source src="assets/<name>.mp4" type="video/mp4"></video> when the cut exists. */
+  .reel-pending { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .reel-pending .tag { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+  .reel-pending .what { font-size: 14.5px; color: var(--ink-mute); max-width: 34ch; line-height: 1.5; text-wrap: pretty; }
+  .reel-cap { font-size: 14px; color: var(--ink-mute); line-height: 1.55; text-wrap: pretty; }
+  .reel-cap b { color: var(--ink); font-weight: 600; }
+
+  /* A big number panel, the same language the landing page rail already speaks. */
+  .panels { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 18px; margin-top: 44px; }
+  .panel { background: var(--paper-card); border: 1px solid var(--rule); border-radius: 16px; padding: 28px 24px; }
+  .panel .n { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 2.9rem); line-height: 1; letter-spacing: -0.03em; margin-bottom: 12px; }
+  .panel .n em { color: var(--accent); font-style: normal; }
+  .panel .l { font-size: 14px; color: var(--ink-mute); line-height: 1.5; text-wrap: pretty; }
+
+  /* ============================================================
+     FOOTER
+     ============================================================ */
+  footer { border-top: 1px solid var(--rule); padding: clamp(60px, 8vw, 100px) 0 44px; background: var(--paper-warm); }
+  .footer-cta { font-family: var(--font-display); font-size: clamp(1.8rem, 5vw, 3rem); line-height: 1.08; max-width: 20ch; margin-bottom: 30px; text-wrap: balance; }
+  .footer-cta em { color: var(--accent); }
+  .footer-links { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 48px; }
+  .footer-links a { display: inline-flex; align-items: center; gap: 9px; font-size: 14px; padding: 12px 18px; border: 1px solid var(--rule-strong); border-radius: 11px; transition: border-color var(--transition), transform var(--transition); }
+  .footer-links a:hover { border-color: var(--ink); transform: translateY(-1px); }
+  .footer-links a svg { width: 16px; height: 16px; }
+  .footer-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; padding-top: 26px; border-top: 1px solid var(--rule); font-size: 12.5px; color: var(--ink-mute); }
+  .colophon { font-family: var(--font-mono); }
+  .colophon b { color: var(--accent); font-weight: 500; }
+
+  /* ============================================================
+     REVEAL
+     ============================================================ */
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+  @media (max-width: 860px) { .nav-links { display: none; } }
+  @media (max-width: 560px) {
+    body { font-size: 16px; }
+    .hero { padding: 150px 0 60px; }
+    .footer-meta { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav" aria-label="Primary">
+  <a href="index.html" class="brand-logo"><span class="mark">E</span><span class="wordmark">Esteban<span class="gz">GZ</span></span></a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="#pitch">The pitch</a>
+      <a href="#practice">The practice</a>
+      <a href="#products">Products</a>
+      <a href="#craft">The craft</a>
+    </div>
+    <a href="Esteban-Gimenez-Zapiola-Creative-Director-CV.pdf" class="btn" download>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      CV
+    </a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" aria-pressed="false">
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+  </div>
+</nav>
+
+<main>
+
+<header class="hero">
+  <div class="wrap">
+    <a href="index.html" class="hero-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+      Back to the front page
+    </a>
+
+    <h1>The work. Some of it <em>rebuilt</em> so it can be shown.</h1>
+
+    <p class="hero-note">Client work is confidential. Where it matters I have rebuilt it with invented branding and invented data rather than blacking things out. The constraints are real, the craft is real, the logos are&nbsp;not.</p>
+    <p class="hero-note">Everything else here is either my own, or was my employer's to show. Four groups, in the order they matter.</p>
+
+    <nav class="jump" aria-label="Jump to a group">
+      <a href="#pitch"><b>01</b>The agentic pitch</a>
+      <a href="#practice"><b>02</b>The practice</a>
+      <a href="#products"><b>03</b>Products and tools</a>
+      <a href="#craft"><b>04</b>The craft underneath</a>
+    </nav>
+  </div>
+</header>
+
+<!-- 01 THE AGENTIC PITCH -->
+<section class="group" id="pitch" aria-labelledby="pitch-title">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="sec-num"><strong>01</strong> &nbsp;/&nbsp; The agentic pitch</div>
+      <h2 id="pitch-title">The proposal, built as an <em>experience</em>.</h2>
+      <div class="group-prose">
+        <p>A pitch a client can open and use rather than sit through. <strong>Coded proof-of-concepts running inside the proposal</strong>, a web experience carrying the argument, film, and a podcast, built as one thing instead of five deliverables.</p>
+        <p>I work inside the case team, with BCG X data scientists and engineers and the client's own technical people, and I bring the studio and the consulting team with me. Proposals have been won this way across <strong>agri-food, energy, convenience retail, beverages and banking</strong>.</p>
+        <p>The win is never one person's. It is what happens when deep BCG strategy is combined with design and creative&nbsp;craft.</p>
+      </div>
+
+      <p class="sanitise"><b>How this one is handled.</b> This is the most exposed work on the site, so it gets rebuilt rather than de-logoed. A stray logo, a recognisable photograph or a distinctive interface pattern identifies a client long after the obvious markers are gone. Sectors are named. Clients are not, and never will&nbsp;be.</p>
+    </div>
+
+    <div class="reels reveal">
+      <figure class="reel">
+        <div class="reel-frame">
+          <div class="reel-pending">
+            <span class="tag">In production</span>
+            <span class="what">A sanitised walkthrough of one full pitch experience, rebuilt end to end with an invented marque.</span>
+          </div>
+        </div>
+        <figcaption class="reel-cap"><b>One pitch, start to finish.</b> The proof-of-concept, the web experience and the film, in the order a client meets them.</figcaption>
+      </figure>
+      <figure class="reel">
+        <div class="reel-frame">
+          <div class="reel-pending">
+            <span class="tag">In production</span>
+            <span class="what">The proof-of-concept on its own, running on invented data that keeps the real constraints.</span>
+          </div>
+        </div>
+        <figcaption class="reel-cap"><b>The coded POC.</b> Built with the case team during the pitch, not demoed after it.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- 02 THE PRACTICE -->
+<section class="group" id="practice" aria-labelledby="practice-title">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="sec-num"><strong>02</strong> &nbsp;/&nbsp; The practice</div>
+      <h2 id="practice-title">A practice, and the people who <em>run it without me</em>.</h2>
+      <div class="group-prose">
+        <p>I founded the Creative AI practice and I lead it: <strong>33 nodes across the regions</strong> and a global lab of 10 creative technologists. Functional leadership is mine, people leadership sits with the regional managers, and the playbook is written so a node runs with me out of the room.</p>
+        <p>I designed the Power Up Weeks and then ran them <strong>through the regional leads rather than by myself</strong>, so every region got hands-on in its own timezone instead of watching one central webinar.</p>
+        <p>I hold clinics on creativity, branding, Creative AI and the technology underneath it. I write and deliver the deep dives: coding, graph engineering, context and prompt engineering, agent loops, and building agents that do real work. I author skills for the firm and for my own team, and the library now runs at <strong>49 of them with an automated reviewer on the door</strong>. Structure without adoption is half a story, and adoption is the rarer half.</p>
+      </div>
+    </div>
+
+    <div class="panels reveal">
+      <div class="panel"><p class="n">33</p><p class="l">Creative AI nodes across the regions, run by regional leads</p></div>
+      <div class="panel"><p class="n">10</p><p class="l">Creative technologists in the global lab, POC to internal product</p></div>
+      <div class="panel"><p class="n">49</p><p class="l">Skills in the library, each scored against a published bar before it ships</p></div>
+      <div class="panel"><p class="n">400<em>+</em></p><p class="l">Designers reached, in their own timezone rather than one central webinar</p></div>
+    </div>
+
+    <div class="reels reveal">
+      <figure class="reel">
+        <div class="reel-frame">
+          <div class="reel-pending">
+            <span class="tag">In production</span>
+            <span class="what">A short film on how a Power Up Week actually runs, and what a region does with it afterwards.</span>
+          </div>
+        </div>
+        <figcaption class="reel-cap"><b>Teaching, at the scale of a firm.</b> Clinics, deep dives and the weeks themselves.</figcaption>
+      </figure>
+      <figure class="reel">
+        <div class="reel-frame">
+          <div class="reel-pending">
+            <span class="tag">In production</span>
+            <span class="what">Dropping a skill into the library and watching the automated reviewer score it against the bar.</span>
+          </div>
+        </div>
+        <figcaption class="reel-cap"><b>The library and its door.</b> Drop a skill, it gets reviewed, approved work publishes.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- 03 PRODUCTS AND TOOLS -->
+<section class="group" id="products" aria-labelledby="products-title">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="sec-num"><strong>03</strong> &nbsp;/&nbsp; Products and tools</div>
+      <h2 id="products-title">Things I built that <em>other people now use</em>.</h2>
+      <div class="group-prose">
+        <p>Client-facing products and internal team tools come out of the same making muscle, so I stopped separating them. I write the first working version myself, which makes the direction arguable instead of theoretical, then hand it to people who take it further than I&nbsp;can.</p>
+        <p>A native macOS dictation app. A report engine that typesets straight from the source document. An agentic image-library generator, an HTML editor, a website builder with live editing, an email builder, a multi-agent studio, a council that anonymises and merges rival models, and Monday, the agent that runs my&nbsp;day.</p>
+        <p><strong>The films on this page are themselves the proof.</strong> They come out of a pipeline I built: headless-browser stills, generated voiceover, motion, a music bed and the final cut, from the terminal rather than an editing&nbsp;suite.</p>
+      </div>
+    </div>
+
+    <div class="reels reveal">
+      <figure class="reel">
+        <div class="reel-frame">
+          <img src="assets/parla-app.jpg" alt="Parla running on macOS, showing its settings pane with appearance themes, language selection and the push-to-talk key" loading="lazy" decoding="async" width="1200" height="820">
+        </div>
+        <figcaption class="reel-cap"><b>Parla.</b> Native macOS dictation, with an MCP server beside it. Transcription is the easy part. The dictionary is the product: it learns the names, jargon and accented edge cases generic speech models get wrong.</figcaption>
+      </figure>
+      <figure class="reel">
+        <div class="reel-frame">
+          <div class="reel-pending">
+            <span class="tag">Awaiting a neutral render</span>
+            <span class="what">A 40-page report rebuilt from its source file, shown on a neutral document rather than a published one.</span>
+          </div>
+        </div>
+        <figcaption class="reel-cap"><b>The report engine.</b> Typesets from the source document, and <b>fails</b> the build on typographic defects instead of flagging them. Rebuilding one report surfaced two errors in the published original.</figcaption>
+      </figure>
+      <figure class="reel">
+        <div class="reel-frame">
+          <div class="reel-pending">
+            <span class="tag">In production</span>
+            <span class="what">The video pipeline running on itself: stills, voiceover, motion and music assembled into a finished cut.</span>
+          </div>
+        </div>
+        <figcaption class="reel-cap"><b>The video pipeline.</b> The tool that makes everything else on this page.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- 04 THE CRAFT UNDERNEATH -->
+<section class="group" id="craft" aria-labelledby="craft-title">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="sec-num"><strong>04</strong> &nbsp;/&nbsp; The craft underneath</div>
+      <h2 id="craft-title">Before any of this was <em>called AI</em>.</h2>
+      <div class="group-prose">
+        <p>I came up through graphic design and brand strategy, in branding and design studios. Then marketing, then digital marketing at a point when <strong>UX and UI were not yet a discipline</strong>. I became a digital designer and an experience designer as the field formed around me, wearing every hat from creative services through to interface work.</p>
+        <p>The through-line has not moved in eighteen years: <strong>connecting brand strategy and brand marketing to what the C-suite is actually trying to do</strong>. That is the same argument I make now about design and revenue. It is just twenty years older than the AI part.</p>
+        <p>At Endeavour Group I led Dan Murphy's, Australia's largest drinks retailer and the group's biggest account, alongside BWS, Jimmy Brings, Langtons and Cellarmasters. I built and governed the design system, led the site restyle that <strong>roughly doubled the audience</strong>, launched the app and created sub-brands. I helped grow the in-house team <strong>from 4 people to 30</strong>, with up to six senior creatives reporting to&nbsp;me.</p>
+      </div>
+
+      <p class="sanitise"><b>Nothing here is sanitised.</b> These were my employer's brands rather than a client's, so this is the one group on the page that can be shown exactly as it&nbsp;was.</p>
+    </div>
+
+    <div class="panels reveal">
+      <div class="panel"><p class="n">4 <em>to</em> 30</p><p class="l">In-house team grown, with up to six senior creatives reporting to me</p></div>
+      <div class="panel"><p class="n">2<em>x</em></p><p class="l">Roughly double the audience after the site restyle I led</p></div>
+      <div class="panel"><p class="n">18</p><p class="l">Years across brand, product, service and creative leadership</p></div>
+      <div class="panel"><p class="n">5</p><p class="l">Retail brands run out of one design system and one team</p></div>
+    </div>
+
+    <div class="reels reveal">
+      <figure class="reel">
+        <div class="reel-frame">
+          <div class="reel-pending">
+            <span class="tag">Being pulled from the archive</span>
+            <span class="what">The design system, the restyle and the sub-brands, shown as the real work they were.</span>
+          </div>
+        </div>
+        <figcaption class="reel-cap"><b>Eighteen years of craft.</b> Real logos, real work, no rebuilding required.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <h2 class="footer-cta">Want to see one of these <em>properly?</em> Ask me.</h2>
+
+    <div class="footer-links">
+      <a href="index.html#contact">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+        Send me a note
+      </a>
+      <a href="index.html#talk">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Ask my agent instead
+      </a>
+      <a href="https://www.linkedin.com/in/estebangz/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+        linkedin.com/in/estebangz
+      </a>
+      <a href="Esteban-Gimenez-Zapiola-Creative-Director-CV.pdf" download>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download CV
+      </a>
+    </div>
+
+    <div class="footer-meta">
+      <span class="colophon">Built with <b>Claude Code</b>, by me. The site is the&nbsp;portfolio.</span>
+      <span>© 2026 Esteban Gimenez Zapiola · Sydney</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var root = document.documentElement;
+  var themeToggle = document.getElementById('themeToggle');
+  function syncToggle() {
+    themeToggle.setAttribute('aria-pressed', String(root.getAttribute('data-theme') === 'dark'));
+  }
+  themeToggle.addEventListener('click', function () {
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    syncToggle();
+  });
+  syncToggle();
+
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function () {
+    nav.classList.toggle('scrolled', window.scrollY > 12);
+  }, { passive: true });
+
+  /* Reveal on scroll. Anything already in view on load is revealed immediately, so
+     a short group never sits invisible above the observer's threshold. */
+  var reveals = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+  if (!('IntersectionObserver' in window)) {
+    reveals.forEach(function (el) { el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+    reveals.forEach(function (el) { io.observe(el); });
+  }
+
+  /* Active section in the nav. */
+  var links = Array.prototype.slice.call(document.querySelectorAll('.nav-links a'));
+  var groups = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+  function markActive() {
+    var best = -1, y = window.scrollY + 140;
+    groups.forEach(function (g, i) { if (g && g.offsetTop <= y) best = i; });
+    links.forEach(function (a, i) { a.classList.toggle('active', i === best); });
+  }
+  window.addEventListener('scroll', markActive, { passive: true });
+  markActive();
+})();
+</script>
+</body>
+</html>

@@ -116,78 +116,8 @@
      family above for: Instrument+Sans:ital,wdth,wght@0,75..100,400..700;1,75..100,400..700
      and switch the --font-display line below. Nothing else needs to change. -->
 
+<link rel="stylesheet" href="assets/tokens.css">
 <style>
-  /* ============================================================
-     DESIGN TOKENS
-     ============================================================ */
-  :root {
-    --paper: #F5F3EE;
-    --paper-warm: #EEEAE0;
-    --paper-card: #FBFAF6;
-    --ink: #14151A;
-    --ink-soft: #2C2D34;
-    --ink-mute: #6B6C75;
-    --ink-faint: #A8A6A0;
-    --rule: #D9D3C7;
-    --rule-strong: #B5AE9F;
-
-    --accent: #00A847;
-    --accent-bright: #00C853;
-    --accent-soft: #DBEFE2;
-    --accent-glow: #C8F2D9;
-
-    --focus: #00A847;
-    --shadow: rgba(20, 21, 26, 0.16);
-    --shadow-soft: rgba(20, 21, 26, 0.07);
-    --px-opacity: 0.55;
-
-    --font-display: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif;
-    /* backup: --font-display: 'Instrument Sans', 'Helvetica Neue', Arial, sans-serif; */
-    --font-body: 'Geist', -apple-system, system-ui, sans-serif;
-    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
-
-    --max: 1180px;
-    --gutter: clamp(20px, 5vw, 64px);
-    --transition: 0.25s ease;
-
-    /* Signature motion */
-    --ease: cubic-bezier(0.16, 1, 0.3, 1);
-    --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-
-    /* Fluid type scale */
-    --step-h1: clamp(2.6rem, 6.5vw, 5rem);
-    --step-h2: clamp(1.9rem, 4.5vw, 3.1rem);
-    --step-section: clamp(70px, 10vw, 130px);
-  }
-
-  /* Animatable angle for the signature conic border */
-  @property --angle {
-    syntax: '<angle>';
-    inherits: false;
-    initial-value: 0deg;
-  }
-
-  [data-theme="dark"] {
-    --paper: #0E0F12;
-    --paper-warm: #16181D;
-    --paper-card: #181A20;
-    --ink: #F2F1EC;
-    --ink-soft: #D6D5CF;
-    --ink-mute: #9A9A93;
-    --ink-faint: #63645E;
-    --rule: #2A2C33;
-    --rule-strong: #3C3E47;
-
-    --accent: #1FD968;
-    --accent-bright: #00E25E;
-    --accent-soft: #122A1C;
-    --accent-glow: #16341F;
-
-    --focus: #1FD968;
-    --shadow: rgba(0, 0, 0, 0.5);
-    --shadow-soft: rgba(0, 0, 0, 0.3);
-    --px-opacity: 0.72;
-  }
 
   /* ============================================================
      BASE
@@ -675,6 +605,19 @@
     text-transform: uppercase; color: var(--ink-soft); margin-right: 8px; }
   .builds-also a { color: var(--accent); }
 
+  /* The one route to page two. Deliberately a single door rather than a link on
+     each of the nine cards: the page's diagnosed problem is already too much. */
+  .builds-door { margin-top: 34px; }
+  .builds-door a {
+    display: inline-flex; align-items: center; gap: 11px;
+    font-size: 15px; font-weight: 500; padding: 14px 22px;
+    border: 1px solid var(--rule-strong); border-radius: 12px;
+    transition: border-color var(--transition), background var(--transition), transform var(--transition);
+  }
+  .builds-door a:hover { border-color: var(--accent); background: var(--paper-card); transform: translateY(-1px); }
+  .builds-door svg { width: 16px; height: 16px; color: var(--accent); }
+  .builds-door small { display: block; margin-top: 12px; font-size: 13.5px; color: var(--ink-mute); }
+
   @media (prefers-reduced-motion: reduce) {
     .builds-rail { scroll-behavior: auto; }
     .build, .rail-btn { transition: none; }
@@ -861,6 +804,7 @@
   <div class="nav-right">
     <div class="nav-links">
       <a href="#builds">Builds</a>
+      <a href="showcase.html">The work</a>
       <a href="#about">About</a>
       <a href="#experience">Experience</a>
       <a href="#contact">Contact</a>
@@ -1089,6 +1033,14 @@
 
     <div class="rail-progress" aria-hidden="true"><span class="rail-progress-bar"></span></div>
     <p class="builds-also"><span>Also built</span> A global Creative AI hackathon built end to end &middot; a self-organising multi-agent studio &middot; an LLM council that anonymises and merges rival models &middot; Monday, my daily EA agent &middot; a portable version-controlled AI operating system &middot; two deck engines and a design-system layer &middot; a nine-skill UX system for the design team &middot; a scientist team's agentic tool made usable &middot; agentic tools taken into production with engineering &middot; <a href="https://www.estebangz.com/world-clock/v2/" target="_blank" rel="noopener">World Clock</a>.</p>
+
+    <p class="builds-door">
+      <a href="showcase.html">
+        See the work in full, grouped four ways
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+      </a>
+      <small>The pitch, the practice, the products, and the craft it is built&nbsp;on.</small>
+    </p>
   </div>
   </div>
 </section>
