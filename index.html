@@ -725,6 +725,52 @@
   .colophon { font-family: var(--font-mono); }
   .colophon b { color: var(--accent); font-weight: 500; }
 
+  /* Contact form. Posts to the same hidden "lead-brief" Netlify form the agent
+     writes to, so there is no second backend and both doors land in one inbox. */
+  .contact-grid {
+    display: grid; grid-template-columns: 1.4fr 0.6fr;
+    gap: clamp(32px, 5vw, 72px); align-items: start; margin-bottom: 56px;
+  }
+  .contact-form { display: flex; flex-direction: column; gap: 18px; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .field { display: flex; flex-direction: column; gap: 7px; }
+  .field > span {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--ink-mute);
+  }
+  .field input, .field textarea {
+    font-family: var(--font-body); font-size: 15.5px; line-height: 1.5; color: var(--ink);
+    background: var(--paper); border: 1.5px solid var(--rule-strong); border-radius: 12px;
+    padding: 12px 14px; outline: none; resize: vertical; width: 100%;
+    transition: border-color var(--transition), box-shadow var(--transition);
+  }
+  .field input::placeholder, .field textarea::placeholder { color: var(--ink-faint); }
+  .field input:focus, .field textarea:focus {
+    border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow);
+  }
+  /* Honeypot: named in the hidden form's netlify-honeypot attribute. */
+  .contact-hp { display: none; }
+  .contact-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+  .contact-send {
+    font-family: var(--font-body); font-size: 14.5px; font-weight: 500; cursor: pointer;
+    color: #06210F; background: var(--accent-bright); border: none; border-radius: 11px;
+    padding: 13px 24px; transition: background var(--transition), transform var(--transition);
+  }
+  .contact-send:hover { background: var(--accent); transform: translateY(-1px); }
+  .contact-send:active { transform: scale(0.97); }
+  .contact-send[disabled] { opacity: 0.5; cursor: default; transform: none; }
+  .contact-status { font-size: 13.5px; color: var(--ink-mute); }
+  .contact-status.ok { color: var(--accent); }
+  .contact-done {
+    border: 1.5px solid var(--accent); border-radius: 14px; padding: 22px 24px;
+    background: var(--accent-soft); font-size: 15.5px; line-height: 1.55;
+  }
+  .contact-direct h3 {
+    font-family: var(--font-mono); font-weight: 500; font-size: 12px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-mute); margin-bottom: 16px;
+  }
+  .contact-direct .footer-links { flex-direction: column; align-items: flex-start; gap: 10px; margin-bottom: 0; }
+
   /* Floating actions */
   .back-top {
     position: fixed; bottom: 24px; right: 24px; width: 44px; height: 44px; border-radius: 50%;
@@ -754,12 +800,16 @@
     .pull-card { position: static; }
     .xp-grid { grid-template-columns: 1fr; }
     .nav-links { display: none; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .contact-direct .footer-links { flex-direction: row; flex-wrap: wrap; }
   }
   @media (max-width: 560px) {
     body { font-size: 16px; }
     .agent { padding: 16px; }
     .hero-credentials { font-size: 12px; }
     .footer-meta { flex-direction: column; }
+    .field-row { grid-template-columns: 1fr; }
+    .contact-send { width: 100%; justify-content: center; }
   }
 </style>
 </head>
@@ -1205,7 +1255,44 @@
   <div class="wrap">
     <h2 id="contact-title" class="footer-cta reveal">Building something where design and AI are <em>one practice?</em> Let's talk.</h2>
 
-    <div class="footer-links reveal">
+    <div class="contact-grid">
+      <!-- Posts to the hidden "lead-brief" form declared at the top of this file.
+           Without JS the browser POSTs natively and Netlify still captures it. -->
+      <form class="contact-form reveal" id="contactForm" name="lead-brief" method="POST" action="/">
+        <input type="hidden" name="form-name" value="lead-brief">
+        <input type="hidden" name="transcript" value="Sent straight from the contact form, not through the agent.">
+        <p class="contact-hp" aria-hidden="true"><label>Leave this field empty <input type="text" name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+
+        <div class="field-row">
+          <label class="field">
+            <span>Your name</span>
+            <input type="text" name="name" required autocomplete="name">
+          </label>
+          <label class="field">
+            <span>Email or phone</span>
+            <input type="text" name="contact" required autocomplete="email">
+          </label>
+        </div>
+
+        <label class="field">
+          <span>What's this about?</span>
+          <input type="text" name="opportunity" required placeholder="A role, a project, a collaboration">
+        </label>
+
+        <label class="field">
+          <span>Tell me a bit more</span>
+          <textarea name="summary" rows="4" required></textarea>
+        </label>
+
+        <div class="contact-actions">
+          <button type="submit" class="contact-send" id="contactSend">Send it</button>
+          <p class="contact-status" id="contactStatus" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+
+      <div class="contact-direct reveal">
+        <h3>Or reach me directly</h3>
+        <div class="footer-links">
       <a href="mailto:estebangz@gmail.com?subject=Hello%20Esteban">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
         estebangz@gmail.com
@@ -1222,10 +1309,12 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         Download CV
       </a>
+        </div>
+      </div>
     </div>
 
     <div class="footer-meta">
-      <span class="colophon">Built with <b>Claude Code</b>, by me. The site is the portfolio.</span>
+      <span class="colophon">Built with <b>Claude Code</b>, by me. The site is the&nbsp;portfolio.</span>
       <span>© 2026 Esteban Gimenez Zapiola · Sydney</span>
     </div>
   </div>
@@ -1717,6 +1806,41 @@
         else if (!raf) { raf = requestAnimationFrame(draw); }
       });
     }
+  })();
+
+  /* ---- Contact form ----
+     Same destination as the agent's save_brief: a urlencoded POST to "/" carrying
+     form-name=lead-brief. JS only exists to keep the visitor on the page; if it
+     fails the native form POST does the identical thing. */
+  (function () {
+    var form = document.getElementById('contactForm');
+    if (!form) return;
+    var btn = document.getElementById('contactSend');
+    var status = document.getElementById('contactStatus');
+
+    form.addEventListener('submit', function (e) {
+      if (!form.reportValidity()) return;
+      e.preventDefault();
+      btn.disabled = true;
+      status.className = 'contact-status';
+      status.textContent = 'Sending…';
+
+      fetch('/', {
+        method: 'POST',
+        headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(new FormData(form)).toString(),
+      }).then(function (r) {
+        if (!r.ok) throw new Error('status ' + r.status);
+        var done = document.createElement('div');
+        done.className = 'contact-done';
+        done.setAttribute('role', 'status');
+        done.textContent = 'Got it. It is in my inbox and I will come back to you.';
+        form.parentNode.replaceChild(done, form);
+      }).catch(function () {
+        btn.disabled = false;
+        status.textContent = 'That did not send. Email me at estebangz@gmail.com and I will pick it up.';
+      });
+    });
   })();
 })();
 </script>
