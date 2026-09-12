@@ -66,42 +66,35 @@ const PROBE = () => {
     const lines = Math.round(rect.height / lh);
     if (lines < 2) return null; // single-line elements cannot have a widow
 
-    // Walk to the deepest trailing text node. A paragraph whose text is wrapped in
-    // <em> or <strong> ends in an ELEMENT, not a text node — looking only at direct
-    // children silently marks those unmeasurable, which reads like a pass but isn't.
-    function deepestTrailingText(n) {
-      const kids = [...n.childNodes].reverse();
-      for (const k of kids) {
-        if (k.nodeType === 3 && k.textContent.trim()) return k;
-        if (k.nodeType === 1) {
-          const found = deepestTrailingText(k);
-          if (found) return found;
-        }
-      }
-      return null;
+    // Build a flat word index across EVERY text node in the element, in document
+    // order. Anything less fails on real markup: a paragraph ending in
+    // "<strong>…</strong>." leaves a trailing text node of just "." and a paragraph
+    // wrapped in <em> ends in an element. Both used to come back "unmeasurable",
+    // which prints like a pass and is not one.
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    const words = [];   // {node, start, end, text}
+    let tn;
+    while ((tn = walker.nextNode())) {
+      const t = tn.textContent;
+      const re = /\S+/g;
+      let m;
+      while ((m = re.exec(t))) words.push({ node: tn, start: m.index, end: m.index + m[0].length, text: m[0] });
     }
-    const node = deepestTrailingText(el);
-    if (!node) return { unfixable: 'no trailing text node found' };
-
-    const text = node.textContent;
-    const words = text.trim().split(/\s+/);
-    if (words.length < 2) return { unfixable: 'final text node has fewer than 2 words' };
+    if (words.length < 2) return null;   // genuinely too short to widow
 
     const r = document.createRange();
-    r.setStart(node, text.length - words[words.length - 1].length);
-    r.setEnd(node, text.length);
-    const lastTop = r.getBoundingClientRect().top;
+    const rectTop = (w) => { r.setStart(w.node, w.start); r.setEnd(w.node, w.end); return r.getBoundingClientRect().top; };
 
-    let onLine = 0, idx = text.length;
+    const lastTop = rectTop(words[words.length - 1]);
+    let onLine = 0;
     for (let i = words.length - 1; i >= 0; i--) {
-      idx = text.lastIndexOf(words[i], idx - 1);
-      if (idx < 0) break;
-      r.setStart(node, idx);
-      r.setEnd(node, idx + words[i].length);
-      if (Math.abs(r.getBoundingClientRect().top - lastTop) < 2) onLine++;
+      if (Math.abs(rectTop(words[i]) - lastTop) < 2) onLine++;
       else break;
     }
-    return { onLine, lastTwo: words.slice(-2).join(' ') };
+    // A lone trailing punctuation token ("." after </strong>) is not a real word.
+    const tail = words.slice(-onLine).map(w => w.text);
+    if (onLine === 1 && /^[.,;:!?)"'’”]+$/.test(tail[0])) onLine = 2;
+    return { onLine, lastTwo: words.slice(-2).map(w => w.text).join(' ') };
   }
 
   const out = [];
