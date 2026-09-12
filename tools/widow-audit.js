@@ -52,7 +52,14 @@ const CV_VIEWPORTS = [
 
 const CV_MODE = process.argv.includes('--cv');
 const VIEWPORTS = CV_MODE ? CV_VIEWPORTS : SITE_VIEWPORTS;
-const TARGET = CV_MODE ? path.join(ROOT, 'cv', 'resume.html') : path.join(ROOT, 'index.html');
+
+// Any other page on the site can be gated the same way:  --file=showcase.html
+const FILE_ARG = (process.argv.find(a => a.startsWith('--file=')) || '').slice(7);
+if (FILE_ARG && CV_MODE) throw new Error('--file and --cv are different targets; pass one.');
+const TARGET = FILE_ARG
+  ? path.resolve(ROOT, FILE_ARG)
+  : (CV_MODE ? path.join(ROOT, 'cv', 'resume.html') : path.join(ROOT, 'index.html'));
+if (!fs.existsSync(TARGET)) throw new Error('No such page: ' + TARGET);
 
 const PROBE = () => {
   // Runs in page context.

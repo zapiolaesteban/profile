@@ -116,78 +116,8 @@
      family above for: Instrument+Sans:ital,wdth,wght@0,75..100,400..700;1,75..100,400..700
      and switch the --font-display line below. Nothing else needs to change. -->
 
+<link rel="stylesheet" href="assets/tokens.css">
 <style>
-  /* ============================================================
-     DESIGN TOKENS
-     ============================================================ */
-  :root {
-    --paper: #F5F3EE;
-    --paper-warm: #EEEAE0;
-    --paper-card: #FBFAF6;
-    --ink: #14151A;
-    --ink-soft: #2C2D34;
-    --ink-mute: #6B6C75;
-    --ink-faint: #A8A6A0;
-    --rule: #D9D3C7;
-    --rule-strong: #B5AE9F;
-
-    --accent: #00A847;
-    --accent-bright: #00C853;
-    --accent-soft: #DBEFE2;
-    --accent-glow: #C8F2D9;
-
-    --focus: #00A847;
-    --shadow: rgba(20, 21, 26, 0.16);
-    --shadow-soft: rgba(20, 21, 26, 0.07);
-    --px-opacity: 0.55;
-
-    --font-display: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif;
-    /* backup: --font-display: 'Instrument Sans', 'Helvetica Neue', Arial, sans-serif; */
-    --font-body: 'Geist', -apple-system, system-ui, sans-serif;
-    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
-
-    --max: 1180px;
-    --gutter: clamp(20px, 5vw, 64px);
-    --transition: 0.25s ease;
-
-    /* Signature motion */
-    --ease: cubic-bezier(0.16, 1, 0.3, 1);
-    --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-
-    /* Fluid type scale */
-    --step-h1: clamp(2.6rem, 6.5vw, 5rem);
-    --step-h2: clamp(1.9rem, 4.5vw, 3.1rem);
-    --step-section: clamp(70px, 10vw, 130px);
-  }
-
-  /* Animatable angle for the signature conic border */
-  @property --angle {
-    syntax: '<angle>';
-    inherits: false;
-    initial-value: 0deg;
-  }
-
-  [data-theme="dark"] {
-    --paper: #0E0F12;
-    --paper-warm: #16181D;
-    --paper-card: #181A20;
-    --ink: #F2F1EC;
-    --ink-soft: #D6D5CF;
-    --ink-mute: #9A9A93;
-    --ink-faint: #63645E;
-    --rule: #2A2C33;
-    --rule-strong: #3C3E47;
-
-    --accent: #1FD968;
-    --accent-bright: #00E25E;
-    --accent-soft: #122A1C;
-    --accent-glow: #16341F;
-
-    --focus: #1FD968;
-    --shadow: rgba(0, 0, 0, 0.5);
-    --shadow-soft: rgba(0, 0, 0, 0.3);
-    --px-opacity: 0.72;
-  }
 
   /* ============================================================
      BASE
@@ -675,6 +605,29 @@
     text-transform: uppercase; color: var(--ink-soft); margin-right: 8px; }
   .builds-also a { color: var(--accent); }
 
+  /* Per-card route into the matching group on page two. */
+  .build-more {
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 16px;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em;
+    text-transform: uppercase; color: var(--ink-mute);
+    border-bottom: 1px solid var(--rule); padding-bottom: 3px;
+    transition: color var(--transition), border-color var(--transition);
+  }
+  .build-more:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* The one route to page two. Deliberately a single door rather than a link on
+     each of the nine cards: the page's diagnosed problem is already too much. */
+  .builds-door { margin-top: 34px; }
+  .builds-door a {
+    display: inline-flex; align-items: center; gap: 11px;
+    font-size: 15px; font-weight: 500; padding: 14px 22px;
+    border: 1px solid var(--rule-strong); border-radius: 12px;
+    transition: border-color var(--transition), background var(--transition), transform var(--transition);
+  }
+  .builds-door a:hover { border-color: var(--accent); background: var(--paper-card); transform: translateY(-1px); }
+  .builds-door svg { width: 16px; height: 16px; color: var(--accent); }
+  .builds-door small { display: block; margin-top: 12px; font-size: 13.5px; color: var(--ink-mute); }
+
   @media (prefers-reduced-motion: reduce) {
     .builds-rail { scroll-behavior: auto; }
     .build, .rail-btn { transition: none; }
@@ -861,6 +814,7 @@
   <div class="nav-right">
     <div class="nav-links">
       <a href="#builds">Builds</a>
+      <a href="showcase.html">The work</a>
       <a href="#about">About</a>
       <a href="#experience">Experience</a>
       <a href="#contact">Contact</a>
@@ -996,6 +950,7 @@
         <div class="build-tag"><span class="live"></span>The programme I run</div>
         <h3>A global Creative AI practice, and the people who run it</h3>
         <p>I founded it and I lead it. Functional leadership for Creative AI is mine; people leadership sits with the regional managers. I wrote the playbook so a node runs with me out of the room.</p>
+        <a class="build-more" href="showcase.html#practice">More in the practice</a>
       </div>
     </article>
     <article class="build" id="build-2" role="group" aria-roledescription="slide" aria-label="2 of 9">
@@ -1007,6 +962,7 @@
         <div class="build-tag">Upskilling, globally</div>
         <h3>Power Up Weeks, run region by region</h3>
         <p>Designed by me, then run <strong>through the regional leads rather than by me</strong>, so every region got hands-on in its own timezone instead of watching one central webinar.</p>
+        <a class="build-more" href="showcase.html#practice">More in the practice</a>
       </div>
     </article>
     <article class="build" id="build-3" role="group" aria-roledescription="slide" aria-label="3 of 9">
@@ -1018,6 +974,7 @@
         <div class="build-tag">Skills marketplace</div>
         <h3>A library of 49 skills, with an AI reviewer on the door</h3>
         <p>Drop a skill, an automated reviewer scores it against a published bar, approved work publishes. A live tracker carries <strong>79 cards across 15 owners</strong>.</p>
+        <a class="build-more" href="showcase.html#practice">More in the practice</a>
       </div>
     </article>
     <article class="build" id="build-4" role="group" aria-roledescription="slide" aria-label="4 of 9">
@@ -1029,6 +986,7 @@
         <div class="build-tag"><span class="live"></span>Live · you are using it</div>
         <h3>This site, and the agent you just spoke to</h3>
         <p>Hand-built. Grounded on a knowledge base I maintain by hand, answers by voice or text, streams token by token, runs on a serverless function with my own guardrails.</p>
+        <a class="build-more" href="showcase.html#products">More in products and tools</a>
       </div>
     </article>
     <article class="build" id="build-5" role="group" aria-roledescription="slide" aria-label="5 of 9">
@@ -1039,6 +997,7 @@
         <div class="build-tag">Native app · scaling across the firm</div>
         <h3>Parla, a dictation app I built from scratch</h3>
         <p>Native macOS, with an MCP server beside it. The transcription engine is the easy part. <strong>The dictionary is the product</strong>: it learns the names, jargon and accented edge cases generic speech models get wrong. In daily use by BCGers well beyond my own team.</p>
+        <a class="build-more" href="showcase.html#products">More in products and tools</a>
       </div>
     </article>
     <article class="build" id="build-6" role="group" aria-roledescription="slide" aria-label="6 of 9">
@@ -1050,6 +1009,7 @@
         <div class="build-tag">Publications &amp; editorial</div>
         <h3>A report engine that typesets from the source document</h3>
         <p>A 40-page report rebuilt straight from its Word file. The build <strong>fails</strong> on typographic defects instead of flagging them. Rebuilding it surfaced two errors in the published original.</p>
+        <a class="build-more" href="showcase.html#products">More in products and tools</a>
       </div>
     </article>
     <article class="build" id="build-7" role="group" aria-roledescription="slide" aria-label="7 of 9">
@@ -1061,6 +1021,7 @@
         <div class="build-tag">Client work · by sector only</div>
         <h3>Coded proof-of-concepts inside the pitch</h3>
         <p>Embedded in the case team with BCG X data scientists and engineers and the client's own technical people. Proposals won across agri-food, energy, convenience retail, beverages and banking. The win is never one person's.</p>
+        <a class="build-more" href="showcase.html#pitch">More in the agentic pitch</a>
       </div>
     </article>
     <article class="build" id="build-8" role="group" aria-roledescription="slide" aria-label="8 of 9">
@@ -1072,6 +1033,7 @@
         <div class="build-tag">Motion, cut in code</div>
         <h3>An AI video pipeline, from stills to a finished MP4</h3>
         <p>Headless-browser stills, generated voiceover, motion, a music bed and the final cut. End to end to a finished film, from the terminal rather than an editing suite.</p>
+        <a class="build-more" href="showcase.html#products">More in products and tools</a>
       </div>
     </article>
     <article class="build" id="build-9" role="group" aria-roledescription="slide" aria-label="9 of 9">
@@ -1083,12 +1045,21 @@
         <div class="build-tag">The craft underneath</div>
         <h3>Brand and experience design, from before UX was a discipline</h3>
         <p>Graphic design and brand strategy first, then marketing, then digital as it formed. At Endeavour Group I built and governed the design system, led the restyle that roughly doubled the audience, launched the app and created sub-brands, with up to six senior creatives reporting to&nbsp;me.</p>
+        <a class="build-more" href="showcase.html#craft">More in the craft underneath</a>
       </div>
     </article>
     </div>
 
     <div class="rail-progress" aria-hidden="true"><span class="rail-progress-bar"></span></div>
     <p class="builds-also"><span>Also built</span> A global Creative AI hackathon built end to end &middot; a self-organising multi-agent studio &middot; an LLM council that anonymises and merges rival models &middot; Monday, my daily EA agent &middot; a portable version-controlled AI operating system &middot; two deck engines and a design-system layer &middot; a nine-skill UX system for the design team &middot; a scientist team's agentic tool made usable &middot; agentic tools taken into production with engineering &middot; <a href="https://www.estebangz.com/world-clock/v2/" target="_blank" rel="noopener">World Clock</a>.</p>
+
+    <p class="builds-door">
+      <a href="showcase.html">
+        See the work in full, grouped four ways
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+      </a>
+      <small>The pitch, the practice, the products, and the craft it is built&nbsp;on.</small>
+    </p>
   </div>
   </div>
 </section>
