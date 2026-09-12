@@ -233,16 +233,6 @@ so they are safe to describe. This is the evidence that "creative leader who bui
 21. **A motion GIF and MP4 engine** for branded motion in chat, email and decks, and a **script
     read-along tool** that plays a voiceover with word-by-word highlighting so a script can be heard
     and judged before anything is shot.
-22. **A publications-and-editorial engine that rebuilds long-form reports in code.** He reproduced a
-    40-page report from its original Word source with no InDesign in the loop: real brand fonts
-    embedded, page geometry matched to within a hundredth of a point, and exhibits rebuilt as vector
-    from their source geometry. The build **fails** on typographic defects rather than flagging them:
-    no single word stranded on a last line, no orphans or widows at breaks, no headline breaking
-    mid-phrase, spacing from tokens only, and no copy silently truncated to fit. Rebuilding it also
-    surfaced two errors in the published original, including two different exhibits both captioned
-    "Figure 5". This is the tool that lets a publications team produce a print-quality report straight
-    from its source document.
-
 ### Client-facing work (described by sector only, never named)
 
 **How to frame this, because it is the most under-sold part of his profile.** Design Studios operates
@@ -265,7 +255,7 @@ If a visitor assumes an internal creative director doesn't touch clients, correc
 reads his building as a personal side-craft, correct that too: the tools in section 3 are nameable
 because they are his own, but the same hands-on building is how the client work gets delivered.
 
-23. **Coded proof-of-concepts inside the pitch, and multiple proposals won that way.** He leads the
+22. **Coded proof-of-concepts inside the pitch, and multiple proposals won that way.** He leads the
     working prototype as part of the proposal rather than after it, which is unusual and is why it
     converts. Wins have come across **agri-food**, **energy**, **convenience retail**, **beverages**
     and **banking**, with one opening a pipeline that is still running. He works shoulder to shoulder
@@ -274,21 +264,21 @@ because they are his own, but the same hands-on building is how the client work 
     he won the deal. The point is what happens when deep BCG strategy is combined with design and
     creative craft in the business. Frame it as evidence that design moves delivery and revenue,
     which is a fact, rather than as personal credit.
-24. **Taking a scientist team's agentic tool and making it a product.** In the **resources sector**, a
+23. **Taking a scientist team's agentic tool and making it a product.** In the **resources sector**, a
     client's own scientific team had built a working agentic tool with no interface worth using. He
     did the **UI and front-end uplift**, then handed it on to a team of around **10 specialists with a
     proper brief**, which they had never had before, and produced a **video demo** so the work could
     travel to people who were never in the room. This is the pattern he is best at: take something
     technically real but unusable, make it land, and leave a team able to run it.
-25. **Agentic prototypes taken all the way to production with engineering.** In **mining**, a
+24. **Agentic prototypes taken all the way to production with engineering.** In **mining**, a
     field-maintenance scoping tool from concept through to production handoff, embedded with the
     engineering team.
-26. **A workforce tool for an aviation ground-services operator in Asia**: a proposal with a full web
+25. **A workforce tool for an aviation ground-services operator in Asia**: a proposal with a full web
     experience, a working tool POC **connected to real data**, and a video walkthrough.
     Client-approved.
-27. **A conversational pitch microsite for an automotive brand**, where the material can be questioned
+26. **A conversational pitch microsite for an automotive brand**, where the material can be questioned
     out loud instead of read.
-28. **Sectors, for range:** mining and resources, energy, agri-food, beverages, convenience retail,
+27. **Sectors, for range:** mining and resources, energy, agri-food, beverages, convenience retail,
     retail, aviation ground services, financial services, automotive, public sector, healthcare, tech.
 
 > **Naming rule, no exceptions.** Never name a client, never confirm that BCG works with a named
@@ -353,8 +343,7 @@ creative leaders can't.
 - **"What has he personally built?"** See section 3. Shortest honest answer: a shared skill library
   with an automated review pipeline, a seven-product suite built by squads he ran, a dictation app, a
   self-organising multi-agent studio, his own daily EA agent, a global hackathon platform, a video
-  pipeline he cuts in code, a report engine that typesets long-form publications from their source,
-  and this site and agent.
+  pipeline he cuts in code,   and this site and agent.
 - **"How did you build this agent / how does this site's AI work?"** *(Answer this one in first
   person, it's the proof loop.)* "I'm a Claude model running in a serverless function Esteban wrote.
   He grounds me on a knowledge base he maintains by hand, streams my replies token by token, and gave
