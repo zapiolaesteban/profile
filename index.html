@@ -559,7 +559,8 @@
   .rail-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
   .builds-rail {
-    display: grid; grid-auto-flow: column; grid-auto-columns: min(84vw, 380px);
+    /* Four cards rather than nine, so each one gets real width. */
+    display: grid; grid-auto-flow: column; grid-auto-columns: min(84vw, 460px);
     gap: 18px; overflow-x: auto; overflow-y: hidden;
     scroll-snap-type: x mandatory; scroll-behavior: smooth;
     padding: 4px 4px 18px; margin: -4px -4px 0;
@@ -580,13 +581,21 @@
   .build-media { aspect-ratio: 16 / 10; background: var(--paper-deep); border-bottom: 1px solid var(--rule);
     display: grid; place-items: center; overflow: hidden; }
   .build-media img { width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block; }
-  .build-media--stat { flex-direction: column; text-align: center; padding: 18px; gap: 6px; }
+  /* .build-media is a grid, so a bare flex-direction did nothing and the number and
+     its label centred in two separate rows, leaving a hole between them. */
+  .build-media--stat {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 18px; gap: 10px;
+  }
   .stat-a { display: block; font-family: var(--font-display); font-size: clamp(2.4rem, 6vw, 3.4rem);
     line-height: 1; color: var(--ink); }
   .stat-b { display: block; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em;
     text-transform: uppercase; color: var(--ink-mute); max-width: 22ch; }
 
-  .build-body { padding: 20px 22px 24px; display: flex; flex-direction: column; }
+  /* Whole card is the door. Native overflow scrolling means a swipe or a trackpad
+     drag never fires a click, so making the card a link is safe inside the rail. */
+  .build-hit { display: flex; flex-direction: column; height: 100%; color: inherit; }
+  .build-body { padding: 20px 22px 24px; display: flex; flex-direction: column; flex: 1; }
   .build-tag {
     font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase;
     color: var(--accent); margin-bottom: 11px; display: inline-flex; align-items: center; gap: 7px;
@@ -605,15 +614,20 @@
     text-transform: uppercase; color: var(--ink-soft); margin-right: 8px; }
   .builds-also a { color: var(--accent); }
 
-  /* Per-card route into the matching group on page two. */
+  /* Sits at the foot of every card, so four cards of uneven copy still line up. */
   .build-more {
-    display: inline-flex; align-items: center; gap: 7px; margin-top: 16px;
+    align-self: flex-start; margin-top: auto; padding-top: 18px;
+    display: inline-flex; align-items: center; gap: 8px;
     font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em;
     text-transform: uppercase; color: var(--ink-mute);
-    border-bottom: 1px solid var(--rule); padding-bottom: 3px;
-    transition: color var(--transition), border-color var(--transition);
+    transition: color var(--transition);
   }
-  .build-more:hover { color: var(--accent); border-bottom-color: var(--accent); }
+  .build-more::after {
+    content: ""; width: 14px; height: 1px; background: currentColor;
+    transition: width var(--transition), background var(--transition);
+  }
+  .build-hit:hover .build-more { color: var(--accent); }
+  .build-hit:hover .build-more::after { width: 22px; }
 
   /* The one route to page two. Deliberately a single door rather than a link on
      each of the nine cards: the page's diagnosed problem is already too much. */
@@ -923,7 +937,7 @@
     <div class="sec-head reveal">
       <div class="sec-num"><strong>01</strong> &nbsp;/&nbsp; Built &amp; shipped</div>
       <h2 id="builds-title" class="sec-title">What I <em>built</em>, and who runs it now.</h2>
-      <p style="color:var(--ink-mute);margin-top:18px;max-width:62ch;">Most of these are my own tools, which is why I can show them. The client work runs the same way and stays confidential. I am embedded in the case team, building the prototype and the POC with BCG X data scientists and engineers and the client's own technical people, and bringing the studio and the consulting team with&nbsp;me.</p>
+      <p style="color:var(--ink-mute);margin-top:18px;max-width:62ch;">Four groups, each one a door into the work itself. The client work stays confidential and is rebuilt with invented branding rather than blacked out. Everything else is either my own or was my employer's to&nbsp;show.</p>
     </div>
 
   <div class="builds-railwrap reveal">
@@ -941,112 +955,60 @@
 
     <div class="builds-rail" id="builds-rail" tabindex="0" role="region"
          aria-label="Things I built, horizontally scrollable" aria-describedby="rail-hint">
-    <article class="build" id="build-1" role="group" aria-roledescription="slide" aria-label="1 of 9">
-      <div class="build-media build-media--stat" aria-hidden="true">
-        <span class="stat-a">33</span>
-        <span class="stat-b">nodes across the regions</span>
-      </div>
-      <div class="build-body">
-        <div class="build-tag"><span class="live"></span>The programme I run</div>
-        <h3>A global Creative AI practice, and the people who run it</h3>
-        <p>I founded it and I lead it. Functional leadership for Creative AI is mine; people leadership sits with the regional managers. I wrote the playbook so a node runs with me out of the room.</p>
-        <a class="build-more" href="showcase.html#practice">More in the practice</a>
-      </div>
+    <article class="build" id="build-1" role="group" aria-roledescription="slide" aria-label="1 of 4">
+      <a class="build-hit" href="showcase.html#pitch">
+        <div class="build-media build-media--stat" aria-hidden="true">
+          <span class="stat-a">5</span>
+          <span class="stat-b">sectors where it won work</span>
+        </div>
+        <div class="build-body">
+          <div class="build-tag">01 &nbsp;/&nbsp; The agentic pitch</div>
+          <h3>The proposal, built as an experience</h3>
+          <p>Coded proof-of-concepts running inside the pitch, a web experience carrying the argument, film and a podcast, built as one thing rather than five deliverables. I work inside the case team. Sectors are named, clients never&nbsp;are.</p>
+          <span class="build-more">See the pitch</span>
+        </div>
+      </a>
     </article>
-    <article class="build" id="build-2" role="group" aria-roledescription="slide" aria-label="2 of 9">
-      <div class="build-media build-media--stat" aria-hidden="true">
-        <span class="stat-a">every</span>
-        <span class="stat-b">region, not just one</span>
-      </div>
-      <div class="build-body">
-        <div class="build-tag">Upskilling, globally</div>
-        <h3>Power Up Weeks, run region by region</h3>
-        <p>Designed by me, then run <strong>through the regional leads rather than by me</strong>, so every region got hands-on in its own timezone instead of watching one central webinar.</p>
-        <a class="build-more" href="showcase.html#practice">More in the practice</a>
-      </div>
+    <article class="build" id="build-2" role="group" aria-roledescription="slide" aria-label="2 of 4">
+      <a class="build-hit" href="showcase.html#practice">
+        <div class="build-media build-media--stat" aria-hidden="true">
+          <span class="stat-a">33</span>
+          <span class="stat-b">nodes across the regions</span>
+        </div>
+        <div class="build-body">
+          <div class="build-tag">02 &nbsp;/&nbsp; The practice</div>
+          <h3>A practice, and the people who run it without me</h3>
+          <p>Thirty-three nodes and a global lab of 10. Power Up Weeks run through the regional leads rather than by me, clinics and deep dives I write and deliver, and a library of 49 skills with an automated reviewer on the&nbsp;door.</p>
+          <span class="build-more">See the practice</span>
+        </div>
+      </a>
     </article>
-    <article class="build" id="build-3" role="group" aria-roledescription="slide" aria-label="3 of 9">
-      <div class="build-media build-media--stat" aria-hidden="true">
-        <span class="stat-a">49</span>
-        <span class="stat-b">skills, reviewed and published</span>
-      </div>
-      <div class="build-body">
-        <div class="build-tag">Skills marketplace</div>
-        <h3>A library of 49 skills, with an AI reviewer on the door</h3>
-        <p>Drop a skill, an automated reviewer scores it against a published bar, approved work publishes. A live tracker carries <strong>79 cards across 15 owners</strong>.</p>
-        <a class="build-more" href="showcase.html#practice">More in the practice</a>
-      </div>
+    <article class="build" id="build-3" role="group" aria-roledescription="slide" aria-label="3 of 4">
+      <a class="build-hit" href="showcase.html#products">
+        <div class="build-media">
+          <img src="assets/parla-app.jpg" alt="Parla, the dictation app, running on macOS" loading="lazy" decoding="async" width="1200" height="820">
+        </div>
+        <div class="build-body">
+          <div class="build-tag">03 &nbsp;/&nbsp; Products and tools</div>
+          <h3>Things I built that other people now use</h3>
+          <p>Parla, a native macOS dictation app in daily use well beyond my own team. An HTML editor, a website builder with live editing, an email builder, a multi-agent studio, and the video pipeline that makes the&nbsp;films.</p>
+          <span class="build-more">See the products</span>
+        </div>
+      </a>
     </article>
-    <article class="build" id="build-4" role="group" aria-roledescription="slide" aria-label="4 of 9">
-      <div class="build-media build-media--stat" aria-hidden="true">
-        <span class="stat-a">you</span>
-        <span class="stat-b">are talking to the proof</span>
-      </div>
-      <div class="build-body">
-        <div class="build-tag"><span class="live"></span>Live · you are using it</div>
-        <h3>This site, and the agent you just spoke to</h3>
-        <p>Hand-built. Grounded on a knowledge base I maintain by hand, answers by voice or text, streams token by token, runs on a serverless function with my own guardrails.</p>
-        <a class="build-more" href="showcase.html#products">More in products and tools</a>
-      </div>
-    </article>
-    <article class="build" id="build-5" role="group" aria-roledescription="slide" aria-label="5 of 9">
-      <div class="build-media">
-        <img src="assets/parla-app.jpg" alt="The Parla settings pane, running on macOS" loading="lazy" decoding="async" width="1200" height="820">
-      </div>
-      <div class="build-body">
-        <div class="build-tag">Native app · scaling across the firm</div>
-        <h3>Parla, a dictation app I built from scratch</h3>
-        <p>Native macOS, with an MCP server beside it. The transcription engine is the easy part. <strong>The dictionary is the product</strong>: it learns the names, jargon and accented edge cases generic speech models get wrong. In daily use by BCGers well beyond my own team.</p>
-        <a class="build-more" href="showcase.html#products">More in products and tools</a>
-      </div>
-    </article>
-    <article class="build" id="build-6" role="group" aria-roledescription="slide" aria-label="6 of 9">
-      <div class="build-media build-media--stat" aria-hidden="true">
-        <span class="stat-a">40pp</span>
-        <span class="stat-b">and no InDesign in the loop</span>
-      </div>
-      <div class="build-body">
-        <div class="build-tag">Publications &amp; editorial</div>
-        <h3>A report engine that typesets from the source document</h3>
-        <p>A 40-page report rebuilt straight from its Word file. The build <strong>fails</strong> on typographic defects instead of flagging them. Rebuilding it surfaced two errors in the published original.</p>
-        <a class="build-more" href="showcase.html#products">More in products and tools</a>
-      </div>
-    </article>
-    <article class="build" id="build-7" role="group" aria-roledescription="slide" aria-label="7 of 9">
-      <div class="build-media build-media--stat" aria-hidden="true">
-        <span class="stat-a">5</span>
-        <span class="stat-b">sectors where it won work</span>
-      </div>
-      <div class="build-body">
-        <div class="build-tag">Client work · by sector only</div>
-        <h3>Coded proof-of-concepts inside the pitch</h3>
-        <p>Embedded in the case team with BCG X data scientists and engineers and the client's own technical people. Proposals won across agri-food, energy, convenience retail, beverages and banking. The win is never one person's.</p>
-        <a class="build-more" href="showcase.html#pitch">More in the agentic pitch</a>
-      </div>
-    </article>
-    <article class="build" id="build-8" role="group" aria-roledescription="slide" aria-label="8 of 9">
-      <div class="build-media build-media--stat" aria-hidden="true">
-        <span class="stat-a">MP4</span>
-        <span class="stat-b">built from the command line</span>
-      </div>
-      <div class="build-body">
-        <div class="build-tag">Motion, cut in code</div>
-        <h3>An AI video pipeline, from stills to a finished MP4</h3>
-        <p>Headless-browser stills, generated voiceover, motion, a music bed and the final cut. End to end to a finished film, from the terminal rather than an editing suite.</p>
-        <a class="build-more" href="showcase.html#products">More in products and tools</a>
-      </div>
-    </article>
-    <article class="build" id="build-9" role="group" aria-roledescription="slide" aria-label="9 of 9">
-      <div class="build-media build-media--stat" aria-hidden="true">
-        <span class="stat-a">4 to 30</span>
-        <span class="stat-b">the in-house team I helped grow</span>
-      </div>
-      <div class="build-body">
-        <div class="build-tag">The craft underneath</div>
-        <h3>Brand and experience design, from before UX was a discipline</h3>
-        <p>Graphic design and brand strategy first, then marketing, then digital as it formed. At Endeavour Group I built and governed the design system, led the restyle that roughly doubled the audience, launched the app and created sub-brands, with up to six senior creatives reporting to&nbsp;me.</p>
-        <a class="build-more" href="showcase.html#craft">More in the craft underneath</a>
-      </div>
+    <article class="build" id="build-4" role="group" aria-roledescription="slide" aria-label="4 of 4">
+      <a class="build-hit" href="showcase.html#craft">
+        <div class="build-media build-media--stat" aria-hidden="true">
+          <span class="stat-a">4 to 30</span>
+          <span class="stat-b">the in-house team I helped grow</span>
+        </div>
+        <div class="build-body">
+          <div class="build-tag">04 &nbsp;/&nbsp; The craft underneath</div>
+          <h3>Brand and experience design, from before UX was a discipline</h3>
+          <p>Graphic design and brand strategy first, then marketing, then digital as it formed. At Endeavour Group I built and governed the design system, led the restyle that roughly doubled the audience, launched the app and created&nbsp;sub-brands.</p>
+          <span class="build-more">See the craft</span>
+        </div>
+      </a>
     </article>
     </div>
 
@@ -1137,7 +1099,7 @@
           <li><strong>Orchestrated 24 builders across squads</strong> to ship a seven-product self-serve suite, shipped with handover docs and briefed to owners in other regions.</li>
           <li><strong>Designed and ran the Power Up Weeks region by region</strong> through the regional leads, plus the deep-dive curriculum: graph engineering, context engineering, prompt engineering, agent loops and building agents in Claude and GPT.</li>
           <li><strong>Conceived and ran a global Creative AI hackathon end to end</strong> out of London: the participant platform, timed mission unlocks, RSVP automation and an automated skill-review&nbsp;pipeline.</li>
-          <li><strong>Build and ship agentic AI personally</strong>: multi-agent systems, MCP servers, autonomous scheduled agents, a native macOS app, and a report engine that typesets long-form publications from their source document.</li>
+          <li><strong>Build and ship agentic AI personally</strong>: multi-agent systems, MCP servers, autonomous scheduled agents, a native macOS app, and the editors and builders the team uses every&nbsp;day.</li>
           <li><strong>Lead across six disciplines</strong>, being experience, visualisation, print, video and motion, editorial and presentation, connecting 400+ designers worldwide.</li>
           <li>Pitched, launched and executive-produce <strong>Business and Beyond</strong>, BCG ANZ's flagship video podcast.</li>
         </ul>

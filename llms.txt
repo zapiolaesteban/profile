@@ -57,11 +57,6 @@ run without him.
 - **A seven-product self-serve suite for senior partners**, shipped and briefed out with handover
   docs to owners in other regions so it runs without him. 24 builders in squads coded it under his
   direction.
-- **A publications engine that rebuilds long-form reports in code** from the original source
-  document. It reproduced a 40-page report with no InDesign in the loop, with brand fonts embedded
-  and page geometry matched to a hundredth of a point. The build *fails* on typographic defects
-  instead of flagging them: no stranded word on a last line, no orphans or widows, no headline
-  broken mid-phrase. Rebuilding it surfaced two errors in the published original.
 - **Parla**, a native macOS dictation app he built from scratch, now in daily use by BCGers well
   beyond his own team and scaling across the firm, with an MCP server
   alongside it. The interesting part is not the transcription engine, it is the dictionary: the app
