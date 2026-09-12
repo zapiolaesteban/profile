@@ -605,6 +605,16 @@
     text-transform: uppercase; color: var(--ink-soft); margin-right: 8px; }
   .builds-also a { color: var(--accent); }
 
+  /* Per-card route into the matching group on page two. */
+  .build-more {
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 16px;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em;
+    text-transform: uppercase; color: var(--ink-mute);
+    border-bottom: 1px solid var(--rule); padding-bottom: 3px;
+    transition: color var(--transition), border-color var(--transition);
+  }
+  .build-more:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
   /* The one route to page two. Deliberately a single door rather than a link on
      each of the nine cards: the page's diagnosed problem is already too much. */
   .builds-door { margin-top: 34px; }
@@ -940,6 +950,7 @@
         <div class="build-tag"><span class="live"></span>The programme I run</div>
         <h3>A global Creative AI practice, and the people who run it</h3>
         <p>I founded it and I lead it. Functional leadership for Creative AI is mine; people leadership sits with the regional managers. I wrote the playbook so a node runs with me out of the room.</p>
+        <a class="build-more" href="showcase.html#practice">More in the practice</a>
       </div>
     </article>
     <article class="build" id="build-2" role="group" aria-roledescription="slide" aria-label="2 of 9">
@@ -951,6 +962,7 @@
         <div class="build-tag">Upskilling, globally</div>
         <h3>Power Up Weeks, run region by region</h3>
         <p>Designed by me, then run <strong>through the regional leads rather than by me</strong>, so every region got hands-on in its own timezone instead of watching one central webinar.</p>
+        <a class="build-more" href="showcase.html#practice">More in the practice</a>
       </div>
     </article>
     <article class="build" id="build-3" role="group" aria-roledescription="slide" aria-label="3 of 9">
@@ -962,6 +974,7 @@
         <div class="build-tag">Skills marketplace</div>
         <h3>A library of 49 skills, with an AI reviewer on the door</h3>
         <p>Drop a skill, an automated reviewer scores it against a published bar, approved work publishes. A live tracker carries <strong>79 cards across 15 owners</strong>.</p>
+        <a class="build-more" href="showcase.html#practice">More in the practice</a>
       </div>
     </article>
     <article class="build" id="build-4" role="group" aria-roledescription="slide" aria-label="4 of 9">
@@ -973,6 +986,7 @@
         <div class="build-tag"><span class="live"></span>Live · you are using it</div>
         <h3>This site, and the agent you just spoke to</h3>
         <p>Hand-built. Grounded on a knowledge base I maintain by hand, answers by voice or text, streams token by token, runs on a serverless function with my own guardrails.</p>
+        <a class="build-more" href="showcase.html#products">More in products and tools</a>
       </div>
     </article>
     <article class="build" id="build-5" role="group" aria-roledescription="slide" aria-label="5 of 9">
@@ -983,6 +997,7 @@
         <div class="build-tag">Native app · scaling across the firm</div>
         <h3>Parla, a dictation app I built from scratch</h3>
         <p>Native macOS, with an MCP server beside it. The transcription engine is the easy part. <strong>The dictionary is the product</strong>: it learns the names, jargon and accented edge cases generic speech models get wrong. In daily use by BCGers well beyond my own team.</p>
+        <a class="build-more" href="showcase.html#products">More in products and tools</a>
       </div>
     </article>
     <article class="build" id="build-6" role="group" aria-roledescription="slide" aria-label="6 of 9">
@@ -994,6 +1009,7 @@
         <div class="build-tag">Publications &amp; editorial</div>
         <h3>A report engine that typesets from the source document</h3>
         <p>A 40-page report rebuilt straight from its Word file. The build <strong>fails</strong> on typographic defects instead of flagging them. Rebuilding it surfaced two errors in the published original.</p>
+        <a class="build-more" href="showcase.html#products">More in products and tools</a>
       </div>
     </article>
     <article class="build" id="build-7" role="group" aria-roledescription="slide" aria-label="7 of 9">
@@ -1005,6 +1021,7 @@
         <div class="build-tag">Client work · by sector only</div>
         <h3>Coded proof-of-concepts inside the pitch</h3>
         <p>Embedded in the case team with BCG X data scientists and engineers and the client's own technical people. Proposals won across agri-food, energy, convenience retail, beverages and banking. The win is never one person's.</p>
+        <a class="build-more" href="showcase.html#pitch">More in the agentic pitch</a>
       </div>
     </article>
     <article class="build" id="build-8" role="group" aria-roledescription="slide" aria-label="8 of 9">
@@ -1016,6 +1033,7 @@
         <div class="build-tag">Motion, cut in code</div>
         <h3>An AI video pipeline, from stills to a finished MP4</h3>
         <p>Headless-browser stills, generated voiceover, motion, a music bed and the final cut. End to end to a finished film, from the terminal rather than an editing suite.</p>
+        <a class="build-more" href="showcase.html#products">More in products and tools</a>
       </div>
     </article>
     <article class="build" id="build-9" role="group" aria-roledescription="slide" aria-label="9 of 9">
@@ -1027,6 +1045,7 @@
         <div class="build-tag">The craft underneath</div>
         <h3>Brand and experience design, from before UX was a discipline</h3>
         <p>Graphic design and brand strategy first, then marketing, then digital as it formed. At Endeavour Group I built and governed the design system, led the restyle that roughly doubled the audience, launched the app and created sub-brands, with up to six senior creatives reporting to&nbsp;me.</p>
+        <a class="build-more" href="showcase.html#craft">More in the craft underneath</a>
       </div>
     </article>
     </div>

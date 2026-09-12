@@ -158,7 +158,17 @@
   /* Pending state: designed, not broken. Swap the inner div for a <video controls
      poster="…"><source src="assets/<name>.mp4" type="video/mp4"></video> when the cut exists. */
   .reel-pending { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-  .reel-pending .tag { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+  /* Deliberately grey, not accent. A green dot means live on the front page, so a
+     grey one has to mean the opposite here, or the two states read the same. */
+  .reel-pending .soon {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink-mute); background: var(--paper-warm);
+    border: 1px solid var(--rule-strong); border-radius: 20px; padding: 8px 15px;
+  }
+  .reel-pending .soon::before {
+    content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--ink-faint); flex: none;
+  }
   .reel-pending .what { font-size: 14.5px; color: var(--ink-mute); max-width: 34ch; line-height: 1.5; text-wrap: pretty; }
   .reel-cap { font-size: 14px; color: var(--ink-mute); line-height: 1.55; text-wrap: pretty; }
   .reel-cap b { color: var(--ink); font-weight: 600; }
@@ -266,7 +276,7 @@
       <figure class="reel">
         <div class="reel-frame">
           <div class="reel-pending">
-            <span class="tag">In production</span>
+            <span class="soon">Coming soon</span>
             <span class="what">A sanitised walkthrough of one full pitch experience, rebuilt end to end with an invented marque.</span>
           </div>
         </div>
@@ -275,7 +285,7 @@
       <figure class="reel">
         <div class="reel-frame">
           <div class="reel-pending">
-            <span class="tag">In production</span>
+            <span class="soon">Coming soon</span>
             <span class="what">The proof-of-concept on its own, running on invented data that keeps the real constraints.</span>
           </div>
         </div>
@@ -309,7 +319,7 @@
       <figure class="reel">
         <div class="reel-frame">
           <div class="reel-pending">
-            <span class="tag">In production</span>
+            <span class="soon">Coming soon</span>
             <span class="what">A short film on how a Power Up Week actually runs, and what a region does with it afterwards.</span>
           </div>
         </div>
@@ -318,7 +328,7 @@
       <figure class="reel">
         <div class="reel-frame">
           <div class="reel-pending">
-            <span class="tag">In production</span>
+            <span class="soon">Coming soon</span>
             <span class="what">Dropping a skill into the library and watching the automated reviewer score it against the bar.</span>
           </div>
         </div>
@@ -351,7 +361,7 @@
       <figure class="reel">
         <div class="reel-frame">
           <div class="reel-pending">
-            <span class="tag">Awaiting a neutral render</span>
+            <span class="soon">Coming soon</span>
             <span class="what">A 40-page report rebuilt from its source file, shown on a neutral document rather than a published one.</span>
           </div>
         </div>
@@ -360,7 +370,7 @@
       <figure class="reel">
         <div class="reel-frame">
           <div class="reel-pending">
-            <span class="tag">In production</span>
+            <span class="soon">Coming soon</span>
             <span class="what">The video pipeline running on itself: stills, voiceover, motion and music assembled into a finished cut.</span>
           </div>
         </div>
@@ -396,7 +406,7 @@
       <figure class="reel">
         <div class="reel-frame">
           <div class="reel-pending">
-            <span class="tag">Being pulled from the archive</span>
+            <span class="soon">Coming soon</span>
             <span class="what">The design system, the restyle and the sub-brands, shown as the real work they were.</span>
           </div>
         </div>
