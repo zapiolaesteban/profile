@@ -860,8 +860,8 @@
   <a href="#top" class="brand-logo"><span class="mark">E</span><span class="wordmark">Esteban<span class="gz">GZ</span></span></a>
   <div class="nav-right">
     <div class="nav-links">
-      <a href="#about">About</a>
       <a href="#builds">Builds</a>
+      <a href="#about">About</a>
       <a href="#experience">Experience</a>
       <a href="#contact">Contact</a>
     </div>
@@ -956,18 +956,157 @@
       </div>
     </div>
 
-    <a href="#about" class="scroll-cue scroll-cue-sm">
+    <a href="#builds" class="scroll-cue scroll-cue-sm">
       <span class="ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></span>
-      Or scroll, the full story's below
+      Or scroll, and see what I&nbsp;built
     </a>
   </div>
 </section>
 
-<!-- 01 ABOUT -->
+<!-- 01 BUILDS -->
+<section id="builds" aria-labelledby="builds-title">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-num"><strong>01</strong> &nbsp;/&nbsp; Built &amp; shipped</div>
+      <h2 id="builds-title" class="sec-title">What I <em>built</em>, and who runs it now.</h2>
+      <p style="color:var(--ink-mute);margin-top:18px;max-width:62ch;">Most of these are my own tools, which is why I can show them. The client work runs the same way and stays confidential. I am embedded in the case team, building the prototype and the POC with BCG X data scientists and engineers and the client's own technical people, and bringing the studio and the consulting team with&nbsp;me.</p>
+    </div>
+
+  <div class="builds-railwrap reveal">
+    <div class="rail-controls">
+      <p class="rail-hint" id="rail-hint">Drag, scroll sideways, or use the arrow keys.</p>
+      <div class="rail-btns">
+        <button type="button" class="rail-btn" data-dir="-1" aria-label="Previous build" aria-controls="builds-rail">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button type="button" class="rail-btn" data-dir="1" aria-label="Next build" aria-controls="builds-rail">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="builds-rail" id="builds-rail" tabindex="0" role="region"
+         aria-label="Things I built, horizontally scrollable" aria-describedby="rail-hint">
+    <article class="build" id="build-1" role="group" aria-roledescription="slide" aria-label="1 of 9">
+      <div class="build-media build-media--stat" aria-hidden="true">
+        <span class="stat-a">33</span>
+        <span class="stat-b">nodes across the regions</span>
+      </div>
+      <div class="build-body">
+        <div class="build-tag"><span class="live"></span>The programme I run</div>
+        <h3>A global Creative AI practice, and the people who run it</h3>
+        <p>I founded it and I lead it. Functional leadership for Creative AI is mine; people leadership sits with the regional managers. I wrote the playbook so a node runs with me out of the room.</p>
+      </div>
+    </article>
+    <article class="build" id="build-2" role="group" aria-roledescription="slide" aria-label="2 of 9">
+      <div class="build-media build-media--stat" aria-hidden="true">
+        <span class="stat-a">every</span>
+        <span class="stat-b">region, not just one</span>
+      </div>
+      <div class="build-body">
+        <div class="build-tag">Upskilling, globally</div>
+        <h3>Power Up Weeks, run region by region</h3>
+        <p>Designed by me, then run <strong>through the regional leads rather than by me</strong>, so every region got hands-on in its own timezone instead of watching one central webinar.</p>
+      </div>
+    </article>
+    <article class="build" id="build-3" role="group" aria-roledescription="slide" aria-label="3 of 9">
+      <div class="build-media build-media--stat" aria-hidden="true">
+        <span class="stat-a">49</span>
+        <span class="stat-b">skills, reviewed and published</span>
+      </div>
+      <div class="build-body">
+        <div class="build-tag">Skills marketplace</div>
+        <h3>A library of 49 skills, with an AI reviewer on the door</h3>
+        <p>Drop a skill, an automated reviewer scores it against a published bar, approved work publishes. A live tracker carries <strong>79 cards across 15 owners</strong>.</p>
+      </div>
+    </article>
+    <article class="build" id="build-4" role="group" aria-roledescription="slide" aria-label="4 of 9">
+      <div class="build-media build-media--stat" aria-hidden="true">
+        <span class="stat-a">you</span>
+        <span class="stat-b">are talking to the proof</span>
+      </div>
+      <div class="build-body">
+        <div class="build-tag"><span class="live"></span>Live · you are using it</div>
+        <h3>This site, and the agent you just spoke to</h3>
+        <p>Hand-built. Grounded on a knowledge base I maintain by hand, answers by voice or text, streams token by token, runs on a serverless function with my own guardrails.</p>
+      </div>
+    </article>
+    <article class="build" id="build-5" role="group" aria-roledescription="slide" aria-label="5 of 9">
+      <div class="build-media">
+        <img src="assets/parla-app.jpg" alt="The Parla settings pane, running on macOS" loading="lazy" decoding="async" width="1200" height="820">
+      </div>
+      <div class="build-body">
+        <div class="build-tag">Native app · scaling across the firm</div>
+        <h3>Parla, a dictation app I built from scratch</h3>
+        <p>Native macOS, with an MCP server beside it. The transcription engine is the easy part. <strong>The dictionary is the product</strong>: it learns the names, jargon and accented edge cases generic speech models get wrong. In daily use by BCGers well beyond my own team.</p>
+      </div>
+    </article>
+    <article class="build" id="build-6" role="group" aria-roledescription="slide" aria-label="6 of 9">
+      <div class="build-media build-media--stat" aria-hidden="true">
+        <span class="stat-a">40pp</span>
+        <span class="stat-b">and no InDesign in the loop</span>
+      </div>
+      <div class="build-body">
+        <div class="build-tag">Publications &amp; editorial</div>
+        <h3>A report engine that typesets from the source document</h3>
+        <p>A 40-page report rebuilt straight from its Word file. The build <strong>fails</strong> on typographic defects instead of flagging them. Rebuilding it surfaced two errors in the published original.</p>
+      </div>
+    </article>
+    <article class="build" id="build-7" role="group" aria-roledescription="slide" aria-label="7 of 9">
+      <div class="build-media build-media--stat" aria-hidden="true">
+        <span class="stat-a">5</span>
+        <span class="stat-b">sectors where it won work</span>
+      </div>
+      <div class="build-body">
+        <div class="build-tag">Client work · by sector only</div>
+        <h3>Coded proof-of-concepts inside the pitch</h3>
+        <p>Embedded in the case team with BCG X data scientists and engineers and the client's own technical people. Proposals won across agri-food, energy, convenience retail, beverages and banking. The win is never one person's.</p>
+      </div>
+    </article>
+    <article class="build" id="build-8" role="group" aria-roledescription="slide" aria-label="8 of 9">
+      <div class="build-media build-media--stat" aria-hidden="true">
+        <span class="stat-a">MP4</span>
+        <span class="stat-b">built from the command line</span>
+      </div>
+      <div class="build-body">
+        <div class="build-tag">Motion, cut in code</div>
+        <h3>An AI video pipeline, from stills to a finished MP4</h3>
+        <p>Headless-browser stills, generated voiceover, motion, a music bed and the final cut. End to end to a finished film, from the terminal rather than an editing suite.</p>
+      </div>
+    </article>
+    <article class="build" id="build-9" role="group" aria-roledescription="slide" aria-label="9 of 9">
+      <div class="build-media build-media--stat" aria-hidden="true">
+        <span class="stat-a">4 to 30</span>
+        <span class="stat-b">the in-house team I helped grow</span>
+      </div>
+      <div class="build-body">
+        <div class="build-tag">The craft underneath</div>
+        <h3>Brand and experience design, from before UX was a discipline</h3>
+        <p>Graphic design and brand strategy first, then marketing, then digital as it formed. At Endeavour Group I built and governed the design system, led the restyle that roughly doubled the audience, launched the app and created sub-brands, with up to six senior creatives reporting to&nbsp;me.</p>
+      </div>
+    </article>
+    </div>
+
+    <div class="rail-progress" aria-hidden="true"><span class="rail-progress-bar"></span></div>
+    <p class="builds-also"><span>Also built</span> A global Creative AI hackathon built end to end &middot; a self-organising multi-agent studio &middot; an LLM council that anonymises and merges rival models &middot; Monday, my daily EA agent &middot; a portable version-controlled AI operating system &middot; two deck engines and a design-system layer &middot; a nine-skill UX system for the design team &middot; a scientist team's agentic tool made usable &middot; agentic tools taken into production with engineering &middot; <a href="https://www.estebangz.com/world-clock/v2/" target="_blank" rel="noopener">World Clock</a>.</p>
+  </div>
+  </div>
+</section>
+
+<!-- 02 THESIS -->
+<section class="thesis" aria-label="Operating principle">
+  <div class="wrap">
+    <div class="sec-num reveal"><strong>02</strong> &nbsp;/&nbsp; Operating principle</div>
+    <p class="thesis-quote reveal">Design isn't art. It's a <em>discipline</em> that moves&nbsp;revenue.</p>
+    <div class="thesis-attr reveal">— My career thesis, 18 years in the making</div>
+  </div>
+</section>
+
+<!-- 03 ABOUT -->
 <section id="about" aria-labelledby="about-title">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div class="sec-num"><strong>01</strong> &nbsp;/&nbsp; About</div>
+      <div class="sec-num"><strong>03</strong> &nbsp;/&nbsp; About</div>
       <h2 id="about-title" class="sec-title">A creative leader who builds, and who <em>grows builders</em>.</h2>
     </div>
 
@@ -1000,134 +1139,6 @@
         </dl>
       </aside>
     </div>
-  </div>
-</section>
-
-<!-- 02 THESIS -->
-<section class="thesis" aria-label="Operating principle">
-  <div class="wrap">
-    <div class="sec-num reveal"><strong>02</strong> &nbsp;/&nbsp; Operating principle</div>
-    <p class="thesis-quote reveal">Design isn't art. It's a <em>discipline</em> that moves&nbsp;revenue.</p>
-    <div class="thesis-attr reveal">— My career thesis, 18 years in the making</div>
-  </div>
-</section>
-
-<!-- 03 BUILDS -->
-<section id="builds" aria-labelledby="builds-title">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="sec-num"><strong>03</strong> &nbsp;/&nbsp; Built &amp; shipped</div>
-      <h2 id="builds-title" class="sec-title">What I <em>built</em>, and who runs it now.</h2>
-      <p style="color:var(--ink-mute);margin-top:18px;max-width:62ch;">These are my own tools, which is why I can show them. The client work runs the same way and stays confidential. I am embedded in the case team, building the prototype and the POC with BCG X data scientists and engineers and the client's own technical people, and bringing the studio and the consulting team with&nbsp;me.</p>
-    </div>
-
-  <div class="builds-railwrap reveal">
-    <div class="rail-controls">
-      <p class="rail-hint" id="rail-hint">Drag, scroll sideways, or use the arrow keys.</p>
-      <div class="rail-btns">
-        <button type="button" class="rail-btn" data-dir="-1" aria-label="Previous build" aria-controls="builds-rail">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
-        </button>
-        <button type="button" class="rail-btn" data-dir="1" aria-label="Next build" aria-controls="builds-rail">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
-        </button>
-      </div>
-    </div>
-
-    <div class="builds-rail" id="builds-rail" tabindex="0" role="region"
-         aria-label="Things I built, horizontally scrollable" aria-describedby="rail-hint">
-    <article class="build" id="build-1" role="group" aria-roledescription="slide" aria-label="1 of 8">
-      <div class="build-media build-media--stat" aria-hidden="true">
-        <span class="stat-a">33</span>
-        <span class="stat-b">nodes across the regions</span>
-      </div>
-      <div class="build-body">
-        <div class="build-tag"><span class="live"></span>The programme I run</div>
-        <h3>A global Creative AI practice, and the people who run it</h3>
-        <p>I founded it and I lead it. Functional leadership for Creative AI is mine; people leadership sits with the regional managers. I wrote the playbook so a node runs with me out of the room.</p>
-      </div>
-    </article>
-    <article class="build" id="build-2" role="group" aria-roledescription="slide" aria-label="2 of 8">
-      <div class="build-media build-media--stat" aria-hidden="true">
-        <span class="stat-a">every</span>
-        <span class="stat-b">region, not just one</span>
-      </div>
-      <div class="build-body">
-        <div class="build-tag">Upskilling, globally</div>
-        <h3>Power Up Weeks, run region by region</h3>
-        <p>Designed by me, then run <strong>through the regional leads rather than by me</strong>, so every region got hands-on in its own timezone instead of watching one central webinar.</p>
-      </div>
-    </article>
-    <article class="build" id="build-3" role="group" aria-roledescription="slide" aria-label="3 of 8">
-      <div class="build-media build-media--stat" aria-hidden="true">
-        <span class="stat-a">49</span>
-        <span class="stat-b">skills, reviewed and published</span>
-      </div>
-      <div class="build-body">
-        <div class="build-tag">Skills marketplace</div>
-        <h3>A library of 49 skills, with an AI reviewer on the door</h3>
-        <p>Drop a skill, an automated reviewer scores it against a published bar, approved work publishes. A live tracker carries <strong>79 cards across 15 owners</strong>.</p>
-      </div>
-    </article>
-    <article class="build" id="build-4" role="group" aria-roledescription="slide" aria-label="4 of 8">
-      <div class="build-media build-media--stat" aria-hidden="true">
-        <span class="stat-a">you</span>
-        <span class="stat-b">are talking to the proof</span>
-      </div>
-      <div class="build-body">
-        <div class="build-tag"><span class="live"></span>Live · you are using it</div>
-        <h3>This site, and the agent you just spoke to</h3>
-        <p>Hand-built. Grounded on a knowledge base I maintain by hand, answers by voice or text, streams token by token, runs on a serverless function with my own guardrails.</p>
-      </div>
-    </article>
-    <article class="build" id="build-5" role="group" aria-roledescription="slide" aria-label="5 of 8">
-      <div class="build-media">
-        <img src="assets/parla-app.jpg" alt="The Parla settings pane, running on macOS" loading="lazy" decoding="async" width="1200" height="820">
-      </div>
-      <div class="build-body">
-        <div class="build-tag">Native app · scaling across the firm</div>
-        <h3>Parla, a dictation app I built from scratch</h3>
-        <p>Native macOS, with an MCP server beside it. The transcription engine is the easy part. <strong>The dictionary is the product</strong>: it learns the names, jargon and accented edge cases generic speech models get wrong. In daily use by BCGers well beyond my own team.</p>
-      </div>
-    </article>
-    <article class="build" id="build-6" role="group" aria-roledescription="slide" aria-label="6 of 8">
-      <div class="build-media build-media--stat" aria-hidden="true">
-        <span class="stat-a">40pp</span>
-        <span class="stat-b">and no InDesign in the loop</span>
-      </div>
-      <div class="build-body">
-        <div class="build-tag">Publications &amp; editorial</div>
-        <h3>A report engine that typesets from the source document</h3>
-        <p>A 40-page report rebuilt straight from its Word file. The build <strong>fails</strong> on typographic defects instead of flagging them. Rebuilding it surfaced two errors in the published original.</p>
-      </div>
-    </article>
-    <article class="build" id="build-7" role="group" aria-roledescription="slide" aria-label="7 of 8">
-      <div class="build-media build-media--stat" aria-hidden="true">
-        <span class="stat-a">5</span>
-        <span class="stat-b">sectors where it won work</span>
-      </div>
-      <div class="build-body">
-        <div class="build-tag">Client work · by sector only</div>
-        <h3>Coded proof-of-concepts inside the pitch</h3>
-        <p>Embedded in the case team with BCG X data scientists and engineers and the client's own technical people. Proposals won across agri-food, energy, convenience retail, beverages and banking. The win is never one person's.</p>
-      </div>
-    </article>
-    <article class="build" id="build-8" role="group" aria-roledescription="slide" aria-label="8 of 8">
-      <div class="build-media build-media--stat" aria-hidden="true">
-        <span class="stat-a">MP4</span>
-        <span class="stat-b">built from the command line</span>
-      </div>
-      <div class="build-body">
-        <div class="build-tag">Motion, cut in code</div>
-        <h3>An AI video pipeline, from stills to a finished MP4</h3>
-        <p>Headless-browser stills, generated voiceover, motion, a music bed and the final cut. End to end to a finished film, from the terminal rather than an editing suite.</p>
-      </div>
-    </article>
-    </div>
-
-    <div class="rail-progress" aria-hidden="true"><span class="rail-progress-bar"></span></div>
-    <p class="builds-also"><span>Also built</span> A global Creative AI hackathon built end to end &middot; a self-organising multi-agent studio &middot; an LLM council that anonymises and merges rival models &middot; Monday, my daily EA agent &middot; a portable version-controlled AI operating system &middot; two deck engines and a design-system layer &middot; a nine-skill UX system for the design team &middot; a scientist team's agentic tool made usable &middot; agentic tools taken into production with engineering &middot; <a href="https://www.estebangz.com/world-clock/v2/" target="_blank" rel="noopener">World Clock</a>.</p>
-  </div>
   </div>
 </section>
 
