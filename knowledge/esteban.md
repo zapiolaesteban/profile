@@ -95,7 +95,11 @@ Three things sit under that, and the third is the rare one:
   built and governed (Frontify, InVision) was the single source of truth for print, digital and coded
   templates before being **adopted beyond Dan Murphy's across the group's other retail brands**,
   including BWS and Woolworths. He led the danmurphys.com.au restyle that captured roughly 2× the
-  audience, launched the app, and created sub-brands including Direct to Boot and Dan's Delivers.
+  audience, and launched the app. He created sub-brands including **Direct to Boot**, **Dan's Run**
+  (the UberEats partnership) and then **Dan's Delivers**, Endeavour's own delivery campaign that
+  succeeded it, which he **executive-produced**: the film shoot through to production assets across
+  every medium. Worth raising when someone asks whether he can run campaign production and video, not
+  just design systems.
   (This is his own employment history, not a client engagement, so it is fine to name.)
 - **The Endeavour digital business unit, and why it matters now.** For much of that time he led
   creative for the **digital business unit**, producing **personalised assets at scale**. The

@@ -65,7 +65,7 @@
   .thesis{ font-family:var(--display); font-style:italic; font-size:11.2pt; color:var(--accent-deep); margin-top:8px; padding-left:12px; border-left:2px solid var(--accent); }
 
   /* ---- Experience ---- */
-  .role{ display:grid; grid-template-columns:128px 1fr; gap:18px; padding:6px 0; border-top:1px solid var(--rule); break-inside:avoid; }
+  .role{ display:grid; grid-template-columns:128px 1fr; gap:18px; padding:5px 0; border-top:1px solid var(--rule); break-inside:avoid; }
   .role.first{ border-top:none; padding-top:2px; }
   .meta .dates{ display:block; font-family:var(--mono); font-size:7.5pt; color:var(--ink); font-weight:500; letter-spacing:0.01em; white-space:nowrap; }
   .meta .co{ display:block; font-size:8.4pt; font-weight:600; color:var(--ink-soft); margin-top:5px; line-height:1.25; }
@@ -74,7 +74,7 @@
   .body h3 em{ color:var(--accent-deep); }
   .body .desc{ color:var(--ink-mute); font-size:9.5pt; margin:3px 0 6px; font-style:italic; }
   ul{ list-style:none; }
-  li{ position:relative; padding-left:13px; margin-bottom:3px; }
+  li{ position:relative; padding-left:13px; margin-bottom:2px; }
   li::before{ content:""; position:absolute; left:0; top:7px; width:5px; height:1.5px; background:var(--accent); }
   .compact .body p{ font-size:9.4pt; }
   .out{ margin-top:6px; padding-left:13px; position:relative; font-size:9.2pt; }
@@ -86,6 +86,10 @@
      what page 2 had left and forced a third page of mostly whitespace. Its children
      stay atomic instead, so a capability or award never splits across pages. */
   .lower{ display:grid; grid-template-columns:1.32fr 1fr; gap:26px; padding-top:1px; }
+  /* Trailing margins here push a hair past the last page boundary and Chrome emits
+     a blank page for it. Nothing may hang below the final line. */
+  .lower section, .doc > :last-child{ margin-bottom:0; }
+  .caps .cap:last-child, .side .langs, .side .edu-item:last-child{ margin-bottom:0; }
   .caps .cap{ margin-bottom:3px; }
   .caps .cap .t{ color:var(--ink); font-weight:600; }
   .caps .cap .t em{ color:var(--accent-deep); }
@@ -186,7 +190,7 @@
           <li><strong>Relaunched the Dan Murphy's brand from inside the in-house agency.</strong> Built and governed the <strong>Design System</strong> (Frontify, InVision) behind it, the single source of truth for print, digital and coded templates, which was then <strong>adopted across the group's other retail brands</strong>.</li>
           <li><strong>Led creative for the digital business unit</strong>: the danmurphys.com.au restyle (≈<strong>2× audience</strong>), the <strong>Dan Murphy's app</strong>, and a personalised programme producing <strong>millions of tailored offers a day</strong>. <strong>Online went from under 1% of sales to 13–15%.</strong></li>
           <li><strong>Built the production automation by hand, before AI.</strong> Photoshop scripting driven from spreadsheet data generated the asset variants; Oracle and Facebook personalised price, offer and send timing, down to <strong>weather-triggered creative</strong>.</li>
-          <li>Primary creative interface to the external agencies: <strong>M&amp;C Saatchi, Thinkerbell and Prospect</strong> on mass media, Oracle on the martech. Created sub-brands incl. Direct to Boot and&nbsp;Dan's&nbsp;Delivers.</li>
+          <li>Primary creative interface to the external agencies: <strong>M&amp;C Saatchi, Thinkerbell and Prospect</strong> on mass media, Oracle on the martech. Created <strong>Direct to Boot</strong>, <strong>Dan's Run</strong> on UberEats and then <strong>Dan's Delivers</strong>, our own delivery campaign, which I <strong>executive-produced</strong> from the shoot through to production assets for every&nbsp;medium.</li>
         </ul>
       </div>
     </article>
