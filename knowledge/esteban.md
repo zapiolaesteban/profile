@@ -67,7 +67,7 @@ Three things sit under that, and the third is the rare one:
 ---
 
 ## 2. Who he is (story)
-- **Creative Director, BCG** (Nov 2024–present), Sydney. Runs the ANZ Creative Studio P&L,
+- **Regional Creative Director, BCG** (Nov 2024–present), Sydney, with direct reports across **APAC and Europe**. Runs the ANZ Creative Studio P&L,
   sits on the global Design Studios leadership team, and leads the global creative practice across
   six disciplines: experience design, visualisation, print, video and motion, publications and
   editorial, and presentation. Recipient of BCG's "Grow by Growing Others" award.
