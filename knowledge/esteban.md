@@ -105,12 +105,18 @@ Three things sit under that, and the third is the rare one:
   (This is his own employment history, not a client engagement, so it is fine to name.)
 - **The Endeavour digital business unit, and why it matters now.** For much of that time he led
   creative for the **digital business unit**, producing **personalised assets at scale**. The
-  automation was hand-built, because nothing existed to buy: **Photoshop scripting driven from
-  spreadsheet data** generated the asset variants, while **Oracle and Facebook personalised price,
-  offer and send timing, down to weather-triggered creative**. **Millions of tailored offers a day.**
-  Alongside the new site and the app, **online went from under 1% of sales to 13–15%**. This is the
-  single best answer to "was he doing AI-assisted production before AI" — he was solving the same
-  problem ten years earlier, without the models. He was also the **primary creative interface to the
+  automation was hand-built, **years before any of it had a language model behind it**. Use that
+  framing, not "nothing existed to buy": the point is that LLMs did not exist yet, so his team wrote
+  their own scripts and algorithms. A script laid out **240 product images a month** with their
+  **SKUs and prices**, on brand, in minutes, to launch the **catalogue offers**, with personalised
+  offers running in between. **Oracle and Facebook** then segmented price, offer and send timing,
+  **down to weather-triggered creative**. **Millions of tailored offers a day.** His team also
+  **hand-coded every EDM**, tested them in **Litmus**, and kept each one rendering correctly across
+  **Outlook, Apple Mail and Gmail**, and **shipped their own dark mode for email before the platforms
+  had one**. Alongside
+  the new site and the app, **online went from under 1% of sales to 13–15%**. This is the single best
+  answer to "was he doing AI-assisted production before AI" — he was solving the same problem a decade
+  earlier, without the models. He was also the **primary creative interface to the
   external agencies**: M&C Saatchi, Thinkerbell and Prospect on mass media, Oracle on the martech,
   plus smaller shops for events and proofs of concept, with the in-house team owning adaptation,
   always-on extensions and iteration. These are his own employers and suppliers, not BCG clients, so

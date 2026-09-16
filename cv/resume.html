@@ -34,7 +34,9 @@
     font-variant-ligatures:common-ligatures;
     text-rendering:geometricPrecision;
   }
-  .role, .cap, .award, .edu-item{ break-inside:avoid; }
+  .cap, .award, .edu-item, li{ break-inside:avoid; }
+  .role{ break-inside:avoid; }
+  .body h3, .body .desc{ break-after:avoid; }
   body{ font-family:var(--body); color:var(--ink-soft); font-size:9.2pt; line-height:1.40; background:var(--paper); }
   a{ color:var(--accent-deep); text-decoration:none; }
   em{ font-style:italic; }
@@ -56,28 +58,28 @@
   /* ---- Section scaffold ---- */
   section{ margin-bottom:4px; }
   .sec-h{ font-family:var(--mono); font-size:8.2pt; letter-spacing:0.13em; text-transform:uppercase; color:var(--accent-deep); font-weight:500;
-          display:flex; align-items:center; gap:10px; margin-bottom:7px; }
+          display:flex; align-items:center; gap:10px; margin-bottom:6px; }
   .sec-h::after{ content:""; flex:1; height:1px; background:var(--rule); }
 
   /* ---- Summary ---- */
   .summary p{ margin-bottom:4px; max-width:98%; }
   .summary .lead{ color:var(--ink); }
-  .thesis{ font-family:var(--display); font-style:italic; font-size:11.2pt; color:var(--accent-deep); margin-top:8px; padding-left:12px; border-left:2px solid var(--accent); }
+  .thesis{ font-family:var(--display); font-style:italic; font-size:11.2pt; color:var(--accent-deep); margin-top:6px; padding-left:12px; border-left:2px solid var(--accent); }
 
   /* ---- Experience ---- */
-  .role{ display:grid; grid-template-columns:128px 1fr; gap:18px; padding:4px 0; border-top:1px solid var(--rule); break-inside:avoid; }
+  .role{ display:grid; grid-template-columns:128px 1fr; gap:18px; padding:5px 0; border-top:1px solid var(--rule); }
   .role.first{ border-top:none; padding-top:2px; }
   .meta .dates{ display:block; font-family:var(--mono); font-size:7.5pt; color:var(--ink); font-weight:500; letter-spacing:0.01em; white-space:nowrap; }
   .meta .co{ display:block; font-size:8.4pt; font-weight:600; color:var(--ink-soft); margin-top:5px; line-height:1.25; }
   .meta .loc{ display:block; font-family:var(--mono); font-size:7pt; color:var(--ink-faint); margin-top:4px; letter-spacing:0.02em; }
   .body h3{ font-family:var(--display); font-size:13pt; font-weight:600; color:var(--ink); line-height:1.12; }
   .body h3 em{ color:var(--accent-deep); }
-  .body .desc{ color:var(--ink-mute); font-size:9.5pt; margin:3px 0 6px; font-style:italic; }
+  .body .desc{ color:var(--ink-mute); font-size:9.5pt; margin:2px 0 4px; font-style:italic; }
   ul{ list-style:none; }
-  li{ position:relative; padding-left:13px; margin-bottom:1px; }
+  li{ position:relative; padding-left:13px; margin-bottom:2px; }
   li::before{ content:""; position:absolute; left:0; top:7px; width:5px; height:1.5px; background:var(--accent); }
   .compact .body p{ font-size:9.4pt; }
-  .out{ margin-top:6px; padding-left:13px; position:relative; font-size:9.2pt; }
+  .out{ margin-top:5px; padding-left:13px; position:relative; font-size:9.2pt; }
   .out::before{ content:""; position:absolute; left:0; top:6.5px; width:5px; height:5px; border-radius:50%; background:var(--accent); }
   .out b{ color:var(--ink); }
 
@@ -90,22 +92,22 @@
      a blank page for it. Nothing may hang below the final line. */
   .lower section, .doc > :last-child{ margin-bottom:0; }
   .caps .cap:last-child, .side .langs, .side .edu-item:last-child{ margin-bottom:0; }
-  .caps .cap{ margin-bottom:3px; }
+  .caps .cap{ margin-bottom:2px; }
   .caps .cap .t{ color:var(--ink); font-weight:600; }
   .caps .cap .t em{ color:var(--accent-deep); }
   .caps .cap .d{ color:var(--ink-mute); }
   .num{ font-family:var(--mono); color:var(--accent-deep); font-size:7.6pt; margin-right:5px; }
 
-  .award{ margin-bottom:5px; }
+  .award{ margin-bottom:4px; }
   .award .t{ font-family:var(--display); font-size:10.8pt; font-weight:600; color:var(--ink); }
   .award .t em{ color:var(--accent-deep); }
   .award .o{ font-family:var(--mono); font-size:6.9pt; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-faint); margin:1px 0 2px; }
   .award .d{ color:var(--ink-mute); font-size:8.9pt; }
 
-  .edu-item{ margin-bottom:2px; font-size:8.8pt; }
+  .edu-item{ margin-bottom:1px; font-size:8.8pt; }
   .edu-item .t{ color:var(--ink); font-weight:500; }
   .edu-item .m{ color:var(--ink-faint); font-family:var(--mono); font-size:7.4pt; }
-  .langs{ margin-top:5px; font-size:8.8pt; color:var(--ink-soft); }
+  .langs{ margin-top:3px; font-size:8.8pt; color:var(--ink-soft); }
   .langs b{ color:var(--ink); }
 </style>
 </head>
@@ -115,8 +117,8 @@
   <header>
     <div class="id">
       <h1>Esteban <em>Gimenez Zapiola</em></h1>
-      <p class="role-now">Creative Director &amp; Creative AI Lead · BCG</p>
-      <p class="tag">I run design as a business that drives revenue, and I built the Creative AI practice that scales&nbsp;it: 33 nodes, a lab of 10, 24 builders in&nbsp;squads.</p>
+      <p class="role-now">Regional Creative Director &amp; Creative AI Lead · BCG</p>
+      <p class="tag">I run design as a business that drives revenue, and I build the AI practice that scales&nbsp;it.</p>
     </div>
     <div class="contact">
       <span class="loc">Sydney, Australia · working globally</span>
@@ -129,7 +131,7 @@
   <div class="rule"></div>
 
   <section class="summary">
-    <p class="lead">As Creative Director at BCG I own the ANZ Creative Studio P&amp;L, sit on the global leadership team, and lead Creative AI across <strong>33 nodes</strong> and a <strong>global lab of 10</strong>, with reach into 400+ designers. I work <strong>embedded in the case team</strong>, hands-on with MDPs, BCG X engineers and the client's own technical people.</p>
+    <p class="lead">As Regional Creative Director at BCG I have direct reports across <strong>APAC and Europe</strong>, lead the creative practice areas, own the ANZ Creative Studio P&amp;L and sit on the global leadership team. I am leading the shift of the whole in-house studio to AI-native: <strong>33 Creative AI nodes</strong> and a <strong>global lab of 10</strong>, with reach into 400+ designers. I work <strong>embedded in the case team</strong>, hands-on with MDPs, BCG X engineers and the client's own technical people.</p>
     <p>I build agentic AI myself and take it to production. The building is how I lead: I write the first working version so there is something real to argue with, then hand it to the people who take it further.</p>
     <p class="thesis">Design isn't art. It's a discipline that moves revenue.</p>
   </section>
@@ -144,7 +146,7 @@
         <span class="loc">Sydney · Global</span>
       </div>
       <div class="body">
-        <h3>Creative Director <em>&amp; Creative AI Lead</em></h3>
+        <h3>Regional Creative Director <em>&amp; Creative AI Lead</em></h3>
         <ul>
           <li>Founded and lead BCG Design Studios' <strong>Creative AI practice</strong>. Wrote the <em>"Creative Advantage"</em> proposal that made it the firm's Creative AI centre of excellence.</li>
           <li>Lead <strong>33 Creative AI nodes across the regions</strong> and a <strong>global lab of 10 creative technologists</strong>. I designed the structure, defined the roles and wrote the playbook, so a node runs without me.</li>
@@ -187,9 +189,9 @@
         <p class="desc">Creative Lead for Dan Murphy's, Australia's #1 drinks retailer; also BWS, Jimmy Brings, Langtons and Cellarmasters.</p>
         <ul>
           <li>Sat on the <strong>division leadership team</strong> and helped grow the in-house team <strong>from 4 people to 30</strong>, into a full in-house agency serving the whole Endeavour portfolio, with up to <strong>6 senior creatives</strong> reporting to me.</li>
-          <li><strong>Relaunched the Dan Murphy's brand from inside the in-house agency.</strong> Built and governed the <strong>Design System</strong> (Frontify, InVision) behind it, the single source of truth for print, digital and coded templates.</li>
+          <li><strong>Relaunched the Dan Murphy's brand from inside the in-house agency.</strong> Built and governed the <strong>Design System</strong> (Frontify, InVision) behind it, the single source of truth for print, digital and coded templates. Restyled and rebranded <strong>My Dan's</strong>, the loyalty programme, alongside&nbsp;it.</li>
           <li><strong>Led creative for the digital business unit</strong>: the danmurphys.com.au restyle (≈<strong>2× audience</strong>), the <strong>Dan Murphy's app</strong>, and a personalised programme producing <strong>millions of tailored offers a day</strong>. <strong>Online went from under 1% of sales to 13–15%.</strong></li>
-          <li><strong>Built the production automation by hand, before AI.</strong> Photoshop scripting driven from spreadsheet data generated the asset variants; Oracle and Facebook personalised price, offer and send timing, down to <strong>weather-triggered creative</strong>.</li>
+          <li><strong>We wrote the automation ourselves, years before any of it had a language model behind it.</strong> A script laid out <strong>240 product images a month</strong> with their SKUs and prices, on brand, in minutes, to launch the catalogue offers, with personalised offers running in between. Oracle and Facebook then segmented price, offer and send timing, down to <strong>weather-triggered&nbsp;creative</strong>.</li>
           <li>Primary creative interface to the external agencies: <strong>M&amp;C Saatchi, Thinkerbell and Prospect</strong> on mass media, Oracle on the martech.</li>
           <li>Designed <strong>Direct to Boot</strong>, our answer to Covid, whose design system was then <strong>rolled out across the group, including BWS and Woolworths</strong>. Then <strong>Dan's Delivers</strong>, our own delivery campaign, which I <strong>executive-produced</strong> from the shoot through to production assets for every&nbsp;medium.</li>
         </ul>
@@ -206,7 +208,7 @@
         <h3>Senior Digital Designer</h3>
         <p class="desc">In-house digital at agency pace, across Dan Murphy's, BWS, Langtons and Cellarmasters. Leading junior designers from the start.</p>
         <ul>
-          <li>Hand-coded EDM templates and implemented dynamic personalisation on Oracle Responsys, the foundation of Dan Murphy's segmented email program.</li>
+          <li>Hand-coded every EDM and the <strong>dynamic personalisation</strong> on Oracle Responsys behind Dan Murphy's segmented email programme, testing in <strong>Litmus</strong> and keeping each one rendering correctly across Outlook, Apple Mail and Gmail. We shipped our own <strong>dark mode</strong> for email before the platforms had&nbsp;one.</li>
           <li>Produced wireframes and restyled core components of danmurphys.com.au; led art direction and on-location shoots for tier-1 campaigns, lifting digital ROI.</li>
         </ul>
       </div>
@@ -214,25 +216,13 @@
 
     <article class="role compact">
       <div class="meta">
-        <span class="dates">Aug 2011 — Aug 2015</span>
-        <span class="co">Kasiopea · Brand Chemistry</span>
+        <span class="dates">2009 — 2015</span>
+        <span class="co">Kasiopea · Brand Chemistry<br>Mendioroz Design</span>
         <span class="loc">Buenos Aires · Sydney</span>
       </div>
       <div class="body">
-        <h3>Senior UX/UI Designer</h3>
-        <p>Generalist principal at a Buenos Aires digital agency (pharma, energy, talent, tech): art director, UX/UI designer, front-end developer, client lead and new-business pitcher. Clients incl. Duke Energy, Engie and Farmacity. Bridged to Brand Chemistry, Sydney.</p>
-      </div>
-    </article>
-
-    <article class="role compact">
-      <div class="meta">
-        <span class="dates">2009 — 2012</span>
-        <span class="co">Mendioroz Design · Crested Butte</span>
-        <span class="loc">Buenos Aires · Colorado</span>
-      </div>
-      <div class="body">
-        <h3>Graphic Designer <em>· Ski Instructor</em></h3>
-        <p>Visual identity and <strong>wayfinding</strong> for airports and shopping centres: signage systems, technical documentation and supplier oversight, where my interest in how design lives in physical space began. Plus three winter seasons as a PSIA-certified ski instructor, coaching beginners with patience.</p>
+        <h3>Senior UX/UI Designer <em>· Graphic Designer</em></h3>
+        <p>Generalist principal at a Buenos Aires digital agency (pharma, energy, talent, tech): art director, UX/UI designer, front-end developer, client lead and new-business pitcher. Clients incl. Duke Energy, Engie and Farmacity. Earlier, visual identity and <strong>wayfinding</strong> for airports and shopping centres, plus three winter seasons as a PSIA-certified ski instructor in&nbsp;Colorado.</p>
       </div>
     </article>
   </section>
