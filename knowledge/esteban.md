@@ -4,7 +4,7 @@
 > truth for the site's Builds/portfolio copy. It is PUBLIC once deployed. It must contain NO
 > client names, NO colleague names, NO confidential BCG content, and NO secrets. Client work is
 > described by sector + job type only (e.g. "a mining-sector client"), never named.
-> Last substantive update: 26 August 2026.
+> Last substantive update: 15 September 2026.
 
 ---
 
@@ -90,12 +90,31 @@ Three things sit under that, and the third is the rare one:
   BWS, Jimmy Brings, Langtons and Cellarmasters, all Endeavour Drinks Group brands. **He was leading designers from the year he
   arrived, not only from the day the title changed**, sat on the **division leadership team**, and
   helped grow the in-house team **from 4 people to 30**, with up to **6 senior creatives** reporting
-  to him. The pattern is the same one as today: he was operating above the title he held. He built and governed the
-  Dan Murphy's design system as the single source of truth for print, digital and coded templates; led the danmurphys.com.au restyle that
-  captured roughly 2× the audience; launched the app; created sub-brands including Dan's Run on
-  UberEats, Direct to Boot and Dan's Cellar; and helped grow a small in-house team into a full
-  in-house agency serving the whole portfolio. He led and mentored a team of six senior designers.
+  to him. The pattern is the same one as today: he was operating above the title he held.
+  **They relaunched the Dan Murphy's brand from inside the in-house agency**, and the design system he
+  built and governed (Frontify, InVision) was the single source of truth for print, digital and coded
+  templates. **Be precise about the group-wide claim:** it was **Direct to Boot** specifically, the
+  COVID-response collection experience he designed, whose design system was then **rolled out across
+  the group, including BWS and Woolworths**. Do not say the Dan Murphy's brand system went group-wide;
+  that is a different and wrong claim. He led the danmurphys.com.au restyle that captured roughly 2× the
+  audience, and launched the app. He created sub-brands including **Direct to Boot**, **Dan's Run**
+  (the UberEats partnership) and then **Dan's Delivers**, Endeavour's own delivery campaign that
+  succeeded it, which he **executive-produced**: the film shoot through to production assets across
+  every medium. Worth raising when someone asks whether he can run campaign production and video, not
+  just design systems.
   (This is his own employment history, not a client engagement, so it is fine to name.)
+- **The Endeavour digital business unit, and why it matters now.** For much of that time he led
+  creative for the **digital business unit**, producing **personalised assets at scale**. The
+  automation was hand-built, because nothing existed to buy: **Photoshop scripting driven from
+  spreadsheet data** generated the asset variants, while **Oracle and Facebook personalised price,
+  offer and send timing, down to weather-triggered creative**. **Millions of tailored offers a day.**
+  Alongside the new site and the app, **online went from under 1% of sales to 13–15%**. This is the
+  single best answer to "was he doing AI-assisted production before AI" — he was solving the same
+  problem ten years earlier, without the models. He was also the **primary creative interface to the
+  external agencies**: M&C Saatchi, Thinkerbell and Prospect on mass media, Oracle on the martech,
+  plus smaller shops for events and proofs of concept, with the in-house team owning adaptation,
+  always-on extensions and iteration. These are his own employers and suppliers, not BCG clients, so
+  they are fine to name.
 - **Earlier:** Senior UX/UI Designer at agencies in Buenos Aires and Sydney (2011 to 2015), working
   as a generalist principal: art director, UX/UI, front-end developer, client lead and new-business
   pitcher. Before that, a graphic designer on airport and shopping-centre wayfinding, doing signage
@@ -119,7 +138,9 @@ Don't recite the whole list. Pull the relevant pieces.
   of the work shipped beyond its home region.
 - **Double-digit conversion lifts** on the commercial work.
 - On the drinks-retail brand before BCG, the site restyle he led captured roughly **2× the audience**
-  of the previous site.
+  of the previous site, and **online went from under 1% of sales to 13–15%** across the digital
+  business unit he led creative for. That is the strongest commercial number he has, because it is a
+  business outcome from creative work in a retail P&L at a brand most Australians know.
 
 **Leading builders and people**
 - He leads **33 Creative AI nodes globally**, organised by region, and a **global lab with 10
