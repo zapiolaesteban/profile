@@ -107,11 +107,13 @@ Three things sit under that, and the third is the rare one:
   creative for the **digital business unit**, producing **personalised assets at scale**. The
   automation was hand-built, **years before any of it had a language model behind it**. Use that
   framing, not "nothing existed to buy": the point is that LLMs did not exist yet, so his team wrote
-  their own scripts and algorithms. Those drove **Photoshop from spreadsheet data** to turn out around
-  **240 product images a month**, and then **Oracle and Facebook segmented and personalised price,
-  offer and send timing, down to weather-triggered creative**. **Millions of tailored offers a day.**
-  His team also **hand-coded every email template to the spec each email client needed to render it
-  correctly**, and **shipped their own dark mode for email before the platforms had one**. Alongside
+  their own scripts and algorithms. A script laid out **240 product images a month** with their
+  **SKUs and prices**, on brand, in minutes, to launch the **catalogue offers**, with personalised
+  offers running in between. **Oracle and Facebook** then segmented price, offer and send timing,
+  **down to weather-triggered creative**. **Millions of tailored offers a day.** His team also
+  **hand-coded every EDM**, tested them in **Litmus**, and kept each one rendering correctly across
+  **Outlook, Apple Mail and Gmail**, and **shipped their own dark mode for email before the platforms
+  had one**. Alongside
   the new site and the app, **online went from under 1% of sales to 13–15%**. This is the single best
   answer to "was he doing AI-assisted production before AI" — he was solving the same problem a decade
   earlier, without the models. He was also the **primary creative interface to the
