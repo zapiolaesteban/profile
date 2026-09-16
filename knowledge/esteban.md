@@ -93,8 +93,10 @@ Three things sit under that, and the third is the rare one:
   to him. The pattern is the same one as today: he was operating above the title he held.
   **They relaunched the Dan Murphy's brand from inside the in-house agency**, and the design system he
   built and governed (Frontify, InVision) was the single source of truth for print, digital and coded
-  templates before being **adopted beyond Dan Murphy's across the group's other retail brands**,
-  including BWS and Woolworths. He led the danmurphys.com.au restyle that captured roughly 2× the
+  templates. **Be precise about the group-wide claim:** it was **Direct to Boot** specifically, the
+  COVID-response collection experience he designed, whose design system was then **rolled out across
+  the group, including BWS and Woolworths**. Do not say the Dan Murphy's brand system went group-wide;
+  that is a different and wrong claim. He led the danmurphys.com.au restyle that captured roughly 2× the
   audience, and launched the app. He created sub-brands including **Direct to Boot**, **Dan's Run**
   (the UberEats partnership) and then **Dan's Delivers**, Endeavour's own delivery campaign that
   succeeded it, which he **executive-produced**: the film shoot through to production assets across
