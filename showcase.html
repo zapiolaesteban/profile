@@ -202,6 +202,33 @@
   @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
 
   /* ============================================================
+     FLOATING RETURN
+     One pill, two ways out: back to the top of this page, or home. It only
+     appears once the hero (and its own "Back to home" link) has scrolled away,
+     so the two never sit on screen together. Sits under the nav (z 100).
+     ============================================================ */
+  .float-nav {
+    position: fixed; right: 24px; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); z-index: 90;
+    display: flex; align-items: center; gap: 2px; padding: 4px;
+    border: 1px solid var(--rule-strong); border-radius: 999px;
+    background: var(--paper); box-shadow: 0 10px 30px var(--shadow-soft);
+    opacity: 0; visibility: hidden; transform: translateY(10px);
+    transition: opacity var(--transition), transform var(--transition), visibility 0s linear var(--transition), background 0.4s var(--ease);
+  }
+  .float-nav.show { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+  .float-nav a, .float-nav button {
+    display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px;
+    border: 0; border-radius: 999px; background: transparent; color: var(--ink-soft); cursor: pointer;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1;
+    transition: background var(--transition), color var(--transition);
+  }
+  .float-nav a:hover, .float-nav button:hover { background: var(--paper-warm); color: var(--ink); }
+  .float-nav a:active, .float-nav button:active { transform: scale(0.96); }
+  .float-nav svg { width: 14px; height: 14px; flex: none; }
+  .float-nav .sep { width: 1px; height: 18px; background: var(--rule); }
+  @media (prefers-reduced-motion: reduce) { .float-nav, .float-nav a, .float-nav button { transition: none; } }
+
+  /* ============================================================
      RESPONSIVE
      ============================================================ */
   @media (max-width: 860px) { .nav-links { display: none; } }
@@ -209,6 +236,8 @@
     body { font-size: 16px; }
     .hero { padding: 150px 0 60px; }
     .footer-meta { flex-direction: column; }
+    .float-nav { right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
+    .float-nav a, .float-nav button { height: 44px; padding: 0 15px; }
   }
 </style>
 </head>
@@ -240,7 +269,7 @@
   <div class="wrap">
     <a href="index.html" class="hero-back">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
-      Back to the front page
+      Back to home
     </a>
 
     <h1>The work. Some of it <em>rebuilt</em> so it can be shown.</h1>
@@ -440,6 +469,18 @@
   </div>
 </footer>
 
+<div class="float-nav" id="floatNav" aria-label="Return">
+  <button type="button" id="backTop" aria-label="Back to top of page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+    Top
+  </button>
+  <span class="sep" aria-hidden="true"></span>
+  <a href="index.html" aria-label="Back to home page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    Home
+  </a>
+</div>
+
 <script>
 (function () {
   "use strict";
@@ -457,10 +498,23 @@
   });
   syncToggle();
 
+  /* Nav shadow + floating return. The pill shows once the hero's own back link
+     has left the viewport, measured from the hero's real height rather than a
+     fixed number so it holds at every viewport. */
   var nav = document.getElementById('nav');
-  window.addEventListener('scroll', function () {
-    nav.classList.toggle('scrolled', window.scrollY > 12);
-  }, { passive: true });
+  var floatNav = document.getElementById('floatNav');
+  var hero = document.querySelector('.hero');
+  function onScroll() {
+    var y = window.scrollY;
+    nav.classList.toggle('scrolled', y > 12);
+    floatNav.classList.toggle('show', y > Math.max(hero.offsetHeight - 160, 320));
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+  document.getElementById('backTop').addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 
   /* Reveal on scroll. Anything already in view on load is revealed immediately, so
      a short group never sits invisible above the observer's threshold. */
