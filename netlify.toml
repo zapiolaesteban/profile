@@ -26,8 +26,10 @@
 # World Clock lives in its own repo (zapiolaesteban/world-clock, served by GitHub Pages).
 # Proxied here so estebangz.com/world-clock/ is the one address to remember; the repo stays
 # the single source of truth and every merge there shows up here with no deploy on this side.
-# Rules run top to bottom, first match wins: the three 301s normalise old/odd URLs onto the
-# trailing-slash form so the page's relative links (manifest, ?mini=1) keep resolving.
+# Rules run top to bottom, first match wins: the two 301s send old/odd URLs to the trailing-slash
+# form so the page's relative links (manifest, ?mini=1) keep resolving. Do NOT add a bare
+# "/world-clock" -> "/world-clock/" rule: Netlify matches `from` with or without the trailing
+# slash, so that rule also catches "/world-clock/" and loops on itself (seen on deploy preview 19).
 [[redirects]]
   from = "/world-clock/v2/*"
   to = "/world-clock/:splat"
@@ -35,11 +37,6 @@
 
 [[redirects]]
   from = "/world-clock.html"
-  to = "/world-clock/"
-  status = 301
-
-[[redirects]]
-  from = "/world-clock"
   to = "/world-clock/"
   status = 301
 
