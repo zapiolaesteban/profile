@@ -22,3 +22,28 @@
   from = "/Esteban-GZ-Resume.pdf"
   to = "/Esteban-Gimenez-Zapiola-Creative-Director-CV.pdf"
   status = 301
+
+# World Clock lives in its own repo (zapiolaesteban/world-clock, served by GitHub Pages).
+# Proxied here so estebangz.com/world-clock/ is the one address to remember; the repo stays
+# the single source of truth and every merge there shows up here with no deploy on this side.
+# Rules run top to bottom, first match wins: the three 301s normalise old/odd URLs onto the
+# trailing-slash form so the page's relative links (manifest, ?mini=1) keep resolving.
+[[redirects]]
+  from = "/world-clock/v2/*"
+  to = "/world-clock/:splat"
+  status = 301
+
+[[redirects]]
+  from = "/world-clock.html"
+  to = "/world-clock/"
+  status = 301
+
+[[redirects]]
+  from = "/world-clock"
+  to = "/world-clock/"
+  status = 301
+
+[[redirects]]
+  from = "/world-clock/*"
+  to = "https://zapiolaesteban.github.io/world-clock/:splat"
+  status = 200
